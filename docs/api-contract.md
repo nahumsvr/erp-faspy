@@ -4,7 +4,7 @@ Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financie
 
 ## Consumo
 
-Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 4f71ceb. Los fixtures y el motor están acotados al único escenario acordado; auditoría, scoring dinámico y reglas generales siguen pendientes. La emisión se probó desde Node y desde `/emision`; aceptación, tesorería y pago aún no tienen pantallas. El checklist conserva las revisiones anteriores como historial.
+Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 4f71ceb. Los fixtures y el motor están acotados al único escenario acordado; auditoría, scoring dinámico y reglas generales siguen pendientes. Emisión, aceptación y pago se probaron desde Node y desde la experiencia server-side `/emision`; no hay persistencia local. El checklist conserva las revisiones anteriores como historial.
 
 Todas las llamadas al core se centralizan en `lib/api.ts`. `createApiClient(baseUrl)` recibe la URL de `NEXT_PUBLIC_API_URL` desde la configuración del servidor Express. El módulo no lee variables globales de entorno ni realiza llamadas al importarse o al crear el cliente. La pantalla `/emision` usa esta ruta server-side; el navegador no llama directamente al core ni requiere CORS para este recorrido.
 
@@ -58,7 +58,7 @@ Se mantienen `Factura` y `ValidacionFactura` como alias para facilitar la transi
 
 `ScoringDecision` conserva literalmente los tres valores solicitados, incluido `revision` sin acento. Se aprobó como campo opcional decision en EmitirFacturaResponse. El score de la referencia sigue siendo `ALTO | MEDIO | BAJO`; no existe un mapeo confirmado entre ese score, compliance y la decisión. El ERP no realizará ese cálculo.
 
-Cuando se implementen las fases restantes de la interfaz, el ERP presentará `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los reciba. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
+La interfaz server-side ya presenta `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los recibe para el escenario acordado. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla, por eso se muestra el valor recibido sin conversión. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
 
 ## CLABE como string
 
@@ -92,4 +92,4 @@ Las pruebas del cliente cubren creación sin URL, configuración inválida, canc
 
 No se incluye `GET /api/mercado` ni tipos del dashboard. No se crean valores ficticios de demo. La emisión real y la presentación literal de CLABE ya se comprobaron en la pantalla server-side; CORS de navegador solo aplicará si se autoriza una llamada directa desde una futura pantalla.
 
-La alineación estática de los cinco tipos queda cerrada y registrada en docs/mvp-checklist.md. Siguen pendientes errores financieros y auditoría; aceptación, tesorería y pago visuales se implementarán en las entregas siguientes.
+La alineación estática de los cinco tipos queda cerrada y registrada en docs/mvp-checklist.md. Siguen pendientes errores financieros, persistencia, idempotencia y auditoría; la Ruta Dorada visual server-side ya está implementada para el escenario acordado.

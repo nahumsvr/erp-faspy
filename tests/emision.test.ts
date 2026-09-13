@@ -59,3 +59,31 @@ test("POST /emision válido informa configuración ausente sin inventar una resp
     assert.match(await response.text(), /El core no está configurado en el ERP/);
   });
 });
+
+test("POST /emision/aceptar y /emision/pago requieren facturaId", async () => {
+  await withServer(async base => {
+    for (const path of ["/emision/aceptar", "/emision/pago"]) {
+      const response = await fetch(`${base}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(),
+      });
+      assert.equal(response.status, 400);
+      assert.match(await response.text(), /Falta el identificador de la factura/);
+    }
+  });
+});
+
+test("las acciones financieras no inventan respuestas sin URL del core", async () => {
+  await withServer(async base => {
+    for (const path of ["/emision/aceptar", "/emision/pago"]) {
+      const response = await fetch(`${base}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ facturaId: "FAC-2026-001" }),
+      });
+      assert.equal(response.status, 503);
+      assert.match(await response.text(), /El core no está configurado en el ERP/);
+    }
+  });
+});

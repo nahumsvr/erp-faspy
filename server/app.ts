@@ -1,6 +1,6 @@
 import express from "express";
 import { ApiError, createApiClient } from "../lib/api.ts";
-import type { EmitirFacturaRequest } from "../types/schema.ts";
+import type { AceptarAnticipoRequest, EmitirFacturaRequest, SimularPagoRequest } from "../types/schema.ts";
 import { renderEmissionPage, type EmisionPageState } from "./emision-page.ts";
 
 function parseEmissionForm(body: unknown): { input?: EmitirFacturaRequest; values: EmisionPageState["values"]; error?: string } {
@@ -35,6 +35,15 @@ function apiErrorState(error: unknown): NonNullable<EmisionPageState["error"]> {
   return { status: 500, message: "No se pudo completar la emisión." };
 }
 
+function parseFacturaId(body: unknown): { input?: AceptarAnticipoRequest | SimularPagoRequest; error?: string } {
+  const record = body && typeof body === "object" && !Array.isArray(body)
+    ? body as Record<string, unknown> : {};
+  if (typeof record.facturaId !== "string") {
+    return { error: "Falta el identificador de la factura." };
+  }
+  return { input: { facturaId: record.facturaId } };
+}
+
 export function createApp(apiUrl?: string) {
   const app = express();
   app.disable("x-powered-by");
@@ -61,6 +70,36 @@ export function createApp(apiUrl?: string) {
     } catch (error) {
       const errorState = apiErrorState(error);
       res.type("html").status(errorState.status).send(renderEmissionPage({ values: parsed.values, error: errorState }));
+    }
+  });
+
+  app.post("/emision/aceptar", async (req, res) => {
+    const parsed = parseFacturaId(req.body);
+    if (!parsed.input) {
+      res.type("html").status(400).send(renderEmissionPage({ error: { status: 400, message: parsed.error ?? "Datos inválidos." } }));
+      return;
+    }
+    try {
+      const advance = await createApiClient(apiUrl).aceptarAnticipo(parsed.input);
+      res.type("html").status(200).send(renderEmissionPage({ advance }));
+    } catch (error) {
+      const errorState = apiErrorState(error);
+      res.type("html").status(errorState.status).send(renderEmissionPage({ error: errorState }));
+    }
+  });
+
+  app.post("/emision/pago", async (req, res) => {
+    const parsed = parseFacturaId(req.body);
+    if (!parsed.input) {
+      res.type("html").status(400).send(renderEmissionPage({ error: { status: 400, message: parsed.error ?? "Datos inválidos." } }));
+      return;
+    }
+    try {
+      const payment = await createApiClient(apiUrl).simularPago(parsed.input);
+      res.type("html").status(200).send(renderEmissionPage({ payment }));
+    } catch (error) {
+      const errorState = apiErrorState(error);
+      res.type("html").status(errorState.status).send(renderEmissionPage({ error: errorState }));
     }
   });
 

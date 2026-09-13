@@ -4,10 +4,12 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 
 ## Estado actual
 
-- Entrega 1: base sin pantallas completada y validada en Windows. Instrucciones de macOS disponibles; ejecución en una Mac pendiente. Arquitectura de frontend aún pendiente.
+- Entrega 1: base Express completada y validada en Windows. Instrucciones de macOS disponibles; ejecución en una Mac pendiente. La arquitectura server-side quedó confirmada para las pantallas actuales.
 - Entrega 2: cinco tipos alineados con core 4f71ceb, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Ruta Dorada técnica verificada desde Node con el escenario acordado.
-- Entrega 3: formulario de emisión de escritorio en `/emision`, con validación básica, errores y llamada server-side a `lib/api.ts`; la pantalla ya mostró una respuesta real del core. Oferta avanzada, aceptación, tesorería, pago y pulido visual siguen pendientes.
-- Entregas 4 a 8: pendientes. La Ruta Dorada técnica es ejecutable desde Node, pero el recorrido visual todavía no está completo.
+- Entrega 3: formulario de emisión de escritorio en `/emision`, con validación básica, errores y llamada server-side a `lib/api.ts`; la pantalla ya mostró una respuesta real del core.
+- Entregas 4 a 6: aceptación, tesorería y pago server-side encadenados desde la pantalla; la Ruta Dorada visual fue verificada con el escenario acordado. No hay persistencia ni reintentos automáticos.
+- Entrega 7: pulido visual, accesibilidad avanzada y animaciones pendientes.
+- Entrega 8: verificación final, documentación de demo y cobertura de limitaciones pendientes.
 
 ## Entregas
 

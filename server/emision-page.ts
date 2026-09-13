@@ -1,8 +1,12 @@
-import type { EmitirFacturaRequest, EmitirFacturaResponse } from "../types/schema.ts";
+import type {
+  AnticipoConfirmado, EmitirFacturaRequest, EmitirFacturaResponse, ResultadoPago,
+} from "../types/schema.ts";
 
 export interface EmisionPageState {
   values?: Partial<Record<keyof EmitirFacturaRequest, string>>;
   result?: EmitirFacturaResponse;
+  advance?: AnticipoConfirmado;
+  payment?: ResultadoPago;
   error?: { status: number; message: string };
 }
 
@@ -37,6 +41,42 @@ function resultPanel(result: EmitirFacturaResponse): string {
       <div><dt>Días promedio de pago</dt><dd>${escapeHtml(result.dias_promedio_pago)}</dd></div>
       <div><dt>CLABE virtual</dt><dd><code>${escapeHtml(result.clabe_virtual)}</code></dd></div>
     </dl>
+    <form class="action" method="post" action="/emision/aceptar">
+      <input type="hidden" name="facturaId" value="${escapeHtml(result.factura_id)}">
+      <button type="submit">Aceptar anticipo</button>
+    </form>
+  </section>`;
+}
+
+function advancePanel(advance: AnticipoConfirmado): string {
+  return `<section class="result" aria-labelledby="advance-title" aria-live="polite">
+    <p class="eyebrow">Tesorería</p>
+    <h2 id="advance-title">Anticipo aceptado</h2>
+    <dl class="metrics">
+      <div><dt>Factura</dt><dd>${escapeHtml(advance.factura_id)}</dd></div>
+      <div><dt>Estado</dt><dd>${escapeHtml(advance.estado)}</dd></div>
+      <div><dt>Monto depositado</dt><dd>${escapeHtml(advance.monto_depositado)}</dd></div>
+      <div><dt>Fecha de depósito</dt><dd>${escapeHtml(advance.fecha_deposito)}</dd></div>
+    </dl>
+    <form class="action" method="post" action="/emision/pago">
+      <input type="hidden" name="facturaId" value="${escapeHtml(advance.factura_id)}">
+      <button type="submit">Simular pago</button>
+    </form>
+  </section>`;
+}
+
+function paymentPanel(payment: ResultadoPago): string {
+  return `<section class="result" aria-labelledby="payment-title" aria-live="polite">
+    <p class="eyebrow">Liquidación</p>
+    <h2 id="payment-title">Pago simulado</h2>
+    <dl class="metrics">
+      <div><dt>Factura</dt><dd>${escapeHtml(payment.factura_id)}</dd></div>
+      <div><dt>Principal retenido</dt><dd>${escapeHtml(payment.principal_retenido)}</dd></div>
+      <div><dt>Comisión cobrada</dt><dd>${escapeHtml(payment.comision_cobrada)}</dd></div>
+      <div><dt>Remanente dispersado</dt><dd>${escapeHtml(payment.remanente_dispersado)}</dd></div>
+      <div><dt>Margen neto (valor recibido)</dt><dd>${escapeHtml(payment.margen_neto_pct)}</dd></div>
+    </dl>
+    <p class="hint">Los importes y el margen se muestran tal como los devolvió el core.</p>
   </section>`;
 }
 
@@ -44,7 +84,13 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
   const error = state.error
     ? `<p class="alert" role="alert">${escapeHtml(state.error.message)}</p>`
     : "";
-  const result = state.result ? resultPanel(state.result) : "";
+  const result = state.payment
+    ? paymentPanel(state.payment)
+    : state.advance
+      ? advancePanel(state.advance)
+      : state.result
+        ? resultPanel(state.result)
+        : `<section class="panel" aria-live="polite"><p class="eyebrow">Resultado</p><h2>La respuesta aparecerá aquí</h2><p class="lede">Completa el formulario para iniciar la validación del escenario acordado.</p></section>`;
   return `<!doctype html>
 <html lang="es">
   <head>
@@ -61,7 +107,7 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
       h1, h2, p { margin-top: 0; } h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; letter-spacing: -.03em; margin-bottom: 14px; } h2 { margin-bottom: 20px; }
       .eyebrow { color: #006d77; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
       .lede { color: #526b76; font-size: 1.05rem; line-height: 1.6; margin-bottom: 28px; }
-      form { display: grid; gap: 18px; } .field { display: grid; gap: 7px; } label { font-weight: 700; } input { border: 1px solid #b9cdd2; border-radius: 10px; color: inherit; font: inherit; min-height: 46px; padding: 10px 12px; } input:focus { border-color: #006d77; outline: 3px solid rgb(0 109 119 / 18%); }
+      form { display: grid; gap: 18px; } .action { margin-top: 24px; } .field { display: grid; gap: 7px; } label { font-weight: 700; } input { border: 1px solid #b9cdd2; border-radius: 10px; color: inherit; font: inherit; min-height: 46px; padding: 10px 12px; } input:focus { border-color: #006d77; outline: 3px solid rgb(0 109 119 / 18%); }
       .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; } .hint { color: #617880; font-size: .88rem; margin: 0; }
       button { background: #006d77; border: 0; border-radius: 10px; color: #fff; cursor: pointer; font: inherit; font-weight: 800; min-height: 48px; padding: 12px 18px; } button:hover { background: #00515a; } button:focus-visible { outline: 3px solid #f4b942; outline-offset: 3px; }
       .result { background: #f2fbf8; border: 1px solid #b8e2d4; border-radius: 16px; padding: 24px; } .metrics { display: grid; gap: 13px; margin: 0; } .metrics div { border-bottom: 1px solid #d6eee7; display: flex; gap: 18px; justify-content: space-between; padding-bottom: 10px; } dt { color: #52706f; font-size: .9rem; } dd { font-weight: 800; margin: 0; text-align: right; } code { font-size: .92rem; letter-spacing: .06em; }
@@ -90,7 +136,7 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
             <button type="submit">Validar factura</button>
           </form>
         </section>
-        ${result || `<section class="panel" aria-live="polite"><p class="eyebrow">Resultado</p><h2>La respuesta aparecerá aquí</h2><p class="lede">Completa el formulario para iniciar la validación del escenario acordado.</p></section>`}
+        ${result}
       </div>
     </main>
   </body>

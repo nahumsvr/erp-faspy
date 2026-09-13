@@ -27,13 +27,16 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Probar el core por HTTP real: smoke test correcto contra `localhost:3000`, incluida latencia de emisión, CORS, anticipo y pago. Esto no prueba aún el cliente ERP ni CORS desde navegador.
 - [x] Primera emisión desde el ERP ejecutada con `pnpm probar:emision` contra core `4f71ceb`: salida 0, `FAC-2026-001`, `VIGENTE/LIMPIO`, `ALTO` y `clabe_tipo: string`. No verifica CORS de navegador.
 - [x] Ruta Dorada técnica ejecutada con `pnpm probar:ruta-dorada`: emisión, aceptación y pago respondieron con contrato compatible. No persiste datos ni prueba CORS de navegador.
-- [x] Entrega 3 iniciada: formulario de escritorio `/emision` con validación, carga, errores y oferta renderizada server-side. La prueba HTTP real devolvió `200` y `FAC-2026-001`.
+- [x] Entrega 3: formulario de escritorio `/emision` con validación, carga, errores y oferta renderizada server-side. La prueba HTTP real devolvió `200` y `FAC-2026-001`.
+- [x] Entrega 4: la oferta incluye acción server-side de aceptación; el core respondió `200` con estado `FONDEADA`.
+- [x] Entrega 5: la misma experiencia presenta `monto_depositado` y `fecha_deposito` recibidos del core, sin persistencia local.
+- [x] Entrega 6: la acción server-side de pago presenta principal, comisión, remanente y `margen_neto_pct` sin recalcularlos.
 - [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.
 - [x] Decidir navegador o servidor: servidor Express; `/emision` llama al core mediante `lib/api.ts`. CORS de navegador queda fuera de este recorrido.
 - [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
 - [ ] Aclarar margen_neto_pct antes de liquidación: el schema dice porcentaje y el ejemplo devuelve 0.02; no establece inequívocamente el formato a mostrar. No se cambia unidad ni se calcula.
 
-La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica se verificó desde Node contra el core. La pantalla de emisión de escritorio ya está conectada server-side y presenta la CLABE literal; aceptación, tesorería, pago y pulido visual siguen pendientes. CORS de navegador queda fuera de esta arquitectura.
+La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. Persistencia, reenvíos/idempotencia, auditoría, reglas generales y pulido visual siguen pendientes. CORS de navegador queda fuera de esta arquitectura.
 
 ## Historial de revisiones — no representa el estado vigente
 
@@ -118,7 +121,7 @@ El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE
 - [x] Preparar `pnpm probar:emision` para ejecutar la prueba temprana desde un JSON acordado, sin mocks. Guía: `docs/prueba-integracion.md`.
 - [ ] Ejecutar la primera emisión real con el core disponible y registrar el resultado. La preparación del comando no cierra este punto.
 
-- [x] URL local confirmada: core en `http://127.0.0.1:3000` y ERP en `http://127.0.0.1:3001`, en la misma computadora. Configuración incluida en `.env.example`; conexión real pendiente.
+- [x] URL local confirmada y comprobada: core en `http://127.0.0.1:3000` y ERP en `http://127.0.0.1:3001`, en la misma computadora. Configuración incluida en `.env.example`.
 
 - [x] Crear y documentar los cinco tipos como propuesta autorizada, sin cambiar campos HTTP de la planeación.
 
@@ -127,12 +130,12 @@ El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE
 - [ ] Registrar las diferencias concretas y acordar los cambios necesarios.
 - [ ] Incorporar el contrato confirmado a `types/schema.ts` del ERP.
 - [ ] Actualizar el contrato del core si procede, una vez identificado y revisadas sus instrucciones; no se ha modificado otro repositorio.
-- [x] Ejecutar comprobaciones de tipos y serialización de CLABE en la base disponible; integración real y presentación pendientes.
+- [x] Ejecutar comprobaciones de tipos, intercambio real y presentación literal de CLABE en la pantalla server-side.
 - [ ] Registrar confirmación final del responsable del ERP y la versión compartida de ambos contratos.
 
 ## Validación local de la propuesta
 
-- Cliente provisional añadido en `lib/api.ts`. Pruebas de configuración, cancelación y entradas inválidas sin ejecutar `fetch`. Respuestas HTTP y compatibilidad real aún pendientes de prueba con core o escenarios acordados.
+- Cliente provisional añadido en `lib/api.ts`. Pruebas de configuración, cancelación y entradas inválidas, más Ruta Dorada HTTP real contra el escenario acordado. Errores de negocio generales e idempotencia siguen pendientes.
 
 - `node --check types/schema.ts`: sintaxis válida; no sustituye comprobación de tipos.
 - `git diff --check`: sin errores de formato.

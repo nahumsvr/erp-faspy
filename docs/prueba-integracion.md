@@ -1,6 +1,6 @@
 # Primera prueba real: emisión de factura
 
-Estado: primera emisión y Ruta Dorada técnica verificadas contra core `4f71ceb` desde Node; la pantalla de emisión de escritorio ya ejecuta emisión server-side y muestra la respuesta real. Aceptación, tesorería y pago todavía no tienen pantallas. No se incluyen respuestas mock.
+Estado: primera emisión, Ruta Dorada técnica desde Node y Ruta Dorada visual server-side verificadas contra core `4f71ceb`. La pantalla de escritorio encadena emisión, aceptación, depósito y pago con respuestas reales. No se incluyen respuestas mock ni persistencia del ERP.
 
 ## Requisitos antes de ejecutar
 
@@ -42,4 +42,4 @@ La salida resume emisión, anticipo y pago, sin imprimir la CLABE. La ejecución
 
 Registrar en `docs/mvp-checklist.md` las versiones de ambos contratos, quién proporcionó el caso, comando usado, código de salida y campos que no coincidan. La emisión verificada fue contra `http://127.0.0.1:3000` con el escenario acordado y código de salida 0; una ejecución de Ruta Dorada debe registrar por separado sus tres respuestas. Ninguna de estas pruebas valida todos los escenarios de rechazo o errores.
 
-La pantalla `/emision` usa el servidor Express como intermediario, por lo que el navegador no llama directamente al core y CORS queda fuera de este recorrido. Si una futura pantalla llama directamente al core, habrá que probar entonces desde el navegador con el origen real del ERP (`http://127.0.0.1:3001` si se abre con esa dirección). Dos puertos distintos son orígenes distintos aunque compartan computadora.
+La pantalla `/emision` y sus acciones usan el servidor Express como intermediario, por lo que el navegador no llama directamente al core y CORS queda fuera de este recorrido. Si una futura pantalla llama directamente al core, habrá que probar entonces desde el navegador con el origen real del ERP (`http://127.0.0.1:3001` si se abre con esa dirección). Dos puertos distintos son orígenes distintos aunque compartan computadora.

@@ -2,7 +2,7 @@
 
 Base Express del Frente 3 para una PyME mexicana. La Ruta Dorada prevista es emitir factura → oferta → depósito → simulación del cobro y split settlement.
 
-Actualmente incluye servidor local, configuración, contrato TypeScript, cliente HTTP, la pantalla de emisión de escritorio y comprobaciones locales. La emisión en `/emision` llama al core desde el servidor Express y muestra su respuesta; oferta avanzada, aceptación, tesorería, pago y la Ruta Dorada visual completa siguen pendientes. No contiene motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
+Actualmente incluye servidor local, configuración, contrato TypeScript, cliente HTTP y una experiencia de escritorio que encadena emisión, aceptación, depósito y pago server-side en `/emision`. La Ruta Dorada visual del escenario acordado está verificada; persistencia, reintentos, auditoría, reglas generales y pulido visual siguen pendientes. No contiene motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
 
 ## Requisitos
 
@@ -86,7 +86,7 @@ La base se ha validado en Windows. Los scripts y dependencias permiten instalaci
 - Tipos del contrato propuesto, incluida CLABE como `string` y los valores de `ScoringDecision`.
 - Serialización de una cadena con ceros iniciales; no es validación bancaria ni una prueba del core.
 
-El cliente provisional está en `lib/api.ts` y se describe en la guía de consumo. Puede crearse sin URL; las operaciones fallan explícitamente hasta configurarla. La pantalla `/emision` cubre la primera fase desde el servidor; oferta avanzada, aceptación, tesorería, pago y el recorrido financiero visual completo están pendientes. La guía documenta la alineación estática y la comprobación real de emisión, sin implementar reglas financieras en el ERP.
+El cliente provisional está en `lib/api.ts` y se describe en la guía de consumo. Puede crearse sin URL; las operaciones fallan explícitamente hasta configurarla. La pantalla `/emision` cubre el recorrido server-side del escenario acordado y presenta los resultados del core; no persiste datos ni implementa reglas financieras.
 
 ## Problemas frecuentes
 
@@ -123,7 +123,7 @@ Antes de contribuir, consultar [AGENTS.md](AGENTS.md), que define las fuentes ob
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 
-Los cinco tipos están alineados con core 4f71ceb, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La primera emisión HTTP real se verificó con `pnpm probar:emision` y la pantalla `/emision` la ejecuta server-side; las tres operaciones siguen centralizadas en `lib/api.ts`. El navegador no llama directamente al core en esta arquitectura, por lo que CORS queda fuera de este recorrido. No se ha configurado un proxy.
+Los cinco tipos están alineados con core 4f71ceb, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La Ruta Dorada real se verificó con `pnpm probar:ruta-dorada` y desde `/emision` server-side; las tres operaciones siguen centralizadas en `lib/api.ts`. El navegador no llama directamente al core en esta arquitectura, por lo que CORS queda fuera de este recorrido. No se ha configurado un proxy.
 
 ## Dependencias y Git
 

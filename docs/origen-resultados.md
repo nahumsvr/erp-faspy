@@ -35,7 +35,7 @@ Antes de implementar cálculos, acordar la relación entre fórmula y campos del
 - **Endpoints:** reciben solicitudes, invocan las funciones disponibles y devuelven el contrato acordado. Los errores y comportamiento de secuencia también requieren definición.
 - **ERP:** envía datos y muestra la respuesta. No calcula importes faltantes ni decide elegibilidad.
 
-El alcance vigente permite el motor y endpoints acotados al caso fijo aprobado explícitamente. El ERP sigue presentando resultados y no calcula importes ni elegibilidad. La primera emisión desde Node ya se verificó; aceptación/pago desde pantallas, CORS de navegador y persistencia siguen pendientes.
+El alcance vigente permite el motor y endpoints acotados al caso fijo aprobado explícitamente. El ERP sigue presentando resultados y no calcula importes ni elegibilidad. La primera emisión desde Node y la Ruta Dorada desde la pantalla server-side ya se verificaron; persistencia, CORS de navegador e idempotencia siguen pendientes.
 
 ## Evidencia de coherencia
 
