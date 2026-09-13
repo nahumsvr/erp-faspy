@@ -1,10 +1,10 @@
-# Contrato HTTP del ERP — propuesta v0.1.0
+# Contrato HTTP del ERP — alineación estática con core 921fd4e
 
-Fuente de tipos: [types/schema.ts](../types/schema.ts). Esta propuesta conserva los campos de la planeación original. No está verificada contra el core: falta contrastar su contrato vigente. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente provisional está en [lib/api.ts](../lib/api.ts); no está conectado a pantallas ni rutas del servidor. No se implementaron endpoints financieros ni mocks. El endpoint actual del ERP es `GET /health`, descrito en el [README](../README.md).
+Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financieros coinciden estáticamente con el core 921fd4e e incorporan decision opcional por acuerdo del usuario. ComplianceAuditItem queda aplazado. No se ha verificado intercambio HTTP real. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente provisional está en [lib/api.ts](../lib/api.ts); no está conectado a pantallas ni rutas del servidor. No se implementaron endpoints financieros ni mocks. El endpoint actual del ERP es `GET /health`, descrito en el [README](../README.md).
 
 ## Consumo
 
-Revisión del core realizada en `nahumsvr/faspy`, commit `08f652e`: solo implementa tipos de health y error genérico. Aún no permite verificar los cinco tipos financieros ni ejecutar emisión. El detalle de diferencias y la coordinación CORS están en [mvp-checklist.md](mvp-checklist.md). No se han adoptado los campos adicionales propuestos en su checklist.
+Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 921fd4e. Los cinco tipos financieros están alineados; faltan datos, motor y endpoints financieros. El checklist conserva las revisiones anteriores como historial.
 
 Todas las llamadas al core se centralizan en `lib/api.ts`. `createApiClient(baseUrl)` recibe la URL de `NEXT_PUBLIC_API_URL` desde la configuración de quien lo invoque. El módulo no lee variables globales de entorno ni realiza llamadas al importarse o al crear el cliente. Express todavía no invoca estas operaciones; sigue pendiente decidir si las futuras pantallas llamarán desde navegador o servidor. No colocar secretos en configuración pública.
 
@@ -40,7 +40,7 @@ La URL debe ser la base anterior a `/api`: cada método añade su ruta completa.
 
 Enviar el objeto de entrada directamente con `Content-Type: application/json`. No envolverlo en `data` ni `factura`. En emisión se envían `monto_mxn`, `cliente`, `rfc_cliente`, `plazo_dias` y `uuid_cfdi`. Para aceptar o simular, pasar el `factura_id` recibido como el campo `facturaId` del body; ambos nombres son intencionalmente distintos en la planeación.
 
-Todos los campos declarados en las interfaces HTTP son obligatorios y no admiten `null`, tal como en la referencia. Límites de monto/plazo, validaciones de RFC, códigos HTTP concretos, cuerpo de error, reglas de rechazo e idempotencia quedan pendientes. No deducirlos de estos tipos.
+Todos los campos declarados son obligatorios salvo `decision?: ScoringDecision` en emisión. Ninguno admite `null` en JSON. Límites de monto/plazo, validaciones de RFC, códigos HTTP concretos, cuerpo de error, reglas de rechazo e idempotencia quedan pendientes. No deducirlos de estos tipos.
 
 ## Los cinco tipos solicitados
 
@@ -48,15 +48,15 @@ Todos los campos declarados en las interfaces HTTP son obligatorios y no admiten
 | --- | --- | --- |
 | `InvoiceCFDI` | Los cinco campos originales de `Factura` | Ninguno |
 | `EmitirFacturaRequest` | Alias de `InvoiceCFDI` | Ninguno; body plano |
-| `EmitirFacturaResponse` | Campos originales de `ValidacionFactura` | Ninguno; respuesta plana |
+| `EmitirFacturaResponse` | Campos originales y decision opcional | Respuesta plana; decision puede estar ausente |
 | `ComplianceReport` | `cfdi_status` y `efos_status`, incorporados por extensión | Ninguno; no añade un campo `compliance` |
-| `ScoringDecision` | Unión propuesta `"aprobada" \| "revision" \| "rechazada"` | Ninguno por ahora: no se inventa un campo nuevo para enviarla |
+| `ScoringDecision` | Unión confirmada `"aprobada" \| "revision" \| "rechazada"` | Campo opcional decision de emisión |
 
-Se mantienen `Factura` y `ValidacionFactura` como alias para facilitar la transición de nombres en TypeScript. No se cambia la forma del JSON. Estos nombres y equivalencias son la propuesta del ERP, no una confirmación de equivalencia con tipos del core que aún no se han recibido.
+Se mantienen `Factura` y `ValidacionFactura` como alias para facilitar la transición de nombres en TypeScript. No se cambia la forma del JSON. Los cinco tipos coinciden con la revisión del core indicada; no se afirma que los archivos completos sean idénticos.
 
 ## Estados y resultados
 
-`ScoringDecision` conserva literalmente los tres valores solicitados, incluido `revision` sin acento. Su aprobación y ubicación en la API siguen pendientes. El score de la referencia sigue siendo `ALTO | MEDIO | BAJO`; no existe un mapeo confirmado entre ese score, compliance y la decisión. El ERP no realizará ese cálculo.
+`ScoringDecision` conserva literalmente los tres valores solicitados, incluido `revision` sin acento. Se aprobó como campo opcional decision en EmitirFacturaResponse. El score de la referencia sigue siendo `ALTO | MEDIO | BAJO`; no existe un mapeo confirmado entre ese score, compliance y la decisión. El ERP no realizará ese cálculo.
 
 Cuando se implementen las pantallas, el ERP presentará `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los reciba. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
 
@@ -68,7 +68,7 @@ Cuando se implementen las pantallas, el ERP presentará `monto_anticipo`, `tasa_
 
 Las interfaces TypeScript se eliminan al ejecutar el programa. El cliente comprueba en ejecución objetos planos, presencia de los campos requeridos, tipos primitivos, números finitos y uniones documentadas. Acepta campos adicionales de respuesta, sin deducir su significado. No convierte valores: una CLABE numérica es incompatible y una CLABE string conserva su contenido. Fechas y UUID se comprueban como cadenas, sin imponer validaciones de formato o reglas de negocio adicionales.
 
-Un estado `RECHAZADO` o `SANCIONADO` permitido por el contrato se devuelve como dato; no se convierte en error HTTP ni determina una acción de pantalla. No se calcula `ScoringDecision` ni se añade a la respuesta.
+Un estado `RECHAZADO` o `SANCIONADO` permitido por el contrato se devuelve como dato; no se convierte en error HTTP ni determina una acción de pantalla. No se calcula ScoringDecision: se conserva decision si llega y se deja ausente si no llega. Presente, debe ser aprobada, revision o rechazada; null, tipos distintos y valores desconocidos producen ApiError.kind = contract.
 
 ### Errores locales del cliente
 
@@ -88,8 +88,8 @@ El cliente no interpreta ni devuelve el body de los errores HTTP del core. No re
 
 ### Alcance de las pruebas
 
-Las pruebas del cliente cubren creación sin URL, configuración inválida, cancelación previa y entradas incompatibles; todas se detienen antes de `fetch`. No hay respuestas financieras ficticias ni modo mock. La validación de respuestas y los caminos HTTP/red/JSON están implementados y revisados, pero aún requieren pruebas de integración reales o escenarios de prueba acordados. No se declara compatibilidad con el core hasta completar ese checkpoint.
+Las pruebas del cliente cubren creación sin URL, configuración inválida, cancelación previa y entradas incompatibles; todas se detienen antes de `fetch`. Se añaden pruebas aisladas del validador de decision opcional y de conservación de requisitos obligatorios, sin respuestas financieras ficticias ni modo mock. La validación de respuestas y los caminos HTTP/red/JSON están implementados y revisados, pero aún requieren pruebas de integración reales o escenarios de prueba acordados. No se declara compatibilidad con el core hasta completar ese checkpoint.
 
 No se incluye `GET /api/mercado` ni tipos del dashboard. No se crean valores ficticios de demo. La prueba temprana de emisión real, incluida CORS si se consume desde el navegador, sigue pendiente de disponibilidad del core.
 
-Para cerrar la propuesta: comparar con la versión del core, acordar el campo de `ScoringDecision` y los errores, actualizar ambos contratos cuando proceda y registrar el resultado en `docs/mvp-checklist.md`.
+La alineación estática de los cinco tipos queda cerrada y registrada en docs/mvp-checklist.md. Siguen pendientes errores financieros, integración real y auditoría.

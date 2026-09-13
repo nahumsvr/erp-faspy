@@ -1,5 +1,42 @@
 # Checklist MVP: alineación del contrato ERP / core
 
+## Estado vigente — decision opcional, 2026-09-13
+
+Fuentes: ERP en rama dev, base 4b8b8edcfeff2d9e0a2ccc1862a8e8bf17d9cb1c; core en feature/contrato-facturacion-compliance-scoring, commit 921fd4eb63d25f15141c36d37d6147afdbf8fb76. Ambos estaban limpios antes de la entrega. No se modificó el core.
+
+El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem queda aplazado explícitamente: la afirmación de espejo exacto del checklist del core no describe ambos archivos completos.
+
+| Tipo | Comparación ERP / core |
+| --- | --- |
+| InvoiceCFDI | Cinco campos obligatorios idénticos: monto_mxn y plazo_dias numéricos; cliente, rfc_cliente y uuid_cfdi string. Sin nulos. |
+| EmitirFacturaRequest | Alias de InvoiceCFDI; body plano sin envoltorio en ambos. |
+| ComplianceReport | cfdi_status: VIGENTE / RECHAZADO; efos_status: LIMPIO / SANCIONADO. Ambos obligatorios, sin nulos. |
+| ScoringDecision | Unión idéntica aprobada / revision / rechazada, sin traducciones ni mapeo desde score. |
+| EmitirFacturaResponse | Extiende ComplianceReport. Obligatorios: factura_id string, score ALTO / MEDIO / BAJO, monto_anticipo number, tasa_aplicada number, dias_promedio_pago number, clabe_virtual string. Único opcional: decision?: ScoringDecision. Plano y sin nulos en JSON. |
+
+### Avance comprobado
+
+- [x] Comparar los cinco tipos, nombres, obligatoriedad, nulos, estructuras y uniones.
+- [x] Confirmar e incorporar decision opcional y sus tres valores literales.
+- [x] Validar el campo presente; no completar ausencia ni inferir decisiones. Valores incompatibles siguen el error local contract.
+- [x] Confirmar CLABE string en ambos schemas. El contrato documenta 18 dígitos; el cliente comprueba tipo, no formato bancario.
+- [x] pnpm typecheck correcto; pnpm test: 11 pruebas correctas, incluyendo opcionalidad y campos obligatorios. Sin respuestas financieras mock. El primer intento tuvo EPERM de dependencias en sandbox; la ejecución autorizada fuera de él pasó.
+- [ ] ComplianceAuditItem: aplazado por decisión del usuario.
+- [ ] Datos y motor del core, tareas 1.2 y 1.3: lib/data y lib/engine contienen solo README.
+- [ ] Endpoints financieros, tarea 1.4: únicamente existe /api/health.
+- [ ] Acordar factura y ejecutar primera emisión real. No se comprobó el puerto 3000 en esta entrega.
+- [ ] Verificar intercambio JSON real y presentación literal de CLABE.
+- [ ] Decidir navegador o servidor y comprobar CORS desde navegador si corresponde.
+- [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
+- [ ] Aclarar margen_neto_pct antes de liquidación: el schema dice porcentaje y el ejemplo devuelve 0.02; no establece inequívocamente el formato a mostrar. No se cambia unidad ni se calcula.
+
+La alineación estática está cerrada para los cinco tipos. Integración HTTP, pantallas y Ruta Dorada siguen pendientes.
+
+## Historial de revisiones — no representa el estado vigente
+
+Los estados siguientes son históricos; consultar la sección anterior para el avance actual.
+
+
 Estado: el usuario indicó `faspy/docs/faspy/contract.md` como fuente de verdad. Revisado en `921fd4e`, rama `feature/contrato-facturacion-compliance-scoring`. El core ya declara los cinco tipos. Endpoints financieros e integración siguen pendientes; el diagnóstico de `08f652e` que aparece abajo es histórico.
 
 ## Actualización de contrato — revisión 921fd4e

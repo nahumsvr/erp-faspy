@@ -1,6 +1,6 @@
 /**
- * Propuesta ERP v0.1.0 para revisión con ecostream-core.
- * Los campos HTTP conservan la planeación original.
+ * Cinco tipos financieros alineados con ecostream-core 921fd4e.
+ * decision opcional adoptada; auditoría pendiente por acuerdo del usuario.
  * Estos tipos no validan JSON en ejecución ni confirman soporte del backend.
  */
 
@@ -24,8 +24,7 @@ export interface ComplianceReport {
 }
 
 /**
- * Vocabulario propuesto, pendiente de confirmación con el core.
- * No se añade a la respuesta: el campo HTTP que lo transportaría no está definido.
+ * Vocabulario confirmado para decision opcional en la respuesta de emisión.
  * No convertir score o compliance a esta decisión mediante reglas del ERP.
  */
 export type ScoringDecision = "aprobada" | "revision" | "rechazada";
@@ -40,6 +39,8 @@ export interface EmitirFacturaResponse extends ComplianceReport {
   dias_promedio_pago: number;
   /** Cadena literal: nunca convertir a number, para conservar ceros iniciales. */
   clabe_virtual: string;
+  /** Se conserva cuando la envía el core; no se calcula si está ausente. */
+  decision?: ScoringDecision;
 }
 
 /** Alias de compatibilidad con los nombres de la planeación original. */

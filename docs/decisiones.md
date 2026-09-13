@@ -2,6 +2,10 @@
 
 ## Confirmadas por el usuario
 
+- Entrega actual: adoptar únicamente decision?: ScoringDecision en emisión con aprobada, revision y rechazada. Ausencia permitida; presente exige un valor de la unión, sin nulos ni conversiones. No deducir decisiones desde score o compliance.
+- ComplianceAuditItem queda aplazado explícitamente. Esta entrega cubre tipos, cliente, pruebas y documentación; commit local sin push. No incluye endpoints ni integración.
+
+
 - El usuario solicitó instrucciones persistentes para consultar las fuentes y verificar coherencia. Se incorporan en `AGENTS.md` del ERP y se documenta el origen previsto de resultados en `docs/origen-resultados.md`. No autorizan implementar reglas pendientes ni amplían el alcance del motor.
 
 - El usuario autorizó implementar únicamente los endpoints en faspy, sin crear un motor ni redefinir el contrato financiero. Fuente de verdad indicada: `C:/Users/hecto/faspy/docs/faspy/contract.md`, disponible en la rama `feature/contrato-facturacion-compliance-scoring`, commit `921fd4e`. La anterior comparación contra `08f652e` queda como registro histórico.
@@ -47,7 +51,9 @@ Registro histórico anterior a la base actual. Hoy existe el servidor Express y 
 - Se eliminó el ejemplo `index.js` y su referencia `main`, junto con el test de marcador. Posteriormente se incorporó el servidor ejecutable en `server/index.ts` y las pruebas actuales.
 - Se conservan las dependencias de Express y TypeScript, el lockfile, `tsconfig.json` y la documentación del proyecto.
 
-## Conflictos resueltos y por resolver
+## Historial de conflictos y resoluciones
+
+Las referencias a ScoringDecision pendiente se resuelven con la decisión actual anterior; los demás pendientes conservan su alcance.
 
 - Se prepara la prueba temprana mediante `pnpm probar:emision <archivo>`: lee un JSON aportado por el equipo y usa `lib/api.ts`. El comando no genera datos, acepta anticipos ni simula pagos. La ejecución real queda pendiente del contrato y archivo acordados; no se ha ejecutado contra el core.
 

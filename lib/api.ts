@@ -2,6 +2,7 @@ import type {
   AceptarAnticipoRequest, AnticipoConfirmado, EmitirFacturaRequest,
   EmitirFacturaResponse, ResultadoPago, SimularPagoRequest,
 } from "../types/schema.ts";
+import { decisionShape, matches, type Check, type Shape } from "./validation.ts";
 
 /** Errores locales del cliente; no representan códigos JSON del core. */
 export type ApiErrorKind = "configuration" | "request" | "network" | "http" | "json" | "contract" | "aborted";
@@ -18,17 +19,16 @@ export class ApiError extends Error {
   }
 }
 
-type Check = (value: unknown) => boolean;
 const string: Check = value => typeof value === "string";
 const number: Check = value => typeof value === "number" && Number.isFinite(value);
 const oneOf = (...values: string[]): Check => value => typeof value === "string" && values.includes(value);
-type Shape<T> = { [K in keyof T]-?: Check };
 
 const invoiceShape: Shape<EmitirFacturaRequest> = {
   monto_mxn: number, cliente: string, rfc_cliente: string, plazo_dias: number, uuid_cfdi: string,
 };
 const idShape: Shape<AceptarAnticipoRequest> = { facturaId: string };
 const emissionShape: Shape<EmitirFacturaResponse> = {
+  ...decisionShape,
   factura_id: string,
   cfdi_status: oneOf("VIGENTE", "RECHAZADO"),
   efos_status: oneOf("LIMPIO", "SANCIONADO"),
@@ -42,13 +42,6 @@ const paymentShape: Shape<ResultadoPago> = {
   factura_id: string, principal_retenido: number, comision_cobrada: number,
   remanente_dispersado: number, margen_neto_pct: number,
 };
-
-function matches<T>(value: unknown, shape: Shape<T>): value is T {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
-  const record = value as Record<string, unknown>;
-  return Object.entries<Check>(shape).every(([key, check]) =>
-    Object.hasOwn(record, key) && check(record[key]));
-}
 
 function endpoint(baseUrl: string | undefined, path: string): string {
   if (!baseUrl?.trim()) {

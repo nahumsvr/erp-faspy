@@ -85,7 +85,7 @@ La base se ha validado en Windows. Los scripts y dependencias permiten instalaci
 - Tipos del contrato propuesto, incluida CLABE como `string` y los valores de `ScoringDecision`.
 - Serialización de una cadena con ceros iniciales; no es validación bancaria ni una prueba del core.
 
-El cliente provisional está en `lib/api.ts` y se describe en la guía de consumo. Puede crearse sin URL; las operaciones fallan explícitamente hasta configurarla. Las cuatro pantallas y el recorrido financiero completo están pendientes. La guía del contrato es una propuesta, no una garantía de compatibilidad con el backend del otro repositorio.
+El cliente provisional está en `lib/api.ts` y se describe en la guía de consumo. Puede crearse sin URL; las operaciones fallan explícitamente hasta configurarla. Las cuatro pantallas y el recorrido financiero completo están pendientes. La guía documenta la alineación estática; no garantiza compatibilidad HTTP comprobada con el backend.
 
 ## Problemas frecuentes
 
@@ -122,7 +122,7 @@ Antes de contribuir, consultar [AGENTS.md](AGENTS.md), que define las fuentes ob
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 
-El contrato todavía debe contrastarse con el core. Las tres operaciones HTTP están centralizadas en `lib/api.ts`, sin invocación automática desde Express. La URL local ya está confirmada; la prueba real de emisión requiere el core ejecutándose y una factura de prueba acordada. CORS debe comprobarse desde el navegador si se acuerda ese origen de las llamadas. No se ha configurado un proxy ni modificado el repositorio del core.
+Los cinco tipos están alineados estáticamente con core 921fd4e, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La integración HTTP aún debe probarse. Las tres operaciones HTTP están centralizadas en `lib/api.ts`, sin invocación automática desde Express. La URL local ya está confirmada; la prueba real de emisión requiere el core ejecutándose y una factura de prueba acordada. CORS debe comprobarse desde el navegador si se acuerda ese origen de las llamadas. No se ha configurado un proxy ni modificado el repositorio del core.
 
 ## Dependencias y Git
 
