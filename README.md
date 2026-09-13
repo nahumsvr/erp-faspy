@@ -1,3 +1,16 @@
+## Demo conectada a Faspy
+
+La pantalla en `/` permite capturar una factura y consultar el motor real del simulador. Incluye casos precargados de aprobación, sanción fiscal y revisión. No realiza depósitos ni guarda facturas.
+
+1. Iniciar `faspy` con `pnpm dev` en puerto 3000.
+2. En `.env` del ERP configurar `NEXT_PUBLIC_API_URL=http://localhost:3000` y `PORT=3001`.
+3. Iniciar el ERP con `pnpm dev` y abrir **http://localhost:3001**.
+4. Elegir un escenario y pulsar **Evaluar factura**. Los importes, estados y CLABE vienen del core; no se calculan ofertas en el ERP.
+
+La demo llama a Express y este usa `lib/api.ts` para consultar Faspy; no requiere CORS del navegador. Reiniciar los servidores al cambiar variables. La pantalla avisa si falta configuración, falla la conexión o el core devuelve errores. Los datos del dashboard de Faspy siguen siendo independientes de esta petición.
+
+El recorrido existente en `/emision` se conserva. Su aceptación y pago requieren un core que implemente esos endpoints; el core local revisado en esta integración solo implementa emisión, auditoría y scoring.
+
 # EcoStream — ERP simulado
 
 Base Express del Frente 3 para una PyME mexicana. La Ruta Dorada prevista es emitir factura → oferta → depósito → simulación del cobro y split settlement.

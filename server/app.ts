@@ -1,4 +1,5 @@
 import express from "express";
+import { fileURLToPath } from "node:url";
 import { ApiError, createApiClient } from "../lib/api.ts";
 import type { AceptarAnticipoRequest, EmitirFacturaRequest, SimularPagoRequest } from "../types/schema.ts";
 import { renderEmissionPage, type EmisionPageState } from "./emision-page.ts";
@@ -109,5 +110,18 @@ export function createApp(apiUrl?: string) {
     }
   });
 
+  app.get("/demo-config", (_req, res) => {
+    res.json({ apiUrl: apiUrl ? "/demo/evaluar" : null });
+  });
+  app.post("/demo/evaluar", express.json(), async (req, res) => {
+    try {
+      const result = await createApiClient(apiUrl).emitirFactura(req.body, { signal: AbortSignal.timeout(14000) });
+      res.json(result);
+    } catch (error) {
+      const state = apiErrorState(error);
+      res.status(state.status).json({ error: { message: state.message } });
+    }
+  });
+  app.use(express.static(fileURLToPath(new URL("../public/", import.meta.url))));
   return app;
 }

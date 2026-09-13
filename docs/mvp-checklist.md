@@ -1,3 +1,14 @@
+## Actualización: recorrido de demo conectado
+
+- [x] Pantalla de factura en `/`, con tres escenarios y campos editables.
+- [x] Cliente HTTP de navegador al endpoint `/api/emitir-factura` de Faspy.
+- [x] Mostrar decisión recibida, cumplimiento, score, anticipo, tasa y CLABE textual.
+- [x] Estados de carga y error; limpiar oferta anterior al editar o reenviar.
+- [x] Campo opcional `decision` alineado con el contrato del core revisado.
+- [ ] Aceptación, depósito, liquidación y persistencia (fuera de esta demo).
+
+Las secciones siguientes registran la revisión previa a esta integración.
+
 # Checklist MVP: alineación del contrato ERP / core
 
 ## Estado vigente — cierre acotado de la demo Windows, 2026-09-13
@@ -195,3 +206,15 @@ El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE
 - `pnpm test`: ocho pruebas correctas de configuración, HTTP local, serialización de CLABE y fallos del cliente previos al envío. La prueba de CLABE utiliza una cadena sintética, no una respuesta del core.
 - `pnpm start`: comprobado en puerto 3001 sin `.env`; `/health` respondió correctamente y el proceso se detuvo al finalizar la verificación.
 - No se realizó prueba HTTP contra el core ni validación de CLABE en una respuesta suya: el core no está disponible en esta sesión.
+
+### Verificación de la demo
+
+- Typecheck y cuatro pruebas existentes: correctos.
+- Navegador en localhost:3001 contra core en localhost:3000: aprobación ($132,300), rechazo fiscal ($0), revisión ($0), CLABE con cero inicial conservada.
+- Sintaxis de demo.js y git diff --check: correctos.
+
+## Integración autorizada de ramas de demo
+
+Se conserva `/emision` y se incorpora la demo de tres escenarios en `/`. Las llamadas de la nueva pantalla pasan por `/demo/evaluar` y `lib/api.ts`, sin exponer la URL del core al navegador. Las comprobaciones anteriores de CORS describen la versión previa al merge. El usuario autorizó publicar la rama demo, integrarla a `dev` y después a `main`. Aceptación y pago existentes dependen de la versión del core; no se añaden endpoints financieros en este merge.
+
+Validación del merge: `pnpm typecheck`, 18 pruebas, sintaxis de `public/demo.js` y diff sin errores. HTTP local mediante `/demo/evaluar`: aprobada con 132300 MXN, rechazada con 0, revisión con 0; GET `/emision` respondió 200. No se verificaron aceptación y pago contra este core local.
