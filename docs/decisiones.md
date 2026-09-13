@@ -39,6 +39,9 @@
 
 ## Conflictos resueltos y por resolver
 
+- La solicitud de alineación del contrato exige manejar la CLABE como `string` para conservar ceros iniciales. Falta identificar el campo en la versión vigente del core.
+- La comparación solicitada de `InvoiceCFDI`, `EmitirFacturaRequest`, `EmitirFacturaResponse`, `ComplianceReport` y `ScoringDecision` se registra en `docs/mvp-checklist.md`. Ninguno existe todavía en el ERP; la unión `aprobada`/`revision`/`rechazada` queda pendiente de confirmación explícita.
+
 - Express reemplaza la suposición de Next.js de la planeación. No se crearán rutas `app/*/page.tsx` por inercia.
 - El uso automático de mocks sugerido por la planeación queda subordinado a la confirmación explícita exigida por el usuario.
 - La referencia propone HTTP desde el navegador con CORS; confirmar la arquitectura de frontend antes de introducir un proxy o cambiar ese punto de integración.
