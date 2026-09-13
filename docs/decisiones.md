@@ -2,15 +2,18 @@
 
 ## Confirmadas por el usuario
 
-- Entrega actual: adoptar únicamente decision?: ScoringDecision en emisión con aprobada, revision y rechazada. Ausencia permitida; presente exige un valor de la unión, sin nulos ni conversiones. No deducir decisiones desde score o compliance.
-- ComplianceAuditItem queda aplazado explícitamente. Esta entrega cubre tipos, cliente, pruebas y documentación; commit local sin push. No incluye endpoints ni integración.
+- Entrega anterior: adoptar únicamente decision?: ScoringDecision en emisión con aprobada, revision y rechazada. Ausencia permitida; presente exige un valor de la unión, sin nulos ni conversiones. No deducir decisiones desde score o compliance.
+- ComplianceAuditItem queda aplazado explícitamente. La entrega anterior cubrió tipos, cliente, pruebas y documentación; la integración se amplió posteriormente al escenario aprobado.
+
+- Continuación autorizada: el usuario confirmó implementar en `faspy` el escenario sintético documentado de emisión, aceptación y pago, con fixtures y motor deterministas. Las entradas distintas se rechazan explícitamente con `SCENARIO_NOT_SUPPORTED`; no se extrapolan reglas ni se usa fallback. Core actualizado en `feature/contrato-facturacion-compliance-scoring`, commit `4f71ceb`.
+- La primera emisión real desde el ERP se ejecutó con `pnpm probar:emision` contra `http://127.0.0.1:3000`, código 0 y CLABE recibida como `string`. La prueba no valida CORS de navegador ni las fases posteriores desde pantallas.
 
 
 - El usuario solicitó instrucciones persistentes para consultar las fuentes y verificar coherencia. Se incorporan en `AGENTS.md` del ERP y se documenta el origen previsto de resultados en `docs/origen-resultados.md`. No autorizan implementar reglas pendientes ni amplían el alcance del motor.
 
-- El usuario autorizó implementar únicamente los endpoints en faspy, sin crear un motor ni redefinir el contrato financiero. Fuente de verdad indicada: `C:/Users/hecto/faspy/docs/faspy/contract.md`, disponible en la rama `feature/contrato-facturacion-compliance-scoring`, commit `921fd4e`. La anterior comparación contra `08f652e` queda como registro histórico.
+- La autorización inicial permitió implementar endpoints en faspy sin redefinir el contrato financiero. La confirmación posterior amplió ese alcance al escenario sintético acotado y su motor determinista, sin cambiar el contrato. Fuente vigente: `C:/Users/hecto/faspy/docs/faspy/contract.md`, rama `feature/contrato-facturacion-compliance-scoring`, commit `4f71ceb`. La comparación contra `08f652e` queda como registro histórico.
 
-- El usuario identificó `C:/Users/hecto/faspy` como el repositorio de ecostream-core. Se permite consultarlo para coordinar el contrato; no se ha modificado esa carpeta.
+- El usuario identificó `C:/Users/hecto/faspy` como el repositorio de ecostream-core. Se permite consultarlo y modificarlo dentro del alcance confirmado; la entrega `4f71ceb` contiene el escenario sintético y sus endpoints.
 
 - ERP y core correrán en la misma computadora como procesos separados. ERP: `http://127.0.0.1:3001`; core: `http://127.0.0.1:3000`. Se configura `NEXT_PUBLIC_API_URL=http://127.0.0.1:3000` en el entorno local y su ejemplo. Confirmar la dirección no acredita que el core esté ejecutándose ni que el contrato sea compatible.
 

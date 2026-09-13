@@ -1,10 +1,10 @@
-# Contrato HTTP del ERP — alineación estática con core 921fd4e
+# Contrato HTTP del ERP — alineación con core 4f71ceb
 
-Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financieros coinciden estáticamente con el core 921fd4e e incorporan decision opcional por acuerdo del usuario. ComplianceAuditItem queda aplazado. No se ha verificado intercambio HTTP real. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente provisional está en [lib/api.ts](../lib/api.ts); no está conectado a pantallas ni rutas del servidor. No se implementaron endpoints financieros ni mocks. El endpoint actual del ERP es `GET /health`, descrito en el [README](../README.md).
+Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financieros coinciden estáticamente con el core y conservan `decision` opcional por acuerdo del usuario. `ComplianceAuditItem` queda aplazado. El core `4f71ceb` ya expone emisión, aceptación y pago para el escenario sintético acordado; la primera emisión real desde Node fue verificada, todavía no hay conexión desde pantallas ERP. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente está en [lib/api.ts](../lib/api.ts) y no implementa fórmulas ni mocks.
 
 ## Consumo
 
-Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 921fd4e. Los cinco tipos financieros están alineados; faltan datos, motor y endpoints financieros. El checklist conserva las revisiones anteriores como historial.
+Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 4f71ceb. Los fixtures y el motor están acotados al único escenario acordado; auditoría, scoring dinámico y reglas generales siguen pendientes. La emisión se probó desde Node; CORS de navegador y pantallas siguen pendientes. El checklist conserva las revisiones anteriores como historial.
 
 Todas las llamadas al core se centralizan en `lib/api.ts`. `createApiClient(baseUrl)` recibe la URL de `NEXT_PUBLIC_API_URL` desde la configuración de quien lo invoque. El módulo no lee variables globales de entorno ni realiza llamadas al importarse o al crear el cliente. Express todavía no invoca estas operaciones; sigue pendiente decidir si las futuras pantallas llamarán desde navegador o servidor. No colocar secretos en configuración pública.
 

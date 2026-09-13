@@ -2,7 +2,7 @@
 
 ## Estado vigente — decision opcional, 2026-09-13
 
-Fuentes: ERP en rama dev, base 4b8b8edcfeff2d9e0a2ccc1862a8e8bf17d9cb1c; core en feature/contrato-facturacion-compliance-scoring, commit 921fd4eb63d25f15141c36d37d6147afdbf8fb76. Ambos estaban limpios antes de la entrega. No se modificó el core.
+Fuentes: ERP en rama dev, base 085ce70231aa1b581474722f7fdf3e11de73a62c; core en feature/contrato-facturacion-compliance-scoring, entrega 4f71cebbe5506413173b003b65a9b2d65708fa3f sobre la base de contrato 921fd4e. Ambos estaban limpios antes de sus entregas.
 
 El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem queda aplazado explícitamente: la afirmación de espejo exacto del checklist del core no describe ambos archivos completos.
 
@@ -22,15 +22,16 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Confirmar CLABE string en ambos schemas. El contrato documenta 18 dígitos; el cliente comprueba tipo, no formato bancario.
 - [x] pnpm typecheck correcto; pnpm test: 11 pruebas correctas, incluyendo opcionalidad y campos obligatorios. Sin respuestas financieras mock. El primer intento tuvo EPERM de dependencias en sandbox; la ejecución autorizada fuera de él pasó.
 - [ ] ComplianceAuditItem: aplazado por decisión del usuario.
-- [ ] Datos y motor del core, tareas 1.2 y 1.3: lib/data y lib/engine contienen solo README.
-- [ ] Endpoints financieros, tarea 1.4: únicamente existe /api/health.
-- [ ] Acordar factura y ejecutar primera emisión real. No se comprobó el puerto 3000 en esta entrega.
+- [x] Datos y motor acotados al escenario acordado en el core: fixtures mínimos en `lib/data` y funciones puras en `lib/engine`; no hay reglas generales.
+- [x] Endpoints financieros del escenario: `POST /api/emitir-factura`, `POST /api/aceptar-anticipo` y `POST /api/simular-pago`. Auditoría y scoring dinámico siguen pendientes.
+- [x] Probar el core por HTTP real: smoke test correcto contra `localhost:3000`, incluida latencia de emisión, CORS, anticipo y pago. Esto no prueba aún el cliente ERP ni CORS desde navegador.
+- [x] Primera emisión desde el ERP ejecutada con `pnpm probar:emision` contra core `4f71ceb`: salida 0, `FAC-2026-001`, `VIGENTE/LIMPIO`, `ALTO` y `clabe_tipo: string`. No verifica CORS de navegador.
 - [ ] Verificar intercambio JSON real y presentación literal de CLABE.
 - [ ] Decidir navegador o servidor y comprobar CORS desde navegador si corresponde.
 - [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
 - [ ] Aclarar margen_neto_pct antes de liquidación: el schema dice porcentaje y el ejemplo devuelve 0.02; no establece inequívocamente el formato a mostrar. No se cambia unidad ni se calcula.
 
-La alineación estática está cerrada para los cinco tipos. Integración HTTP, pantallas y Ruta Dorada siguen pendientes.
+La alineación estática está cerrada para los cinco tipos y la emisión Node se verificó contra el core. CORS de navegador, pantallas y Ruta Dorada siguen pendientes.
 
 ## Historial de revisiones — no representa el estado vigente
 

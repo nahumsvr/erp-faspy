@@ -8,14 +8,14 @@ Datos sintéticos del core → funciones de simulación del core → endpoints H
 
 | Resultado | Fuente prevista en faspy | Qué debe confirmarse antes de implementarlo |
 | --- | --- | --- |
-| Cumplimiento | `lib/engine/compliance.ts` y listas sintéticas de `lib/data` | Escenarios, validaciones y correspondencia con `cfdi_status`/`efos_status` |
-| Score y decisión | `lib/engine/scoring.ts` | Umbrales, influencia del pagador/monto/plazo y criterios de revisión/rechazo |
-| Días promedio de pago | Catálogo `lib/data/debtors.json` | Datos por pagador y comportamiento si no existe |
-| Oferta y desembolso | `lib/engine/factoring.ts` | Aforo, tasa, comisión, unidades y redondeo |
-| ID de factura, CLABE y fecha de depósito | No especificada completamente | Generación determinista, asociación con la factura y política de fechas |
-| Depósito y split | Tipos y ejemplos definidos en el contrato | Origen de importes, secuencia de operaciones, repetición y persistencia |
+| Cumplimiento | `lib/engine/compliance.ts` y listas sintéticas de `lib/data` | Caso aprobado disponible; listas y reglas generales siguen pendientes |
+| Score y decisión | `lib/engine/scoring.ts` | Resultado del caso aprobado disponible; umbrales generales no definidos |
+| Días promedio de pago | Catálogo `lib/data/debtors.json` | Un pagador del escenario; catálogo ampliado pendiente |
+| Oferta y desembolso | `lib/engine/factoring.ts` | Resultado fijo del caso aprobado; aforo, cálculo y redondeo generales pendientes |
+| ID de factura, CLABE y fecha de depósito | `lib/data/scenario.json` y `lib/engine/scenario.ts` | Deterministas solo para el caso aprobado |
+| Depósito y split | `lib/engine/scenario.ts` y `lib/engine/factoring.ts` | Caso aprobado disponible; secuencia, repetición y persistencia generales pendientes |
 
-Las rutas de esta tabla describen trabajo previsto, no garantizan que los archivos existan. Verificar código y revisión antes de usarlos. En la inspección de `921fd4e`, `lib/data` y `lib/engine` solo contenían README.
+Las rutas de esta tabla describen el origen actual del escenario acordado en el core `4f71ceb`. El motor y los fixtures son deliberadamente mínimos; las reglas generales y auditoría siguen pendientes.
 
 ## Fórmula propuesta y coherencia del ejemplo
 
@@ -35,7 +35,7 @@ Antes de implementar cálculos, acordar la relación entre fórmula y campos del
 - **Endpoints:** reciben solicitudes, invocan las funciones disponibles y devuelven el contrato acordado. Los errores y comportamiento de secuencia también requieren definición.
 - **ERP:** envía datos y muestra la respuesta. No calcula importes faltantes ni decide elegibilidad.
 
-El alcance autorizado actualmente es implementar endpoints, no construir el motor. Si el motor no existe, documentar esa dependencia y acordar cómo avanzar. Un caso fijo solo puede usarse si se aprueba explícitamente; no constituye un motor financiero.
+El alcance vigente permite el motor y endpoints acotados al caso fijo aprobado explícitamente. El ERP sigue presentando resultados y no calcula importes ni elegibilidad. La primera emisión desde Node ya se verificó; aceptación/pago desde pantallas, CORS de navegador y persistencia siguen pendientes.
 
 ## Evidencia de coherencia
 

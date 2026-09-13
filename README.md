@@ -2,7 +2,7 @@
 
 Base Express del Frente 3 para una PyME mexicana. La Ruta Dorada prevista es emitir factura → oferta → depósito → simulación del cobro y split settlement.
 
-Actualmente incluye servidor local, configuración, contrato TypeScript propuesto, cliente HTTP provisional y comprobaciones locales. Las pantallas y la conexión real con el core están pendientes. No contiene motor financiero, autenticación, base de datos ni conexiones a SAT/SPEI.
+Actualmente incluye servidor local, configuración, contrato TypeScript, cliente HTTP y comprobaciones locales. La primera emisión real contra el core fue verificada; las pantallas y el resto de la Ruta Dorada están pendientes. No contiene motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
 
 ## Requisitos
 
@@ -122,7 +122,7 @@ Antes de contribuir, consultar [AGENTS.md](AGENTS.md), que define las fuentes ob
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 
-Los cinco tipos están alineados estáticamente con core 921fd4e, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La integración HTTP aún debe probarse. Las tres operaciones HTTP están centralizadas en `lib/api.ts`, sin invocación automática desde Express. La URL local ya está confirmada; la prueba real de emisión requiere el core ejecutándose y una factura de prueba acordada. CORS debe comprobarse desde el navegador si se acuerda ese origen de las llamadas. No se ha configurado un proxy ni modificado el repositorio del core.
+Los cinco tipos están alineados con core 4f71ceb, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La primera emisión HTTP real se verificó con `pnpm probar:emision`; las tres operaciones siguen centralizadas en `lib/api.ts`, sin invocación automática desde Express. CORS debe comprobarse desde el navegador cuando exista pantalla conectada. No se ha configurado un proxy.
 
 ## Dependencias y Git
 

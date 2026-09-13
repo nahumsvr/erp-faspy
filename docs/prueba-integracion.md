@@ -1,6 +1,6 @@
 # Primera prueba real: emisión de factura
 
-Estado: comando preparado; integración real pendiente. No se incluyen facturas ficticias ni respuestas mock.
+Estado: primera emisión real verificada contra core `4f71ceb`; aceptación y pago aún no se ejecutan desde el ERP. No se incluyen respuestas mock.
 
 ## Requisitos antes de ejecutar
 
@@ -32,6 +32,6 @@ El comando carga `.env`, pasa `NEXT_PUBLIC_API_URL` al cliente y llama solo a `P
 
 ## Evidencias para cerrar el checkpoint
 
-Registrar en `docs/mvp-checklist.md` las versiones de ambos contratos, quién proporcionó el caso, comando usado, código de salida y campos que no coincidan. Una respuesta exitosa de emisión no valida los otros dos endpoints ni todos los escenarios de rechazo o errores.
+Registrar en `docs/mvp-checklist.md` las versiones de ambos contratos, quién proporcionó el caso, comando usado, código de salida y campos que no coincidan. La ejecución verificada de esta entrega fue contra `http://127.0.0.1:3000` con el escenario acordado y código de salida 0; no valida los otros dos endpoints ni todos los escenarios de rechazo o errores.
 
 Esta prueba desde Node no valida CORS. Si las futuras pantallas llaman directamente al core, habrá que probar desde el navegador con el origen real del ERP (`http://127.0.0.1:3001` si se abre con esa dirección). Dos puertos distintos son orígenes distintos aunque compartan computadora.

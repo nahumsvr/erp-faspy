@@ -5,7 +5,7 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 ## Estado actual
 
 - Entrega 1: base sin pantallas completada y validada en Windows. Instrucciones de macOS disponibles; ejecución en una Mac pendiente. Arquitectura de frontend aún pendiente.
-- Entrega 2: cinco tipos alineados estáticamente con core 921fd4e, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Falta probar respuestas reales. Sin mocks ni integración desde pantallas o rutas del servidor.
+- Entrega 2: cinco tipos alineados con core 4f71ceb, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Primera emisión real verificada desde Node con el escenario acordado. Sin integración desde pantallas o rutas del servidor.
 - Entregas 3 a 8: pendientes. No existe todavía la Ruta Dorada ejecutable.
 
 ## Entregas
