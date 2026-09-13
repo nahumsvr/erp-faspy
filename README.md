@@ -123,7 +123,7 @@ Antes de contribuir, consultar [AGENTS.md](AGENTS.md), que define las fuentes ob
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 
-Los cinco tipos están alineados con core 4f71ceb, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La Ruta Dorada real se verificó con `pnpm probar:ruta-dorada` y desde `/emision` server-side; las tres operaciones siguen centralizadas en `lib/api.ts`. El navegador no llama directamente al core en esta arquitectura, por lo que CORS queda fuera de este recorrido. No se ha configurado un proxy.
+Los cinco tipos están alineados con core a754a0d (escenario introducido en 4f71ceb), incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La Ruta Dorada real se verificó con `pnpm probar:ruta-dorada` y desde `/emision` server-side; las tres operaciones siguen centralizadas en `lib/api.ts`. El navegador no llama directamente al core en esta arquitectura, por lo que CORS queda fuera de este recorrido. No se ha configurado un proxy.
 
 ## Dependencias y Git
 

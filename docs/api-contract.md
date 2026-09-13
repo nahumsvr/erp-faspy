@@ -1,10 +1,10 @@
 # Contrato HTTP del ERP — alineación con core 4f71ceb
 
-Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financieros coinciden estáticamente con el core y conservan `decision` opcional por acuerdo del usuario. `ComplianceAuditItem` queda aplazado. El core `4f71ceb` ya expone emisión, aceptación y pago para el escenario sintético acordado; la primera emisión real desde Node y desde la pantalla de emisión server-side fueron verificadas. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente está en [lib/api.ts](../lib/api.ts) y no implementa fórmulas ni mocks.
+Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financieros coinciden estáticamente con el core y conservan `decision` opcional por acuerdo del usuario. `ComplianceAuditItem` queda aplazado. El core `a754a0d` (escenario introducido en `4f71ceb`) expone emisión, aceptación y pago para el caso sintético acordado; la primera emisión real desde Node y desde la pantalla de emisión server-side fueron verificadas. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente está en [lib/api.ts](../lib/api.ts) y no implementa fórmulas ni mocks.
 
 ## Consumo
 
-Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 4f71ceb. Los fixtures y el motor están acotados al único escenario acordado; auditoría, scoring dinámico y reglas generales siguen pendientes. Emisión, aceptación y pago se probaron desde Node y desde la experiencia server-side `/emision`; no hay persistencia local. El checklist conserva las revisiones anteriores como historial.
+Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit a754a0d. Los fixtures y el motor están acotados al único escenario acordado; auditoría, scoring dinámico y reglas generales siguen pendientes. Emisión, aceptación y pago se probaron desde Node y desde la experiencia server-side `/emision`; no hay persistencia local. El checklist conserva las revisiones anteriores como historial.
 
 Todas las llamadas al core se centralizan en `lib/api.ts`. `createApiClient(baseUrl)` recibe la URL de `NEXT_PUBLIC_API_URL` desde la configuración del servidor Express. El módulo no lee variables globales de entorno ni realiza llamadas al importarse o al crear el cliente. La pantalla `/emision` usa esta ruta server-side; el navegador no llama directamente al core ni requiere CORS para este recorrido.
 

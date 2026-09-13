@@ -1,6 +1,6 @@
 # Primera prueba real: emisión de factura
 
-Estado: primera emisión, Ruta Dorada técnica desde Node y Ruta Dorada visual server-side verificadas contra core `4f71ceb`. La pantalla de escritorio encadena emisión, aceptación, depósito y pago con respuestas reales. No se incluyen respuestas mock ni persistencia del ERP.
+Estado: primera emisión, Ruta Dorada técnica desde Node y Ruta Dorada visual server-side verificadas contra core `a754a0d` (escenario introducido en `4f71ceb`). La pantalla de escritorio encadena emisión, aceptación, depósito y pago con respuestas reales. No se incluyen respuestas mock ni persistencia del ERP.
 
 ## Requisitos antes de ejecutar
 

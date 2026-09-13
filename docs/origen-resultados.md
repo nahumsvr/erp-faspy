@@ -15,7 +15,7 @@ Datos sintéticos del core → funciones de simulación del core → endpoints H
 | ID de factura, CLABE y fecha de depósito | `lib/data/scenario.json` y `lib/engine/scenario.ts` | Deterministas solo para el caso aprobado |
 | Depósito y split | `lib/engine/scenario.ts` y `lib/engine/factoring.ts` | Caso aprobado disponible; secuencia, repetición y persistencia generales pendientes |
 
-Las rutas de esta tabla describen el origen actual del escenario acordado en el core `4f71ceb`. El motor y los fixtures son deliberadamente mínimos; las reglas generales y auditoría siguen pendientes.
+Las rutas de esta tabla describen el origen actual del escenario acordado en el core `a754a0d` (código del escenario en `4f71ceb`). El motor y los fixtures son deliberadamente mínimos; las reglas generales y auditoría siguen pendientes.
 
 ## Fórmula propuesta y coherencia del ejemplo
 
