@@ -37,10 +37,17 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [ ] Revisión visual a resolución de escritorio amplia y aceptación de animaciones finales.
 - [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.
 - [x] Decidir navegador o servidor: servidor Express; `/emision` llama al core mediante `lib/api.ts`. CORS de navegador queda fuera de este recorrido.
-- [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
 - [x] Presentar `margen_neto_pct` como `2 %` cuando el core devuelve `0.02`; el JSON conserva la fracción y la interfaz solo aplica formato visual.
 
-La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. Persistencia, reenvíos/idempotencia, auditoría, reglas generales y revisión visual final siguen pendientes. CORS de navegador queda fuera de esta arquitectura.
+### Pendientes vigentes
+
+- [ ] Auditoría `ComplianceAuditItem` y su endpoint: aplazada explícitamente.
+- [ ] Scoring dinámico, catálogos ampliados y reglas generales del core: requieren contrato, escenarios y reglas aprobadas.
+- [ ] Errores, rechazos, reenvíos, secuencia e idempotencia: requieren política acordada; el ERP no reintenta automáticamente.
+- [ ] Persistencia y recarga del flujo: requieren alcance y almacenamiento aprobados; la entrega actual no persiste datos.
+- [ ] Revisión visual a resolución de escritorio amplia y aceptación de animaciones finales.
+
+La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. Quedan cinco áreas pendientes en la sección anterior. CORS de navegador queda fuera de esta arquitectura.
 
 ## Historial de revisiones — no representa el estado vigente
 

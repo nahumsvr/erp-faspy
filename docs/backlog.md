@@ -11,6 +11,8 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 - Entrega 7: pulido base aplicado a la pantalla de escritorio (foco, salto al contenido, alto contraste, responsive y movimiento reducido); revisión visual local realizada, pero falta comprobar una resolución de escritorio amplia y acordar animaciones adicionales.
 - Entrega 8 (escenario acordado): Ruta Dorada repetida por CLI y desde `/emision`, con documentación y limitaciones registradas. Cobertura de escenarios generales y revisión visual final siguen pendientes.
 
+Pendientes vigentes: cinco áreas: auditoría, reglas generales/scoring dinámico, política de errores y reenvíos, persistencia/idempotencia y revisión visual amplia con animaciones. Requieren decisiones o alcance adicional; no se cuentan como completadas por la prueba del escenario fijo.
+
 ## Entregas
 
 | Entrega | Objetivo y alcance | Dependencias o preguntas | Aceptación observable | Validación prevista | Commit propuesto |
