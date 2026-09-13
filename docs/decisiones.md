@@ -8,6 +8,7 @@
 - Continuación autorizada: el usuario confirmó implementar en `faspy` el escenario sintético documentado de emisión, aceptación y pago, con fixtures y motor deterministas. Las entradas distintas se rechazan explícitamente con `SCENARIO_NOT_SUPPORTED`; no se extrapolan reglas ni se usa fallback. Core actualizado en `feature/contrato-facturacion-compliance-scoring`, commit `4f71ceb`.
 - La primera emisión real desde el ERP se ejecutó con `pnpm probar:emision` contra `http://127.0.0.1:3000`, código 0 y CLABE recibida como `string`. La Ruta Dorada posterior también se verificó desde la pantalla server-side con emisión, aceptación y pago reales; no valida CORS de navegador.
 - Arquitectura confirmada para la interfaz: prioridad escritorio y llamadas server-side desde Express. La ruta `/emision` recibe el formulario, centraliza la llamada en `lib/api.ts` y no expone `NEXT_PUBLIC_API_URL` al navegador. CORS de navegador no es requisito de este recorrido.
+- Presentación confirmada para `margen_neto_pct`: conservar `0.02` como fracción en el JSON y mostrar `2 %` en la interfaz. Es una conversión de presentación, no un recálculo financiero.
 
 
 - El usuario solicitó instrucciones persistentes para consultar las fuentes y verificar coherencia. Se incorporan en `AGENTS.md` del ERP y se documenta el origen previsto de resultados en `docs/origen-resultados.md`. No autorizan implementar reglas pendientes ni amplían el alcance del motor.

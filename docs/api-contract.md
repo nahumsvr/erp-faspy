@@ -58,7 +58,7 @@ Se mantienen `Factura` y `ValidacionFactura` como alias para facilitar la transi
 
 `ScoringDecision` conserva literalmente los tres valores solicitados, incluido `revision` sin acento. Se aprobó como campo opcional decision en EmitirFacturaResponse. El score de la referencia sigue siendo `ALTO | MEDIO | BAJO`; no existe un mapeo confirmado entre ese score, compliance y la decisión. El ERP no realizará ese cálculo.
 
-La interfaz server-side ya presenta `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los recibe para el escenario acordado. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla, por eso se muestra el valor recibido sin conversión. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
+La interfaz server-side ya presenta `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los recibe para el escenario acordado. `tasa_aplicada` y `margen_neto_pct` se transportan como fracciones; por acuerdo de presentación, `0.02` se muestra como `2 %` sin modificar el JSON. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
 
 ## CLABE como string
 

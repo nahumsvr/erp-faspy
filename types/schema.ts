@@ -70,6 +70,6 @@ export interface ResultadoPago {
   principal_retenido: number;
   comision_cobrada: number;
   remanente_dispersado: number;
-  /** Unidad exacta pendiente de confirmar con el core; no inferir por el nombre. */
+  /** Fracción decimal recibida del core; la interfaz puede mostrarla como porcentaje. */
   margen_neto_pct: number;
 }

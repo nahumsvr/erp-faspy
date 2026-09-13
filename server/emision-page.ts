@@ -23,6 +23,14 @@ function fieldValue(state: EmisionPageState, key: keyof EmitirFacturaRequest): s
   return escapeHtml(state.values?.[key] ?? "");
 }
 
+/** El core transporta el margen como fracción; aquí solo se formatea para lectura humana. */
+export function formatMargin(value: number): string {
+  return new Intl.NumberFormat("es-MX", {
+    style: "percent",
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
 function resultPanel(result: EmitirFacturaResponse): string {
   const decision = result.decision
     ? `<div><dt>Decisión</dt><dd>${escapeHtml(result.decision)}</dd></div>`
@@ -74,9 +82,9 @@ function paymentPanel(payment: ResultadoPago): string {
       <div><dt>Principal retenido</dt><dd>${escapeHtml(payment.principal_retenido)}</dd></div>
       <div><dt>Comisión cobrada</dt><dd>${escapeHtml(payment.comision_cobrada)}</dd></div>
       <div><dt>Remanente dispersado</dt><dd>${escapeHtml(payment.remanente_dispersado)}</dd></div>
-      <div><dt>Margen neto (valor recibido)</dt><dd>${escapeHtml(payment.margen_neto_pct)}</dd></div>
+      <div><dt>Margen neto</dt><dd>${escapeHtml(formatMargin(payment.margen_neto_pct))}</dd></div>
     </dl>
-    <p class="hint">Los importes y el margen se muestran tal como los devolvió el core.</p>
+    <p class="hint">El core devuelve el margen como fracción decimal; aquí se presenta como porcentaje.</p>
   </section>`;
 }
 

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { once } from "node:events";
 import test from "node:test";
 import { createApp } from "../server/app.ts";
+import { formatMargin } from "../server/emision-page.ts";
 
 async function withServer(callback: (base: string) => Promise<void>): Promise<void> {
   const server = createApp().listen(0, "127.0.0.1");
@@ -90,4 +91,8 @@ test("las acciones financieras no inventan respuestas sin URL del core", async (
       assert.match(await response.text(), /El core no está configurado en el ERP/);
     }
   });
+});
+
+test("la interfaz presenta el margen recibido como porcentaje", () => {
+  assert.match(formatMargin(0.02), /^2(?:\u00a0|\s)?%$/u);
 });

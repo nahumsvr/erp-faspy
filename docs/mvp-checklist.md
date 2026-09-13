@@ -38,7 +38,7 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.
 - [x] Decidir navegador o servidor: servidor Express; `/emision` llama al core mediante `lib/api.ts`. CORS de navegador queda fuera de este recorrido.
 - [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
-- [ ] Aclarar margen_neto_pct antes de liquidación: el schema dice porcentaje y el ejemplo devuelve 0.02; no establece inequívocamente el formato a mostrar. No se cambia unidad ni se calcula.
+- [x] Presentar `margen_neto_pct` como `2 %` cuando el core devuelve `0.02`; el JSON conserva la fracción y la interfaz solo aplica formato visual.
 
 La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. Persistencia, reenvíos/idempotencia, auditoría, reglas generales y revisión visual final siguen pendientes. CORS de navegador queda fuera de esta arquitectura.
 
