@@ -1,12 +1,12 @@
 # Contrato HTTP del ERP — alineación con core 4f71ceb
 
-Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financieros coinciden estáticamente con el core y conservan `decision` opcional por acuerdo del usuario. `ComplianceAuditItem` queda aplazado. El core `4f71ceb` ya expone emisión, aceptación y pago para el escenario sintético acordado; la primera emisión real desde Node fue verificada, todavía no hay conexión desde pantallas ERP. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente está en [lib/api.ts](../lib/api.ts) y no implementa fórmulas ni mocks.
+Fuente de tipos: [types/schema.ts](../types/schema.ts). Los cinco tipos financieros coinciden estáticamente con el core y conservan `decision` opcional por acuerdo del usuario. `ComplianceAuditItem` queda aplazado. El core `4f71ceb` ya expone emisión, aceptación y pago para el escenario sintético acordado; la primera emisión real desde Node y desde la pantalla de emisión server-side fueron verificadas. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente está en [lib/api.ts](../lib/api.ts) y no implementa fórmulas ni mocks.
 
 ## Consumo
 
-Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 4f71ceb. Los fixtures y el motor están acotados al único escenario acordado; auditoría, scoring dinámico y reglas generales siguen pendientes. La emisión se probó desde Node; CORS de navegador y pantallas siguen pendientes. El checklist conserva las revisiones anteriores como historial.
+Revisión vigente: core en feature/contrato-facturacion-compliance-scoring, commit 4f71ceb. Los fixtures y el motor están acotados al único escenario acordado; auditoría, scoring dinámico y reglas generales siguen pendientes. La emisión se probó desde Node y desde `/emision`; aceptación, tesorería y pago aún no tienen pantallas. El checklist conserva las revisiones anteriores como historial.
 
-Todas las llamadas al core se centralizan en `lib/api.ts`. `createApiClient(baseUrl)` recibe la URL de `NEXT_PUBLIC_API_URL` desde la configuración de quien lo invoque. El módulo no lee variables globales de entorno ni realiza llamadas al importarse o al crear el cliente. Express todavía no invoca estas operaciones; sigue pendiente decidir si las futuras pantallas llamarán desde navegador o servidor. No colocar secretos en configuración pública.
+Todas las llamadas al core se centralizan en `lib/api.ts`. `createApiClient(baseUrl)` recibe la URL de `NEXT_PUBLIC_API_URL` desde la configuración del servidor Express. El módulo no lee variables globales de entorno ni realiza llamadas al importarse o al crear el cliente. La pantalla `/emision` usa esta ruta server-side; el navegador no llama directamente al core ni requiere CORS para este recorrido.
 
 Ejemplo de conexión futura desde código del servidor, sin valores ficticios de factura:
 
@@ -58,7 +58,7 @@ Se mantienen `Factura` y `ValidacionFactura` como alias para facilitar la transi
 
 `ScoringDecision` conserva literalmente los tres valores solicitados, incluido `revision` sin acento. Se aprobó como campo opcional decision en EmitirFacturaResponse. El score de la referencia sigue siendo `ALTO | MEDIO | BAJO`; no existe un mapeo confirmado entre ese score, compliance y la decisión. El ERP no realizará ese cálculo.
 
-Cuando se implementen las pantallas, el ERP presentará `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los reciba. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
+Cuando se implementen las fases restantes de la interfaz, el ERP presentará `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los reciba. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
 
 ## CLABE como string
 
@@ -90,6 +90,6 @@ El cliente no interpreta ni devuelve el body de los errores HTTP del core. No re
 
 Las pruebas del cliente cubren creación sin URL, configuración inválida, cancelación previa y entradas incompatibles; todas se detienen antes de `fetch`. Se añaden pruebas aisladas del validador de decision opcional y de conservación de requisitos obligatorios, sin respuestas financieras ficticias ni modo mock. La validación de respuestas y los caminos HTTP/red/JSON están implementados y revisados, pero aún requieren pruebas de integración reales o escenarios de prueba acordados. No se declara compatibilidad con el core hasta completar ese checkpoint.
 
-No se incluye `GET /api/mercado` ni tipos del dashboard. No se crean valores ficticios de demo. La prueba temprana de emisión real, incluida CORS si se consume desde el navegador, sigue pendiente de disponibilidad del core.
+No se incluye `GET /api/mercado` ni tipos del dashboard. No se crean valores ficticios de demo. La emisión real y la presentación literal de CLABE ya se comprobaron en la pantalla server-side; CORS de navegador solo aplicará si se autoriza una llamada directa desde una futura pantalla.
 
-La alineación estática de los cinco tipos queda cerrada y registrada en docs/mvp-checklist.md. Siguen pendientes errores financieros, integración real y auditoría.
+La alineación estática de los cinco tipos queda cerrada y registrada en docs/mvp-checklist.md. Siguen pendientes errores financieros y auditoría; aceptación, tesorería y pago visuales se implementarán en las entregas siguientes.

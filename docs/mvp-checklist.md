@@ -27,12 +27,13 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Probar el core por HTTP real: smoke test correcto contra `localhost:3000`, incluida latencia de emisión, CORS, anticipo y pago. Esto no prueba aún el cliente ERP ni CORS desde navegador.
 - [x] Primera emisión desde el ERP ejecutada con `pnpm probar:emision` contra core `4f71ceb`: salida 0, `FAC-2026-001`, `VIGENTE/LIMPIO`, `ALTO` y `clabe_tipo: string`. No verifica CORS de navegador.
 - [x] Ruta Dorada técnica ejecutada con `pnpm probar:ruta-dorada`: emisión, aceptación y pago respondieron con contrato compatible. No persiste datos ni prueba CORS de navegador.
-- [ ] Verificar intercambio JSON real y presentación literal de CLABE.
-- [ ] Decidir navegador o servidor y comprobar CORS desde navegador si corresponde.
+- [x] Entrega 3 iniciada: formulario de escritorio `/emision` con validación, carga, errores y oferta renderizada server-side. La prueba HTTP real devolvió `200` y `FAC-2026-001`.
+- [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.
+- [x] Decidir navegador o servidor: servidor Express; `/emision` llama al core mediante `lib/api.ts`. CORS de navegador queda fuera de este recorrido.
 - [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
 - [ ] Aclarar margen_neto_pct antes de liquidación: el schema dice porcentaje y el ejemplo devuelve 0.02; no establece inequívocamente el formato a mostrar. No se cambia unidad ni se calcula.
 
-La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica se verificó desde Node contra el core. CORS de navegador, pantallas y Ruta Dorada visual siguen pendientes.
+La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica se verificó desde Node contra el core. La pantalla de emisión de escritorio ya está conectada server-side y presenta la CLABE literal; aceptación, tesorería, pago y pulido visual siguen pendientes. CORS de navegador queda fuera de esta arquitectura.
 
 ## Historial de revisiones — no representa el estado vigente
 
@@ -110,7 +111,7 @@ Propuesta del lado ERP: conservar esos valores exactamente si corresponden al co
 - [ ] Verificar tipo string en ambos contratos e intercambio JSON como cadena.
 - [ ] Comprobar que captura, transporte, almacenamiento si se acuerda y presentación preserven el valor literal, sin conversiones numéricas.
 
-El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE como string, sin conversiones. Falta probar respuestas reales y presentación en pantallas. No se han creado datos mock ni reglas adicionales sobre longitud o validación bancaria.
+El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE como string, sin conversiones. La respuesta real de emisión y su presentación literal en `/emision` ya fueron comprobadas. No se han creado datos mock ni reglas adicionales sobre longitud o validación bancaria.
 
 ## Cierre de integración
 

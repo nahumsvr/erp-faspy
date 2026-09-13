@@ -5,8 +5,9 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 ## Estado actual
 
 - Entrega 1: base sin pantallas completada y validada en Windows. Instrucciones de macOS disponibles; ejecución en una Mac pendiente. Arquitectura de frontend aún pendiente.
-- Entrega 2: cinco tipos alineados con core 4f71ceb, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Ruta Dorada técnica verificada desde Node con el escenario acordado. Sin integración desde pantallas o rutas del servidor.
-- Entregas 3 a 8: pendientes. No existe todavía la Ruta Dorada ejecutable.
+- Entrega 2: cinco tipos alineados con core 4f71ceb, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Ruta Dorada técnica verificada desde Node con el escenario acordado.
+- Entrega 3: formulario de emisión de escritorio en `/emision`, con validación básica, errores y llamada server-side a `lib/api.ts`; la pantalla ya mostró una respuesta real del core. Oferta avanzada, aceptación, tesorería, pago y pulido visual siguen pendientes.
+- Entregas 4 a 8: pendientes. La Ruta Dorada técnica es ejecutable desde Node, pero el recorrido visual todavía no está completo.
 
 ## Entregas
 
@@ -14,7 +15,7 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 | --- | --- | --- | --- | --- | --- |
 | 1 | Base Express, configuración y documentación de arranque | Arquitectura de frontend y configuración pública | Arranque reproducible en puerto 3001; decisiones documentadas | Arranque, comprobación de tipos y revisión documental | `chore: configurar base Express del ERP`; documentación separada |
 | 2 | Contrato de tipos y cliente HTTP; mocks solo si se acuerdan | Contrato vigente, URL, errores, valores y escenarios mock | Tres endpoints centralizados en lib/api.ts; sin fallback mock automático | Pruebas del cliente para respuestas y fallos acordados | `feat: agregar contrato y cliente HTTP del core`; mocks en commit separado si se autorizan |
-| 3 | Formulario de emisión de factura | Diseño, datos y validaciones acordados | Envío de Factura con carga, errores y avance según respuesta | Validación de formulario e integración temprana real | `feat: agregar formulario de emisión de factura` |
+| 3 | Formulario de emisión de factura | Diseño, datos y validaciones acordados | Envío de factura con carga, errores y respuesta del core en pantalla | Validación de formulario e integración temprana real | `feat: agregar formulario de emisión de factura` |
 | 4 | Oferta y confirmación de aceptación | Página/modal, rechazo y navegación acordados | Presentación de resultados del core y aceptación comprobable | Interacciones, carga y fallos acordados | `feat: agregar oferta y aceptación de anticipo` |
 | 5 | Tesorería y depósito | Persistencia, recarga y acceso directo acordados | Monto y fecha del depósito recibidos del core visibles | Respuesta de aceptación y navegación | `feat: mostrar depósito en tesorería` |
 | 6 | Simulación del pago y split settlement | Comportamiento de simulación y repetición acordados | Resultados del core visibles sin fórmulas financieras locales | Simulación, carga y fallos acordados | `feat: agregar simulación de pago y split settlement` |
@@ -23,7 +24,7 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 
 ## Checkpoint temprano
 
-Probar `POST /api/emitir-factura` real en cuanto esté disponible, incluso si las demás pantallas no están terminadas. Comprobar el contrato y CORS desde el navegador si se confirma esa arquitectura. Documentar necesidades del backend sin modificar su repositorio. No desplegar sin solicitud explícita.
+Probar `POST /api/emitir-factura` real en cuanto esté disponible, incluso si las demás pantallas no están terminadas. La arquitectura vigente usa `/emision` server-side; CORS de navegador solo será necesario si se autoriza una llamada directa desde una pantalla. Documentar necesidades del backend sin modificar su repositorio. No desplegar sin solicitud explícita.
 
 ## Ciclo de entrega
 

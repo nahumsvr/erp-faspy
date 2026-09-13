@@ -2,7 +2,7 @@
 
 Base Express del Frente 3 para una PyME mexicana. La Ruta Dorada prevista es emitir factura → oferta → depósito → simulación del cobro y split settlement.
 
-Actualmente incluye servidor local, configuración, contrato TypeScript, cliente HTTP y comprobaciones locales. La Ruta Dorada técnica contra el core fue verificada desde Node; las pantallas y la Ruta Dorada visual están pendientes. No contiene motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
+Actualmente incluye servidor local, configuración, contrato TypeScript, cliente HTTP, la pantalla de emisión de escritorio y comprobaciones locales. La emisión en `/emision` llama al core desde el servidor Express y muestra su respuesta; oferta avanzada, aceptación, tesorería, pago y la Ruta Dorada visual completa siguen pendientes. No contiene motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
 
 ## Requisitos
 
@@ -64,7 +64,7 @@ Copiar `.env.example` solo si todavía no existe `.env`, para conservar tu confi
 {"status":"ok","service":"erp-faspy","simulation":true}
 ```
 
-`/health` confirma que el proceso ERP responde; no comprueba el core. No hay pantalla en `/` ni endpoints financieros locales: esas rutas responden 404.
+`/health` confirma que el proceso ERP responde; no comprueba el core. La pantalla de emisión está en [`/emision`](http://127.0.0.1:3001/emision) y llama al core desde el servidor; `/` y los endpoints financieros locales no implementados responden 404.
 
 | Comando | Función |
 | --- | --- |
@@ -73,6 +73,7 @@ Copiar `.env.example` solo si todavía no existe `.env`, para conservar tu confi
 | `pnpm typecheck` | Comprobar tipos sin generar archivos |
 | `pnpm test` | Probar la base y los casos del cliente que no requieren core ni mocks |
 | `pnpm probar:emision "RUTA_AL_JSON"` | Emitir una factura real del simulador con un archivo acordado; requiere core disponible |
+| `pnpm probar:ruta-dorada "RUTA_AL_JSON"` | Ejecutar emisión, aceptación y pago desde Node; requiere core disponible |
 
 Detener con Ctrl+C. Si el puerto está ocupado, detener el proceso correspondiente o cambiar `PORT` en `.env`.
 
@@ -85,7 +86,7 @@ La base se ha validado en Windows. Los scripts y dependencias permiten instalaci
 - Tipos del contrato propuesto, incluida CLABE como `string` y los valores de `ScoringDecision`.
 - Serialización de una cadena con ceros iniciales; no es validación bancaria ni una prueba del core.
 
-El cliente provisional está en `lib/api.ts` y se describe en la guía de consumo. Puede crearse sin URL; las operaciones fallan explícitamente hasta configurarla. Las cuatro pantallas y el recorrido financiero completo están pendientes. La guía documenta la alineación estática; no garantiza compatibilidad HTTP comprobada con el backend.
+El cliente provisional está en `lib/api.ts` y se describe en la guía de consumo. Puede crearse sin URL; las operaciones fallan explícitamente hasta configurarla. La pantalla `/emision` cubre la primera fase desde el servidor; oferta avanzada, aceptación, tesorería, pago y el recorrido financiero visual completo están pendientes. La guía documenta la alineación estática y la comprobación real de emisión, sin implementar reglas financieras en el ERP.
 
 ## Problemas frecuentes
 
@@ -94,7 +95,7 @@ El cliente provisional está en `lib/api.ts` y se describe en la guía de consum
 | `node` o `pnpm` no se encuentran | Instalar las versiones indicadas y abrir una terminal nueva |
 | Error de `sh` o de plataforma al ejecutar TypeScript | Retirar solo la carpeta local `node_modules` copiada de otro sistema y repetir la instalación del lockfile |
 | Puerto ocupado | Cambiar `PORT` o detener el proceso que ya lo utiliza |
-| `/` devuelve 404 | Es esperado: todavía no hay pantallas; usar `/health` |
+| `/` devuelve 404 | Es esperado: la pantalla de emisión está en `/emision`; usar `/health` para comprobar el proceso |
 | Aviso de core sin configurar | Es esperado con `NEXT_PUBLIC_API_URL` vacía; no bloquea esta entrega |
 | Instalación o pruebas fallan | Compartir el error y versiones de Node/pnpm; no borrar el lockfile ni actualizar versiones para ocultarlo |
 
@@ -122,7 +123,7 @@ Antes de contribuir, consultar [AGENTS.md](AGENTS.md), que define las fuentes ob
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 
-Los cinco tipos están alineados con core 4f71ceb, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La primera emisión HTTP real se verificó con `pnpm probar:emision`; las tres operaciones siguen centralizadas en `lib/api.ts`, sin invocación automática desde Express. CORS debe comprobarse desde el navegador cuando exista pantalla conectada. No se ha configurado un proxy.
+Los cinco tipos están alineados con core 4f71ceb, incluida decision?: ScoringDecision. ComplianceAuditItem queda pendiente por decisión del usuario. La primera emisión HTTP real se verificó con `pnpm probar:emision` y la pantalla `/emision` la ejecuta server-side; las tres operaciones siguen centralizadas en `lib/api.ts`. El navegador no llama directamente al core en esta arquitectura, por lo que CORS queda fuera de este recorrido. No se ha configurado un proxy.
 
 ## Dependencias y Git
 

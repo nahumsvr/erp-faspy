@@ -2,7 +2,7 @@ import { createApp } from "./app.ts";
 import { readConfig } from "./config.ts";
 
 const config = readConfig();
-const server = createApp().listen(config.port, "127.0.0.1", () => {
+const server = createApp(config.apiUrl).listen(config.port, "127.0.0.1", () => {
   console.log(`ERP simulado: http://127.0.0.1:${config.port}/health`);
   if (!config.apiUrl) {
     console.log("Core sin configurar: NEXT_PUBLIC_API_URL está vacía. No se realizan llamadas HTTP.");
