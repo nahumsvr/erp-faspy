@@ -26,12 +26,13 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Endpoints financieros del escenario: `POST /api/emitir-factura`, `POST /api/aceptar-anticipo` y `POST /api/simular-pago`. Auditoría y scoring dinámico siguen pendientes.
 - [x] Probar el core por HTTP real: smoke test correcto contra `localhost:3000`, incluida latencia de emisión, CORS, anticipo y pago. Esto no prueba aún el cliente ERP ni CORS desde navegador.
 - [x] Primera emisión desde el ERP ejecutada con `pnpm probar:emision` contra core `4f71ceb`: salida 0, `FAC-2026-001`, `VIGENTE/LIMPIO`, `ALTO` y `clabe_tipo: string`. No verifica CORS de navegador.
+- [x] Ruta Dorada técnica ejecutada con `pnpm probar:ruta-dorada`: emisión, aceptación y pago respondieron con contrato compatible. No persiste datos ni prueba CORS de navegador.
 - [ ] Verificar intercambio JSON real y presentación literal de CLABE.
 - [ ] Decidir navegador o servidor y comprobar CORS desde navegador si corresponde.
 - [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
 - [ ] Aclarar margen_neto_pct antes de liquidación: el schema dice porcentaje y el ejemplo devuelve 0.02; no establece inequívocamente el formato a mostrar. No se cambia unidad ni se calcula.
 
-La alineación estática está cerrada para los cinco tipos y la emisión Node se verificó contra el core. CORS de navegador, pantallas y Ruta Dorada siguen pendientes.
+La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica se verificó desde Node contra el core. CORS de navegador, pantallas y Ruta Dorada visual siguen pendientes.
 
 ## Historial de revisiones — no representa el estado vigente
 

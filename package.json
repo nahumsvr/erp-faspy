@@ -14,7 +14,8 @@
     "start": "node --env-file-if-exists=.env server/index.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.ts",
-    "probar:emision": "node --env-file-if-exists=.env scripts/probar-emision.ts"
+    "probar:emision": "node --env-file-if-exists=.env scripts/probar-emision.ts",
+    "probar:ruta-dorada": "node --env-file-if-exists=.env scripts/probar-ruta-dorada.ts"
   },
   "dependencies": {
     "express": "^5.2.1"
