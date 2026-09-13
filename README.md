@@ -1,11 +1,11 @@
 ## Demo conectada a Faspy
 
-La pantalla en `/` permite capturar una factura y consultar el motor real del simulador. Incluye casos precargados de aprobación, sanción fiscal y revisión. No realiza depósitos ni guarda facturas.
+La pantalla en `/` permite capturar una factura y consultar el motor real del simulador. Incluye tres selecciones precargadas. Con el core actual (`a754a0d`) solo «Empresa elegible» está soportada de punta a punta; las opciones de sanción fiscal y revisión responden `422 SCENARIO_NOT_SUPPORTED` hasta ampliar fixtures y reglas. No realiza depósitos ni guarda facturas.
 
 1. Iniciar `faspy` con `pnpm dev` en puerto 3000.
 2. En `.env` del ERP configurar `NEXT_PUBLIC_API_URL=http://localhost:3000` y `PORT=3001`.
 3. Iniciar el ERP con `pnpm dev` y abrir **http://localhost:3001**.
-4. Elegir un escenario y pulsar **Evaluar factura**. Los importes, estados y CLABE vienen del core; no se calculan ofertas en el ERP.
+4. Para la demo estable, elegir **Empresa elegible** y pulsar **Evaluar factura**. Los importes, estados y CLABE vienen del core; no se calculan ofertas en el ERP. Las otras dos opciones requieren ampliar el escenario soportado.
 
 La demo llama a Express y este usa `lib/api.ts` para consultar Faspy; no requiere CORS del navegador. Reiniciar los servidores al cambiar variables. La pantalla avisa si falta configuración, falla la conexión o el core devuelve errores. Los datos del dashboard de Faspy siguen siendo independientes de esta petición.
 

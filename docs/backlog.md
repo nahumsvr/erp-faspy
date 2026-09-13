@@ -36,4 +36,4 @@ Explicar alcance, aclarar bloqueos, implementar únicamente lo acordado, validar
 
 ## Integración autorizada de ramas de demo
 
-Se conserva `/emision` y se incorpora la demo de tres escenarios en `/`. Las llamadas de la nueva pantalla pasan por `/demo/evaluar` y `lib/api.ts`, sin exponer la URL del core al navegador. Las comprobaciones anteriores de CORS describen la versión previa al merge. El usuario autorizó publicar la rama demo, integrarla a `dev` y después a `main`. Aceptación y pago existentes dependen de la versión del core; no se añaden endpoints financieros en este merge.
+Se conserva `/emision` y se incorpora la demo conectada en `/`. Las llamadas de la nueva pantalla pasan por `/demo/evaluar` y `lib/api.ts`, sin exponer la URL del core al navegador. Solo «Empresa elegible» es compatible con el core actual; las opciones de sanción y revisión devuelven `422 SCENARIO_NOT_SUPPORTED`. Aceptación y pago existentes dependen de la versión del core; no se añaden endpoints financieros en este merge.

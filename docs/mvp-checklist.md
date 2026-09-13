@@ -1,12 +1,14 @@
 ## Actualización: recorrido de demo conectado
 
-- [x] Pantalla de factura en `/`, con tres escenarios y campos editables.
-- [x] Cliente HTTP de navegador al endpoint `/api/emitir-factura` de Faspy.
-- [x] Mostrar decisión recibida, cumplimiento, score, anticipo, tasa y CLABE textual.
+- [x] Pantalla de factura en `/`, con tres selecciones precargadas y campos editables.
+- [x] Cliente HTTP server-side mediante `/demo/evaluar`, centralizado en `lib/api.ts`.
+- [x] Mostrar decisión recibida, cumplimiento, score, anticipo, tasa y CLABE textual para el escenario soportado.
 - [x] Estados de carga y error; limpiar oferta anterior al editar o reenviar.
 - [x] Campo opcional `decision` alineado con el contrato del core revisado.
-- [ ] Aceptación, depósito, liquidación y persistencia (fuera de esta demo).
+- [ ] Escenarios «Alerta fiscal» y «Empresa sin historial»: la UI los precarga, pero el core `a754a0d` responde `422 SCENARIO_NOT_SUPPORTED`. Para una demo sin sorpresas hay que ocultarlos/deshabilitarlos o ampliar el core con fixtures, reglas y pruebas aprobadas.
+- [ ] Aceptación, depósito, liquidación y persistencia de la pantalla `/` (fuera de esta demo conectada); `/emision` sí conserva la Ruta Dorada del escenario aprobado.
 
+La pantalla `/` funciona de punta a punta únicamente con «Empresa elegible» contra el core actual.
 Las secciones siguientes registran la revisión previa a esta integración.
 
 # Checklist MVP: alineación del contrato ERP / core
