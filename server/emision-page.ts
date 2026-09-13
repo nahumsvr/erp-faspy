@@ -120,7 +120,7 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
       .lede { color: #526b76; font-size: 1.05rem; line-height: 1.6; margin-bottom: 28px; }
       form { display: grid; gap: 18px; } .action { margin-top: 24px; } .field { display: grid; gap: 7px; } label { font-weight: 700; } input { background: #fff; border: 1px solid #b9cdd2; border-radius: 10px; color: inherit; font: inherit; min-height: 46px; padding: 10px 12px; transition: border-color .18s ease, box-shadow .18s ease; } input:focus-visible { border-color: #006d77; box-shadow: 0 0 0 3px rgb(0 109 119 / 18%); outline: 0; }
       .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; } .hint { color: #617880; font-size: .88rem; margin: 0; }
-      button { background: #006d77; border: 0; border-radius: 10px; color: #fff; cursor: pointer; font: inherit; font-weight: 800; min-height: 48px; padding: 12px 18px; transition: background-color .18s ease, transform .18s ease; } button:hover { background: #00515a; transform: translateY(-1px); } button:focus-visible { outline: 3px solid #f4b942; outline-offset: 3px; }
+      button { background: #006d77; border: 0; border-radius: 10px; color: #fff; cursor: pointer; font: inherit; font-weight: 800; min-height: 48px; padding: 12px 18px; transition: background-color .18s ease, transform .18s ease; } button:hover { background: #00515a; transform: translateY(-1px); } button:focus-visible { outline: 3px solid #f4b942; outline-offset: 3px; } button:disabled { background: #6b858a; cursor: wait; transform: none; }
       .result { background: #f2fbf8; border: 1px solid #b8e2d4; border-radius: 16px; padding: 24px; } .metrics { display: grid; gap: 13px; margin: 0; } .metrics div { border-bottom: 1px solid #d6eee7; display: flex; gap: 18px; justify-content: space-between; padding-bottom: 10px; } dt { color: #52706f; font-size: .9rem; } dd { font-weight: 800; margin: 0; text-align: right; } code { font-size: .92rem; letter-spacing: .06em; }
       .alert { background: #fff4e8; border: 1px solid #edc693; border-radius: 10px; color: #744d1d; margin-bottom: 20px; padding: 12px 14px; }
       @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } input, button { transition: none; } button:hover { transform: none; } }
@@ -154,6 +154,19 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
         ${result}
       </div>
     </main>
+  <script>
+    // Evita dobles clics durante una petición; no reemplaza idempotencia del core.
+    for (const form of document.querySelectorAll("form")) {
+      form.addEventListener("submit", () => {
+        const submit = form.querySelector("button[type=submit]");
+        if (submit instanceof HTMLButtonElement) {
+          submit.disabled = true;
+          submit.setAttribute("aria-disabled", "true");
+          submit.textContent = "Procesando…";
+        }
+      }, { once: true });
+    }
+  </script>
   </body>
 </html>`;
 }

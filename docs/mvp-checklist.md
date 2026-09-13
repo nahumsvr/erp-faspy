@@ -2,7 +2,7 @@
 
 ## Estado vigente — decision opcional, 2026-09-13
 
-Fuentes: ERP en rama dev, base 085ce70231aa1b581474722f7fdf3e11de73a62c; core en feature/contrato-facturacion-compliance-scoring, entrega 4f71cebbe5506413173b003b65a9b2d65708fa3f sobre la base de contrato 921fd4e. Ambos estaban limpios antes de sus entregas.
+Fuentes: ERP en rama dev, entrega local sobre el historial publicado hasta 1223b86; core en feature/contrato-facturacion-compliance-scoring, commit a754a0d (con el escenario determinista de 4f71ceb y el contrato de 921fd4e). Ambos árboles estaban limpios al revisarse.
 
 El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem queda aplazado explícitamente: la afirmación de espejo exacto del checklist del core no describe ambos archivos completos.
 
@@ -20,7 +20,7 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Confirmar e incorporar decision opcional y sus tres valores literales.
 - [x] Validar el campo presente; no completar ausencia ni inferir decisiones. Valores incompatibles siguen el error local contract.
 - [x] Confirmar CLABE string en ambos schemas. El contrato documenta 18 dígitos; el cliente comprueba tipo, no formato bancario.
-- [x] pnpm typecheck correcto; pnpm test: 11 pruebas correctas, incluyendo opcionalidad y campos obligatorios. Sin respuestas financieras mock. El primer intento tuvo EPERM de dependencias en sandbox; la ejecución autorizada fuera de él pasó.
+- [x] pnpm typecheck correcto; pnpm test: 17 pruebas correctas, incluyendo opcionalidad, campos obligatorios, la pantalla y el guardado de doble clic. Sin respuestas financieras mock. El primer intento tuvo EPERM de dependencias en sandbox; la ejecución autorizada fuera de él pasó.
 - [x] Datos y motor acotados al escenario acordado en el core: fixtures mínimos en `lib/data` y funciones puras en `lib/engine`; no hay reglas generales.
 - [x] Endpoints financieros del escenario: `POST /api/emitir-factura`, `POST /api/aceptar-anticipo` y `POST /api/simular-pago`. Auditoría y scoring dinámico siguen pendientes.
 - [x] Probar el core por HTTP real: smoke test correcto contra `localhost:3000`, incluida latencia de emisión, CORS, anticipo y pago. Esto no prueba aún el cliente ERP ni CORS desde navegador.
@@ -30,7 +30,7 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Entrega 4: la oferta incluye acción server-side de aceptación; el core respondió `200` con estado `FONDEADA`.
 - [x] Entrega 5: la misma experiencia presenta `monto_depositado` y `fecha_deposito` recibidos del core, sin persistencia local.
 - [x] Entrega 6: la acción server-side de pago presenta principal, comisión, remanente y `margen_neto_pct` sin recalcularlos.
-- [x] Entrega 7 (base): foco visible, salto al contenido, asociaciones ARIA, diseño adaptable, alto contraste y movimiento reducido en la pantalla de escritorio.
+- [x] Entrega 7 (base): foco visible, salto al contenido, asociaciones ARIA, diseño adaptable, alto contraste, movimiento reducido y bloqueo de doble clic durante cada envío en la pantalla de escritorio. Esto evita reenvíos accidentales de la interfaz; no acredita idempotencia del core.
 - [x] Entrega 8 (escenario acordado): `pnpm probar:ruta-dorada` se repitió con el core disponible y devolvió emisión, aceptación y pago compatibles; documentación y limitaciones quedan registradas.
 - [x] Revisión visual local: `/emision` cargó en navegador, el árbol accesible expuso los cinco campos y el foco recorrió el salto al contenido y el formulario por teclado.
 - [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.

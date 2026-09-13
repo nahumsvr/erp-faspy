@@ -28,6 +28,8 @@ test("GET /emision entrega un formulario accesible de escritorio", async () => {
     assert.match(html, /href="#main-content"/);
     assert.match(html, /id="main-content"/);
     assert.match(html, /prefers-reduced-motion/);
+    assert.match(html, /idempotencia del core/);
+    assert.match(html, /submit\.disabled = true/);
   });
 });
 
