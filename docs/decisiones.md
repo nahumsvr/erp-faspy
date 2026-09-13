@@ -40,7 +40,8 @@
 ## Conflictos resueltos y por resolver
 
 - La solicitud de alineación del contrato exige manejar la CLABE como `string` para conservar ceros iniciales. Falta identificar el campo en la versión vigente del core.
-- La comparación solicitada de `InvoiceCFDI`, `EmitirFacturaRequest`, `EmitirFacturaResponse`, `ComplianceReport` y `ScoringDecision` se registra en `docs/mvp-checklist.md`. Ninguno existe todavía en el ERP; la unión `aprobada`/`revision`/`rechazada` queda pendiente de confirmación explícita.
+- El usuario autorizó crear y documentar los cinco tipos solicitados. Se creó la propuesta ERP v0.1.0 en `types/schema.ts`, conservando los campos HTTP de la planeación y los nombres originales como alias. La guía está en `docs/api-contract.md` y la comparación pendiente en `docs/mvp-checklist.md`.
+- `ScoringDecision` declara la unión propuesta `aprobada`/`revision`/`rechazada`; su confirmación con el core y el campo HTTP que la transportaría siguen pendientes. No se agregó un campo nuevo ni una regla de conversión del score.
 
 - Express reemplaza la suposición de Next.js de la planeación. No se crearán rutas `app/*/page.tsx` por inercia.
 - El uso automático de mocks sugerido por la planeación queda subordinado a la confirmación explícita exigida por el usuario.
