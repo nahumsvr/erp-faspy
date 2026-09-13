@@ -2,6 +2,14 @@
 
 Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega incorpora carga, errores, navegación y validaciones pertinentes. Las responsabilidades independientes pueden dividirse en commits pequeños. Las dependencias pendientes no se consideran aprobadas por silencio.
 
+## Estado actual
+
+- Entrega 1: base sin pantallas completada y validada en Windows. Instrucciones de macOS disponibles; ejecución en una Mac pendiente. Arquitectura de frontend aún pendiente.
+- Entrega 2: propuesta de tipos y guía disponibles; falta contrastar el core e implementar el cliente HTTP. No hay mocks.
+- Entregas 3 a 8: pendientes. No existe todavía la Ruta Dorada ejecutable.
+
+## Entregas
+
 | Entrega | Objetivo y alcance | Dependencias o preguntas | Aceptación observable | Validación prevista | Commit propuesto |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Base Express, configuración y documentación de arranque | Arquitectura de frontend y configuración pública | Arranque reproducible en puerto 3001; decisiones documentadas | Arranque, comprobación de tipos y revisión documental | `chore: configurar base Express del ERP`; documentación separada |

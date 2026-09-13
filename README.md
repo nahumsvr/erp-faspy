@@ -9,17 +9,54 @@ Actualmente incluye servidor local, configuración, contrato TypeScript propuest
 - Node.js 24.14 o posterior de la rama 24.
 - pnpm 11.19.0, declarado en `package.json`.
 
+Comprobar con `node --version` y `pnpm --version`. Si falta pnpm, después de instalar Node puedes instalarlo con `npm install --global pnpm@11.19.0`.
+
 Node ejecuta directamente el TypeScript compatible con eliminación de tipos. No se requiere build ni se genera `dist`; la comprobación estática se ejecuta por separado.
 
 ## Arranque local
+
+### Descargar la rama del equipo
+
+Esta entrega se comparte en `dev`:
+
+```bash
+git clone --branch dev https://github.com/nahumsvr/erp-faspy.git
+cd erp-faspy
+```
+
+Si ya tienes el repositorio, revisa `git status` y conserva tus cambios antes de cambiar de rama. Con el árbol limpio:
+
+```bash
+git fetch origin
+git switch dev
+git pull --ff-only origin dev
+```
+
+Si `dev` aún no existe localmente, usa `git switch --track origin/dev` en lugar de `git switch dev`. Usa tu acceso habitual a GitHub si solicita autenticación; no guardes credenciales en el proyecto.
+
+### Windows — PowerShell
 
 Desde la raíz del repositorio:
 
 ```powershell
 pnpm install --frozen-lockfile
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+pnpm typecheck
+pnpm test
 pnpm dev
 ```
+
+### macOS — Terminal (zsh o bash)
+
+```bash
+pnpm install --frozen-lockfile
+if [ ! -e .env ]; then cp .env.example .env; fi
+pnpm typecheck
+pnpm test
+pnpm dev
+```
+
+### Resultado esperado
 
 Copiar `.env.example` solo si todavía no existe `.env`, para conservar tu configuración. El servidor escucha únicamente en `127.0.0.1`, puerto `3001` por defecto. Abrir [comprobación del servidor](http://127.0.0.1:3001/health):
 
@@ -37,6 +74,28 @@ Copiar `.env.example` solo si todavía no existe `.env`, para conservar tu confi
 | `pnpm test` | Probar configuración, HTTP local y serialización de CLABE |
 
 Detener con Ctrl+C. Si el puerto está ocupado, detener el proceso correspondiente o cambiar `PORT` en `.env`.
+
+La base y las cuatro pruebas se han validado en Windows. Los scripts y dependencias permiten instalación en macOS, pero falta ejecutar las comprobaciones en una Mac. Cada equipo debe instalar sus dependencias localmente.
+
+## Qué puede probar el equipo hoy
+
+- Arranque de Express y respuesta JSON de `/health`.
+- Validación de puerto y URL configurada, sin conectar con el core.
+- Tipos del contrato propuesto, incluida CLABE como `string` y los valores de `ScoringDecision`.
+- Serialización de una cadena con ceros iniciales; no es validación bancaria ni una prueba del core.
+
+Las cuatro pantallas, `lib/api.ts` y el recorrido financiero completo están pendientes. La guía del contrato es una propuesta, no una garantía de compatibilidad con el backend del otro repositorio.
+
+## Problemas frecuentes
+
+| Síntoma | Qué revisar |
+| --- | --- |
+| `node` o `pnpm` no se encuentran | Instalar las versiones indicadas y abrir una terminal nueva |
+| Error de `sh` o de plataforma al ejecutar TypeScript | Retirar solo la carpeta local `node_modules` copiada de otro sistema y repetir la instalación del lockfile |
+| Puerto ocupado | Cambiar `PORT` o detener el proceso que ya lo utiliza |
+| `/` devuelve 404 | Es esperado: todavía no hay pantallas; usar `/health` |
+| Aviso de core sin configurar | Es esperado con `NEXT_PUBLIC_API_URL` vacía; no bloquea esta entrega |
+| Instalación o pruebas fallan | Compartir el error y versiones de Node/pnpm; no borrar el lockfile ni actualizar versiones para ocultarlo |
 
 ## Configuración
 

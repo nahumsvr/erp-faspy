@@ -11,9 +11,11 @@
 - Las llamadas al core se centralizan en `lib/api.ts`; los componentes no hacen llamadas directas. Los tipos acordados viven en `types/schema.ts`.
 - Se solicita configurar la URL con `NEXT_PUBLIC_API_URL`. Express no publica esa variable al navegador automáticamente; su exposición depende de la arquitectura de frontend pendiente.
 - Los mocks requieren confirmar previamente valores y escenarios. Nunca se usarán como fallback automático ante fallos de la API.
-- Se autorizan commits locales de entregas validadas. No se autoriza push, merge, deploy ni reescritura del historial.
+- Se autorizan commits locales de entregas validadas. El usuario autorizó publicar los cambios actuales mediante push después de revisar la documentación y comprobar la base. La publicación corresponde a `origin/dev`; no incluye merge, deploy ni reescritura del historial.
 
 ## Estado observado al iniciar
+
+Registro histórico anterior a la base actual. Hoy existe el servidor Express y sus scripts; consultar el README para arrancarlo.
 
 - Rama `dev`, árbol limpio, commit inicial `f626781`.
 - Base mínima Express con TypeScript, `pnpm-lock.yaml` y sin pantallas.
@@ -34,7 +36,7 @@
 ## Limpieza solicitada
 
 - Se retira `node_modules` del seguimiento de Git y se conserva instalado localmente; `.gitignore` excluye dependencias, salidas de compilación, cobertura, logs y archivos de entorno locales.
-- Se elimina el ejemplo `index.js` y su referencia `main`, junto con el script de prueba de marcador. La base queda sin servidor ejecutable hasta la entrega de configuración de Express.
+- Se eliminó el ejemplo `index.js` y su referencia `main`, junto con el test de marcador. Posteriormente se incorporó el servidor ejecutable en `server/index.ts` y las pruebas actuales.
 - Se conservan las dependencias de Express y TypeScript, el lockfile, `tsconfig.json` y la documentación del proyecto.
 
 ## Conflictos resueltos y por resolver

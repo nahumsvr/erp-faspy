@@ -49,7 +49,7 @@ La validación en ejecución está pendiente porque aún no existen cliente ni p
 - [ ] Registrar las diferencias concretas y acordar los cambios necesarios.
 - [ ] Incorporar el contrato confirmado a `types/schema.ts` del ERP.
 - [ ] Actualizar el contrato del core si procede, una vez identificado y revisadas sus instrucciones; no se ha modificado otro repositorio.
-- [ ] Ejecutar comprobaciones de tipos y preservación de CLABE en la implementación disponible.
+- [x] Ejecutar comprobaciones de tipos y serialización de CLABE en la base disponible; integración real y presentación pendientes.
 - [ ] Registrar confirmación final del responsable del ERP y la versión compartida de ambos contratos.
 
 ## Validación local de la propuesta

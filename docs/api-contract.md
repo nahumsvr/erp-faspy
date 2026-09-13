@@ -1,6 +1,6 @@
 # Contrato HTTP del ERP — propuesta v0.1.0
 
-Fuente de tipos: `types/schema.ts`. Esta propuesta fue solicitada por el usuario y conserva los campos de la planeación original. No es una especificación verificada contra el core: falta su URL y contrato vigente. No se implementaron endpoints, cliente HTTP ni mocks.
+Fuente de tipos: [types/schema.ts](../types/schema.ts). Esta propuesta fue solicitada por el usuario y conserva los campos de la planeación original. No es una especificación verificada contra el core: falta su URL y contrato vigente. No se implementaron endpoints financieros, cliente HTTP ni mocks. El endpoint actual del ERP es `GET /health`, descrito en el [README](../README.md).
 
 ## Consumo
 
@@ -32,7 +32,7 @@ Se mantienen `Factura` y `ValidacionFactura` como alias para facilitar la transi
 
 `ScoringDecision` conserva literalmente los tres valores solicitados, incluido `revision` sin acento. Su aprobación y ubicación en la API siguen pendientes. El score de la referencia sigue siendo `ALTO | MEDIO | BAJO`; no existe un mapeo confirmado entre ese score, compliance y la decisión. El ERP no realizará ese cálculo.
 
-El ERP presenta `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los reciba. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
+Cuando se implementen las pantallas, el ERP presentará `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `monto_depositado` y los cuatro resultados del split tal como los reciba. La referencia define `tasa_aplicada` como fracción; la escala de `margen_neto_pct` debe confirmarse antes de formatearla. Los estados y números de la respuesta no definen por sí solos cuándo bloquear o habilitar acciones.
 
 ## CLABE como string
 
