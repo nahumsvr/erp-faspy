@@ -47,20 +47,20 @@ Desde una tercera terminal en el ERP:
 
 ```powershell
 pnpm probar:ruta-dorada docs/demo-factura.json
-node scripts/verificar-demo.ts
+pnpm verificar:demo
 ```
 
 El primer comando efectúa los tres POST al simulador. El segundo comprueba entradas inválidas, errores 400/422 y el GET inicial. Ambos terminaron con código 0. El JSON conserva importes numéricos y fracciones 0.02; el formato es visual.
 
 ### Evidencia y límites
 
-Fuentes: ERP dev@9d82491 antes del pulido y core feature/contrato-facturacion-compliance-scoring@a754a0d. Tipos y escenario contrastados con los archivos actuales. Typecheck correcto y 18 pruebas aprobadas.
+Fuentes: ERP dev@9d82491 antes del pulido y core feature/contrato-facturacion-compliance-scoring@a754a0d. Tipos y escenario contrastados con los archivos actuales. Typecheck correcto y 19 pruebas aprobadas.
 
 La primera ejecución falló por core apagado. El arranque de desarrollo agotó memoria, también al limitar el heap. Se validó con `pnpm start` usando el build local existente: CLI, emisión/aceptación/pago desde navegador y errores 400/422 correctos. No se recompiló el core ni se certifica que ese build reproduzca exactamente HEAD. En una instalación nueva se requiere `pnpm dev` o `pnpm build` correcto antes de `pnpm start`.
 
 Formulario y oferta revisados en 1366×768 y 1440×900 sin overflow horizontal. Foco visible, entrada al formulario y regreso al inicio por teclado comprobados. Depósito y liquidación mostraron los valores anteriores. Core inaccesible observado en navegador; configuración ausente cubierta por pruebas.
 
-Pendiente manual: activar movimiento reducido y confirmar ausencia de transiciones; observar «Procesando…», botón deshabilitado y doble clic durante envío. Las reglas CSS y el script existen, pero la herramienta no expone emulación de movimiento y perdió el nodo al intentar doble clic durante la navegación. No se contabilizaron POST para acreditar un único envío. Estos límites están registrados en el checklist.
+Pendiente manual: activar movimiento reducido y confirmar ausencia de transiciones; observar «Procesando…», botón deshabilitado y anuncio «Procesando la solicitud…» durante el envío y comprobar doble clic. La página mantiene un guard por formulario y la prueba automatizada cubre su presencia, pero la herramienta no expone emulación de movimiento ni permite acreditar el conteo de POST durante la navegación. Estos límites están registrados en el checklist.
 
 Sin persistencia ni recuperación. Recargar un POST puede reenviar la operación; ante fallo de red no asumir que el core no la procesó. Sin garantía de secuencia ni idempotencia. Auditoría, escenarios generales y dashboard quedan fuera; macOS no se ejecutó. CORS del navegador no interviene en este flujo server-side.
 

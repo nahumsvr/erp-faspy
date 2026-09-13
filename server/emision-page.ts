@@ -155,6 +155,7 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
               <div class="field"><label for="uuid_cfdi">UUID del CFDI</label><input id="uuid_cfdi" name="uuid_cfdi" type="text" autocomplete="off" required value="${fieldValue(state, "uuid_cfdi")}"></div>
             </div>
             <p id="form-hint" class="hint">Usa los datos exactos del escenario acordado. Esta demo no realiza operaciones financieras reales.</p>
+            <p id="form-status" class="status" aria-live="polite" aria-atomic="true"></p>
             <button type="submit">Validar factura</button>
           </form>
         </section>
@@ -163,16 +164,25 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
       ${state.result || state.advance || state.payment || state.error ? `<nav class="restart" aria-label="Reiniciar recorrido"><a href="/emision">Volver al inicio</a><p class="hint">Abre el formulario vacío; no borra ni revierte operaciones. Evita recargar después de enviar: podrías repetir la solicitud.</p></nav>` : ""}
     </main>
   <script>
-    // Evita dobles clics durante una petición; no reemplaza idempotencia del core.
+    // Evita dobles envíos durante una petición; no reemplaza idempotencia del core.
     for (const form of document.querySelectorAll("form")) {
-      form.addEventListener("submit", () => {
+      let submitted = false;
+      form.addEventListener("submit", event => {
+        if (submitted) {
+          event.preventDefault();
+          return;
+        }
+        submitted = true;
+        form.setAttribute("aria-busy", "true");
         const submit = form.querySelector("button[type=submit]");
         if (submit instanceof HTMLButtonElement) {
           submit.disabled = true;
           submit.setAttribute("aria-disabled", "true");
           submit.textContent = "Procesando…";
         }
-      }, { once: true });
+        const status = form.querySelector("#form-status");
+        if (status) status.textContent = "Procesando la solicitud…";
+      });
     }
   </script>
   </body>

@@ -3,7 +3,7 @@ import { once } from "node:events";
 import test from "node:test";
 import { apiErrorState, createApp } from "../server/app.ts";
 import { ApiError } from "../lib/api.ts";
-import { formatMargin } from "../server/emision-page.ts";
+import { formatMargin, renderEmissionPage } from "../server/emision-page.ts";
 
 async function withServer(callback: (base: string) => Promise<void>): Promise<void> {
   const server = createApp().listen(0, "127.0.0.1");
@@ -100,6 +100,25 @@ test("la interfaz presenta el margen recibido como porcentaje", () => {
   assert.match(formatMargin(0.02), /^2(?:\u00a0|\s)?%$/u);
 });
 
+test("los resultados presentan importes y el regreso al inicio", () => {
+  const html = renderEmissionPage({ result: {
+    factura_id: "FAC-2026-001",
+    cfdi_status: "VIGENTE",
+    efos_status: "LIMPIO",
+    score: "ALTO",
+    monto_anticipo: 120000,
+    tasa_aplicada: 0.02,
+    dias_promedio_pago: 45,
+    clabe_virtual: "012180001234567890",
+    decision: "aprobada",
+  } });
+  assert.match(html, /MXN[\s\u00a0]+120,000\.00/);
+  assert.match(html, />2%<\/dd>/);
+  assert.match(html, /href="\/emision">Volver al inicio/);
+  assert.match(html, /let submitted = false/);
+  assert.match(html, /form\.setAttribute\("aria-busy", "true"\)/);
+  assert.match(html, /Procesando la solicitud/);
+});
 test("la pantalla conserva los estados de error 400 y 422 definidos por el core", () => {
   assert.deepEqual(apiErrorState(new ApiError("http", "", 400)), {
     status: 400,

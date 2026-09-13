@@ -16,9 +16,9 @@ Fuentes revisadas: ERP `dev@9d824914d868eeb6d728546a9509963f6a5ad1db` antes del 
 - [x] 6. Pago real: principal `120000`, comisión `3000`, remanente `27000`, margen JSON `0.02`.
 - [x] 7. Pulido actual aceptado: importes MXN, tasa y margen en porcentaje, CLABE literal, textos para demo y enlace GET de regreso al inicio.
 - [x] 8. Ruta Dorada CLI y recorrido completo en navegador repetidos; guía y JSON exacto publicados en el repositorio.
-- [x] `pnpm typecheck` y `pnpm test`: 18 pruebas correctas; `git diff --check` sin errores de formato.
+- [x] `pnpm typecheck` y `pnpm test`: 19 pruebas correctas; `git diff --check` sin errores de formato.
 - [x] `pnpm probar:ruta-dorada docs/demo-factura.json`: salida 0 contra el core local.
-- [x] `node scripts/verificar-demo.ts`: salida 0; campos faltantes 400, rechazo del core 400, escenario no soportado 422 y GET con cinco campos vacíos.
+- [x] `pnpm verificar:demo`: salida 0; campos faltantes 400, rechazo del core 400, escenario no soportado 422 y GET con cinco campos vacíos.
 - [x] Error de core inaccesible observado en navegador; configuración ausente cubierta por las pruebas locales.
 - [x] Formulario y oferta revisados en 1366×768 y 1440×900, sin overflow horizontal; depósito y liquidación revisados en navegador. Desplazamiento vertical normal para alcanzar acciones y regreso al inicio.
 - [x] Foco visible, salto al contenido, entrada al formulario y regreso al inicio mediante teclado; enlace también comprobado tras liquidación.
@@ -27,7 +27,7 @@ Fuentes revisadas: ERP `dev@9d824914d868eeb6d728546a9509963f6a5ad1db` antes del 
 
 - El primer intento de integración falló por core apagado. `pnpm dev` del core agotó la memoria del equipo, incluso con límite de heap. Se detuvieron los procesos de core iniciados para esa prueba y se verificó con `pnpm start` usando el build local existente. No se reconstruyó ese build ni se acredita su correspondencia exacta con HEAD; sí se comprobó su compatibilidad HTTP para el caso acordado.
 - El CSS cargado contiene `prefers-reduced-motion: reduce` que elimina transiciones, transformación y scroll suave. La preferencia del navegador estaba desactivada; la herramienta no expone emulación de movimiento. Esta revisión es estática, no una prueba visual con la preferencia activada.
-- El script deshabilita el botón y cambia su texto a «Procesando…». El intento de doble clic llegó a la oferta, pero el controlador perdió el nodo al navegar; no acredita conteo de peticiones ni observación del estado transitorio. Queda pendiente una comprobación manual de carga y doble clic con navegador visible.
+- El script ahora mantiene un guard por formulario, marca `aria-busy`, anuncia «Procesando la solicitud…» y deshabilita el botón. La prueba automatizada cubre la presencia de estas protecciones. Queda pendiente una comprobación manual visible del estado transitorio y del conteo de peticiones con doble clic.
 
 El pulido y el recorrido funcional están entregados. La aceptación visual dinámica completa conserva las dos comprobaciones anteriores pendientes; no se marcan como aprobadas por la revisión estática.
 

@@ -2,7 +2,7 @@
 
 Base Express del Frente 3 para una PyME mexicana. La Ruta Dorada prevista es emitir factura → oferta → depósito → simulación del cobro y split settlement.
 
-La demo Windows encadena emisión, oferta, aceptación, depósito y pago server-side en `/emision`, con importes MXN, porcentajes y regreso al inicio. Ruta Dorada verificada por CLI y navegador para el único escenario aprobado. Auditoría, scoring general, dashboard y persistencia/idempotencia quedan fuera; macOS sigue pendiente y no bloquea Windows. Restan comprobaciones dinámicas de carga/doble clic y movimiento reducido activado. Consultar los límites del build del core en el checklist. Sin motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
+La demo Windows encadena emisión, oferta, aceptación, depósito y pago server-side en `/emision`, con importes MXN, porcentajes y regreso al inicio. Ruta Dorada verificada por CLI y navegador para el único escenario aprobado. Auditoría, scoring general, dashboard y persistencia/idempotencia quedan fuera; macOS sigue pendiente y no bloquea Windows. La protección de doble envío y el estado accesible de carga están implementados y cubiertos por pruebas; queda pendiente observarlos manualmente en navegador con movimiento reducido activado. Consultar los límites del build del core en el checklist. Sin motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
 
 Usar la [guía reproducible](docs/prueba-integracion.md) y la [factura exacta acordada](docs/demo-factura.json). «Volver al inicio» abre el formulario vacío sin borrar ni revertir operaciones. Recargar un POST puede reenviar la solicitud; no hay recuperación del recorrido.
 
@@ -76,6 +76,7 @@ Copiar `.env.example` solo si todavía no existe `.env`, para conservar tu confi
 | `pnpm test` | Probar la base y los casos del cliente que no requieren core ni mocks |
 | `pnpm probar:emision "RUTA_AL_JSON"` | Emitir una factura real del simulador con un archivo acordado; requiere core disponible |
 | `pnpm probar:ruta-dorada "RUTA_AL_JSON"` | Ejecutar emisión, aceptación y pago desde Node; requiere core disponible |
+| `pnpm verificar:demo` | Comprobar errores 400/422 y formulario vacío; requiere ERP y core activos |
 
 Detener con Ctrl+C. Si el puerto está ocupado, detener el proceso correspondiente o cambiar `PORT` en `.env`.
 
