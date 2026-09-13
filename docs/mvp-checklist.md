@@ -2,7 +2,7 @@
 
 ## Estado vigente — decision opcional, 2026-09-13
 
-Fuentes: ERP en rama dev, commit local c539c76 (sobre el historial publicado hasta 1223b86); core en feature/contrato-facturacion-compliance-scoring, commit a754a0d (con el escenario determinista de 4f71ceb y el contrato de 921fd4e). Ambos árboles estaban limpios al revisarse.
+Fuentes: ERP en rama dev, commit local deb2f68 (sobre el historial publicado hasta 1223b86); core en feature/contrato-facturacion-compliance-scoring, commit a754a0d (con el escenario determinista de 4f71ceb y el contrato de 921fd4e). Ambos árboles estaban limpios al revisarse.
 
 El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem queda aplazado explícitamente: la afirmación de espejo exacto del checklist del core no describe ambos archivos completos.
 
