@@ -39,6 +39,11 @@
 
 ## Conflictos resueltos y por resolver
 
+- El usuario autorizó avanzar con la base sin pantallas: dependencias Windows, servidor Express, configuración de entorno, documentación y consistencia interna de tipos.
+- La base usa Node 24 (mínimo 24.14) para ejecutar TypeScript directamente y pnpm 11.19.0. `typecheck` comprueba tipos por separado; no hay artefactos de build.
+- El servidor local escucha en `127.0.0.1:3001` por defecto. `/health` identifica el proceso como simulación y no comprueba conectividad con el core.
+- `NEXT_PUBLIC_API_URL` puede quedar vacía durante esta entrega. Si se configura, se valida como URL HTTP(S) sin credenciales, query ni fragmento; no se publica automáticamente al navegador. La arquitectura de frontend sigue pendiente.
+
 - La solicitud de alineación del contrato exige manejar la CLABE como `string` para conservar ceros iniciales. Falta identificar el campo en la versión vigente del core.
 - El usuario autorizó crear y documentar los cinco tipos solicitados. Se creó la propuesta ERP v0.1.0 en `types/schema.ts`, conservando los campos HTTP de la planeación y los nombres originales como alias. La guía está en `docs/api-contract.md` y la comparación pendiente en `docs/mvp-checklist.md`.
 - `ScoringDecision` declara la unión propuesta `aprobada`/`revision`/`rechazada`; su confirmación con el core y el campo HTTP que la transportaría siguen pendientes. No se agregó un campo nuevo ni una regla de conversión del score.

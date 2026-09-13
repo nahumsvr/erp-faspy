@@ -4,14 +4,17 @@
   "description": "ERP simulado de EcoStream para una PyME mexicana",
   "private": true,
   "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.2.2",
-      "onFail": "download"
-    }
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=24.14.0 <25"
   },
   "type": "module",
+  "scripts": {
+    "dev": "node --watch --env-file-if-exists=.env server/index.ts",
+    "start": "node --env-file-if-exists=.env server/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.ts"
+  },
   "dependencies": {
     "express": "^5.2.1"
   },

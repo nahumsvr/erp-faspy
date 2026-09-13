@@ -56,5 +56,8 @@ La validación en ejecución está pendiente porque aún no existen cliente ni p
 
 - `node --check types/schema.ts`: sintaxis válida; no sustituye comprobación de tipos.
 - `git diff --check`: sin errores de formato.
-- `pnpm exec tsc --noEmit`: bloqueado por la instalación local heredada, que contiene un lanzador shell y un compilador para Darwin ARM64, no una instalación utilizable en Windows. Pendiente reinstalar dependencias para esta plataforma y repetir la comprobación de tipos.
-- No se realizó prueba HTTP ni validación de CLABE en una respuesta real: el core no está disponible en esta sesión.
+- Bloqueo inicial de dependencias macOS resuelto al reinstalar para Windows con `pnpm install --frozen-lockfile`, sin cambiar versiones del lockfile.
+- `pnpm typecheck`: correcto; incluye el contrato, servidor y pruebas estáticas de CLABE y unión de decisiones.
+- `pnpm test`: cuatro pruebas correctas de configuración, HTTP local y serialización de CLABE. Esta última comprueba una cadena sintética, no una respuesta del core.
+- `pnpm start`: comprobado en puerto 3001 sin `.env`; `/health` respondió correctamente y el proceso se detuvo al finalizar la verificación.
+- No se realizó prueba HTTP contra el core ni validación de CLABE en una respuesta suya: el core no está disponible en esta sesión.
