@@ -2,6 +2,8 @@
 
 ## Confirmadas por el usuario
 
+- El usuario identificó `C:/Users/hecto/faspy` como el repositorio de ecostream-core. Se permite consultarlo para coordinar el contrato; no se ha modificado esa carpeta.
+
 - ERP y core correrán en la misma computadora como procesos separados. ERP: `http://127.0.0.1:3001`; core: `http://127.0.0.1:3000`. Se configura `NEXT_PUBLIC_API_URL=http://127.0.0.1:3000` en el entorno local y su ejemplo. Confirmar la dirección no acredita que el core esté ejecutándose ni que el contrato sea compatible.
 
 - El repositorio de trabajo es `erp-faspy`, aunque la planeación lo denomina `ecostream-erp`.

@@ -1,13 +1,36 @@
 # Checklist MVP: alineación del contrato ERP / core
 
-Estado: propuesta ERP v0.1.0 creada por solicitud posterior del usuario en `types/schema.ts`, con guía en `docs/api-contract.md`. Pendiente recibir el contrato vigente del core y confirmar la unión de estados. No se confirma compatibilidad entre contratos todavía.
+Estado: propuesta ERP v0.1.0 disponible. Core identificado y contrato remoto consultado; los cinco tipos financieros todavía no están implementados allí. Pendiente acordar el contrato compartido. No se confirma compatibilidad entre contratos todavía.
+
+## Revisión del core — 2026-09-13
+
+- Ruta confirmada por el usuario: `C:/Users/hecto/faspy`; remoto `nahumsvr/faspy`.
+- Copia local: rama `develop`, commit `90705a5`, sin cambios pendientes. Contiene base Next.js, sin `types/schema.ts` ni rutas API.
+- GitHub: rama `develop`, commit `08f652eb9de9625174b5096638ed8f64b4d1b348`, consultado en modo lectura. La copia local está atrasada; no se hizo pull ni se modificó el core.
+- [Contrato remoto revisado](https://github.com/nahumsvr/faspy/blob/08f652eb9de9625174b5096638ed8f64b4d1b348/types/schema.ts): solo `HealthResponse` y `ApiError`. Declara que el contrato de facturas queda pendiente de sincronización con ERP.
+- El árbol remoto tiene únicamente `app/api/health/route.ts` como endpoint. No existen `emitir-factura`, `aceptar-anticipo` ni `simular-pago`.
+- La colección remota de Bruno contiene health y OPTIONS; no hay archivo de factura ni petición de emisión. `lib/data` y `lib/engine` contienen solo README.
+
+### Diferencias observadas con la revisión remota
+
+| Punto | ERP | Core remoto | Resolución pendiente |
+| --- | --- | --- | --- |
+| Los cinco tipos solicitados | Implementados como propuesta | Ninguno declarado en schema.ts | Acordar esquema antes de incorporarlo al core |
+| InvoiceCFDI | Campos originales de Factura | Checklist propone RFC emisor/receptor, conceptos y vencimiento | Ampliación de producto pendiente de acuerdo; no añadida al ERP |
+| ComplianceReport | CFDI y EFOS de la planeación | Checklist propone estados 69-B, OFAC y SPEI | No hay equivalencia implementada ni mapeo autorizado |
+| ScoringDecision | Unión propuesta aprobada/revision/rechazada | Checklist propone objeto con riskScore, tier, aforo, tasas e importes | Nombre coincidente con significado distinto; no convertir ni reemplazar unilateralmente |
+| CLABE | clabe_virtual: string | No hay campo financiero implementado | No puede confirmarse todavía el tipo del core |
+| Errores | ApiError es una clase local del cliente | ApiError es un body JSON con error.code y error.message | Son conceptos distintos; no copiar como equivalentes. Su uso en endpoints financieros aún no existe |
+| CORS | ERP documentado en http://127.0.0.1:3001 | corsHeaders usa ERP_ORIGIN o http://localhost:3001 | Coordinar ERP_ORIGIN=http://127.0.0.1:3001 si se abre con esa dirección; comprobar desde navegador |
+
+Las propuestas ampliadas provienen del [checklist del core](https://github.com/nahumsvr/faspy/blob/08f652eb9de9625174b5096638ed8f64b4d1b348/docs/mvp-checklist.md), no de un contrato implementado. No autorizan construir el motor ni cambiar las reglas del ERP. La configuración CORS se verificó en [lib/api/response.ts](https://github.com/nahumsvr/faspy/blob/08f652eb9de9625174b5096638ed8f64b4d1b348/lib/api/response.ts); no se ejecutó una prueba de navegador.
 
 ## Fuentes y alcance de la revisión
 
 - ERP: `erp-faspy`, rama `dev`, base revisada `76dca49`, sin cambios pendientes al iniciar la revisión.
 - Referencia original: `planeacion_3_tareas_paralelas.md` proporcionada por el usuario.
 - Solicitud actual: comparar cinco tipos nuevos, acordar estados y validar CLABE como string.
-- Al iniciar no existía contrato en el ERP. El usuario autorizó posteriormente crear y documentar los cinco tipos. No se dispone aún de una ubicación o versión identificada del contrato vigente del core.
+- Al iniciar no existía contrato en el ERP. El usuario autorizó posteriormente crear y documentar los cinco tipos. La ubicación y revisión del core se identificaron después; ver revisión de 2026-09-13 arriba.
 
 ## Diferencias y pendientes
 
@@ -49,7 +72,7 @@ El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE
 
 - [x] Crear y documentar los cinco tipos como propuesta autorizada, sin cambiar campos HTTP de la planeación.
 
-- [ ] Recibir ubicación y versión del contrato vigente del core.
+- [x] Identificar ubicación y versión disponible del core: revisión remota `08f652e`, sin contrato financiero implementado.
 - [ ] Comparar los cinco tipos campo por campo, incluyendo opcionales, nulos, estructuras anidadas y uniones.
 - [ ] Registrar las diferencias concretas y acordar los cambios necesarios.
 - [ ] Incorporar el contrato confirmado a `types/schema.ts` del ERP.

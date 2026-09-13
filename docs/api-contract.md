@@ -4,6 +4,8 @@ Fuente de tipos: [types/schema.ts](../types/schema.ts). Esta propuesta conserva 
 
 ## Consumo
 
+Revisión del core realizada en `nahumsvr/faspy`, commit `08f652e`: solo implementa tipos de health y error genérico. Aún no permite verificar los cinco tipos financieros ni ejecutar emisión. El detalle de diferencias y la coordinación CORS están en [mvp-checklist.md](mvp-checklist.md). No se han adoptado los campos adicionales propuestos en su checklist.
+
 Todas las llamadas al core se centralizan en `lib/api.ts`. `createApiClient(baseUrl)` recibe la URL de `NEXT_PUBLIC_API_URL` desde la configuración de quien lo invoque. El módulo no lee variables globales de entorno ni realiza llamadas al importarse o al crear el cliente. Express todavía no invoca estas operaciones; sigue pendiente decidir si las futuras pantallas llamarán desde navegador o servidor. No colocar secretos en configuración pública.
 
 Ejemplo de conexión futura desde código del servidor, sin valores ficticios de factura:
