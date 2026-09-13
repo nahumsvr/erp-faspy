@@ -1,6 +1,16 @@
 # Checklist MVP: alineación del contrato ERP / core
 
-Estado: propuesta ERP v0.1.0 disponible. Core identificado y contrato remoto consultado; los cinco tipos financieros todavía no están implementados allí. Pendiente acordar el contrato compartido. No se confirma compatibilidad entre contratos todavía.
+Estado: el usuario indicó `faspy/docs/faspy/contract.md` como fuente de verdad. Revisado en `921fd4e`, rama `feature/contrato-facturacion-compliance-scoring`. El core ya declara los cinco tipos. Endpoints financieros e integración siguen pendientes; el diagnóstico de `08f652e` que aparece abajo es histórico.
+
+## Actualización de contrato — revisión 921fd4e
+
+- Los cinco tipos solicitados ya existen en `faspy/types/schema.ts`. Los campos originales del ERP coinciden; el core incorpora `decision?: ScoringDecision` a `EmitirFacturaResponse`.
+- `contract.md` presenta `decision` con la unión literal `aprobada`/`revision`/`rechazada`. El schema referenciado por ese documento la declara opcional.
+- Ambos schemas declaran `clabe_virtual: string`; el contrato describe 18 dígitos. Falta comprobar su intercambio real.
+- El contrato documenta un caso de éxito: factura 150000, anticipo/depósito 120000, comisión 3000, remanente 27000, fecha fija y margen 0.02. Son ejemplos documentados, no reglas de cálculo para cualquier factura.
+- No existen motor ni endpoints financieros en esa revisión. Tampoco hay reglas acordadas para solicitudes distintas, reenvíos, secuencia de pasos ni contratos de error financieros.
+- El usuario autorizó únicamente implementar endpoints usando ese documento. Pendiente confirmar si se usará el caso fijo como escenario ejecutable y cómo tratar entradas fuera de ese caso; no se ha convertido el ejemplo en un mock automáticamente.
+- No se redefinió el contrato ni se modificaron los archivos de la rama del core durante esta inspección.
 
 ## Revisión del core — 2026-09-13
 

@@ -2,6 +2,8 @@
 
 ## Confirmadas por el usuario
 
+- El usuario autorizó implementar únicamente los endpoints en faspy, sin crear un motor ni redefinir el contrato financiero. Fuente de verdad indicada: `C:/Users/hecto/faspy/docs/faspy/contract.md`, disponible en la rama `feature/contrato-facturacion-compliance-scoring`, commit `921fd4e`. La anterior comparación contra `08f652e` queda como registro histórico.
+
 - El usuario identificó `C:/Users/hecto/faspy` como el repositorio de ecostream-core. Se permite consultarlo para coordinar el contrato; no se ha modificado esa carpeta.
 
 - ERP y core correrán en la misma computadora como procesos separados. ERP: `http://127.0.0.1:3001`; core: `http://127.0.0.1:3000`. Se configura `NEXT_PUBLIC_API_URL=http://127.0.0.1:3000` en el entorno local y su ejemplo. Confirmar la dirección no acredita que el core esté ejecutándose ni que el contrato sea compatible.
