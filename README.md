@@ -113,6 +113,8 @@ La URL confirmada no garantiza que el core esté levantado. `/health` solo compr
 
 ## Contrato y coordinación
 
+Antes de contribuir, consultar [AGENTS.md](AGENTS.md), que define las fuentes obligatorias y las comprobaciones de coherencia, y la [guía de origen de resultados](docs/origen-resultados.md).
+
 - [Tipos propuestos](types/schema.ts)
 - [Guía de consumo HTTP](docs/api-contract.md)
 - [Checklist de integración](docs/mvp-checklist.md)

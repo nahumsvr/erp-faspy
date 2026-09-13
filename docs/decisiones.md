@@ -2,6 +2,8 @@
 
 ## Confirmadas por el usuario
 
+- El usuario solicitó instrucciones persistentes para consultar las fuentes y verificar coherencia. Se incorporan en `AGENTS.md` del ERP y se documenta el origen previsto de resultados en `docs/origen-resultados.md`. No autorizan implementar reglas pendientes ni amplían el alcance del motor.
+
 - El usuario autorizó implementar únicamente los endpoints en faspy, sin crear un motor ni redefinir el contrato financiero. Fuente de verdad indicada: `C:/Users/hecto/faspy/docs/faspy/contract.md`, disponible en la rama `feature/contrato-facturacion-compliance-scoring`, commit `921fd4e`. La anterior comparación contra `08f652e` queda como registro histórico.
 
 - El usuario identificó `C:/Users/hecto/faspy` como el repositorio de ecostream-core. Se permite consultarlo para coordinar el contrato; no se ha modificado esa carpeta.
