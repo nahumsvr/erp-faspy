@@ -42,6 +42,9 @@ El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE
 
 ## Cierre de integración
 
+- [x] Preparar `pnpm probar:emision` para ejecutar la prueba temprana desde un JSON acordado, sin mocks. Guía: `docs/prueba-integracion.md`.
+- [ ] Ejecutar la primera emisión real con el core disponible y registrar el resultado. La preparación del comando no cierra este punto.
+
 - [x] URL local confirmada: core en `http://127.0.0.1:3000` y ERP en `http://127.0.0.1:3001`, en la misma computadora. Configuración incluida en `.env.example`; conexión real pendiente.
 
 - [x] Crear y documentar los cinco tipos como propuesta autorizada, sin cambiar campos HTTP de la planeación.

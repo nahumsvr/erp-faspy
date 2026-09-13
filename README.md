@@ -72,6 +72,7 @@ Copiar `.env.example` solo si todavía no existe `.env`, para conservar tu confi
 | `pnpm start` | Arrancar sin vigilancia de archivos |
 | `pnpm typecheck` | Comprobar tipos sin generar archivos |
 | `pnpm test` | Probar la base y los casos del cliente que no requieren core ni mocks |
+| `pnpm probar:emision "RUTA_AL_JSON"` | Emitir una factura real del simulador con un archivo acordado; requiere core disponible |
 
 Detener con Ctrl+C. Si el puerto está ocupado, detener el proceso correspondiente o cambiar `PORT` en `.env`.
 
@@ -115,6 +116,7 @@ La URL confirmada no garantiza que el core esté levantado. `/health` solo compr
 - [Tipos propuestos](types/schema.ts)
 - [Guía de consumo HTTP](docs/api-contract.md)
 - [Checklist de integración](docs/mvp-checklist.md)
+- [Primera prueba de emisión real](docs/prueba-integracion.md)
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 

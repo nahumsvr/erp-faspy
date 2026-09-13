@@ -43,6 +43,8 @@ Registro histórico anterior a la base actual. Hoy existe el servidor Express y 
 
 ## Conflictos resueltos y por resolver
 
+- Se prepara la prueba temprana mediante `pnpm probar:emision <archivo>`: lee un JSON aportado por el equipo y usa `lib/api.ts`. El comando no genera datos, acepta anticipos ni simula pagos. La ejecución real queda pendiente del contrato y archivo acordados; no se ha ejecutado contra el core.
+
 - El usuario autorizó avanzar sin URL ni pantallas con un cliente HTTP provisional, validaciones estructurales y errores locales. Implementado en `lib/api.ts` con `createApiClient(baseUrl)` y las tres operaciones acordadas; la URL se pasa desde `NEXT_PUBLIC_API_URL` cuando esté disponible.
 - La clasificación `ApiError.kind` es interna del cliente, no modifica el contrato HTTP del core. No hay reintentos, redirecciones automáticas ni fallback mock. El invocador puede cancelar mediante `AbortSignal`; no se impone un timeout.
 - La prueba del cliente se limita por ahora a fallos previos al envío. No se han creado respuestas mock, datos financieros ficticios ni supuestos sobre errores del core. La prueba de integración permanece pendiente.
