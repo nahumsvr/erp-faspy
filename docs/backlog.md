@@ -8,7 +8,7 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 - Entrega 2: cinco tipos alineados con core 4f71ceb, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Ruta Dorada técnica verificada desde Node con el escenario acordado.
 - Entrega 3: formulario de emisión de escritorio en `/emision`, con validación básica, errores y llamada server-side a `lib/api.ts`; la pantalla ya mostró una respuesta real del core.
 - Entregas 4 a 6: aceptación, tesorería y pago server-side encadenados desde la pantalla; la Ruta Dorada visual fue verificada con el escenario acordado. No hay persistencia ni reintentos automáticos.
-- Entrega 7: pulido visual, accesibilidad avanzada y animaciones pendientes.
+- Entrega 7: pulido base aplicado a la pantalla de escritorio (foco, salto al contenido, alto contraste, responsive y movimiento reducido); revisión visual manual y animaciones adicionales pendientes.
 - Entrega 8: verificación final, documentación de demo y cobertura de limitaciones pendientes.
 
 ## Entregas

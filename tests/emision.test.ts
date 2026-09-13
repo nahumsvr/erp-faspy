@@ -21,9 +21,12 @@ test("GET /emision entrega un formulario accesible de escritorio", async () => {
     const html = await response.text();
     assert.equal(response.status, 200);
     assert.match(response.headers.get("content-type") ?? "", /text\/html/);
-    assert.match(html, /<form method="post" action="\/emision">/);
+    assert.match(html, /<form method="post" action="\/emision" aria-describedby=/);
     assert.match(html, /id="monto_mxn"/);
     assert.match(html, /aria-live="polite"/);
+    assert.match(html, /href="#main-content"/);
+    assert.match(html, /id="main-content"/);
+    assert.match(html, /prefers-reduced-motion/);
   });
 });
 
@@ -39,6 +42,7 @@ test("POST /emision valida campos y escapa valores antes de llamar al core", asy
     assert.match(html, /Completa todos los campos requeridos/);
     assert.doesNotMatch(html, /<script>alert\(1\)<\/script>/);
     assert.match(html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
+    assert.match(html, /aria-describedby="form-hint emision-error"/);
   });
 });
 
