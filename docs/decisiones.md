@@ -2,6 +2,8 @@
 
 ## Confirmadas por el usuario
 
+- ERP y core correrán en la misma computadora como procesos separados. ERP: `http://127.0.0.1:3001`; core: `http://127.0.0.1:3000`. Se configura `NEXT_PUBLIC_API_URL=http://127.0.0.1:3000` en el entorno local y su ejemplo. Confirmar la dirección no acredita que el core esté ejecutándose ni que el contrato sea compatible.
+
 - El repositorio de trabajo es `erp-faspy`, aunque la planeación lo denomina `ecostream-erp`.
 - Se utilizará Express. La propuesta de migrar a Next.js fue rechazada.
 - Se aprueba el backlog de ocho entregas de la solicitud original; no se sustituye por el desglose propuesto posteriormente por el asistente.
@@ -28,7 +30,7 @@ Registro histórico anterior a la base actual. Hoy existe el servidor Express y 
 - Forma de servir/renderizar el frontend con Express y ubicación de las llamadas HTTP (navegador o servidor ERP).
 - Diseño visual, dispositivo prioritario y animaciones.
 - Oferta como página, modal o ambos.
-- Disponibilidad y URL del core, versión vigente del contrato y contrato de errores.
+- Disponibilidad del core en la URL local confirmada, versión vigente del contrato y contrato de errores.
 - Datos ficticios y autorización de mocks, con valores y escenarios.
 - Validaciones de entrada, rechazo, reintentos y prevención de acciones duplicadas.
 - Persistencia, recarga, acceso directo a pasos posteriores y reinicio del demo.

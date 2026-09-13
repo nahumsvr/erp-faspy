@@ -102,9 +102,13 @@ El cliente provisional está en `lib/api.ts` y se describe en la guía de consum
 | Variable | Valor por defecto | Uso |
 | --- | --- | --- |
 | `PORT` | `3001` | Puerto entero entre 1 y 65535 |
-| `NEXT_PUBLIC_API_URL` | Sin configurar | URL HTTP(S) del core; completar cuando sea confirmada |
+| `NEXT_PUBLIC_API_URL` | Sin valor implícito en código; `.env.example` configura `http://127.0.0.1:3000` | URL local confirmada del core |
 
 Los scripts cargan `.env` si existe; las variables del proceso tienen prioridad. Una URL configurada debe estar libre de credenciales, query y fragmento. No se publica automáticamente al navegador ni se devuelve por `/health`. Mientras falta, la base arranca y avisa; no intenta llamar al core ni devuelve mocks.
+
+ERP y core se ejecutarán en la misma computadora, en dos terminales y desde sus respectivos repositorios. El ERP usa el puerto `3001` y el core el `3000`. El comando de arranque del core debe consultarse en su repositorio. Si ya tienes `.env`, actualiza `NEXT_PUBLIC_API_URL=http://127.0.0.1:3000` sin sobrescribir las demás variables. No añadas `/api` al valor base.
+
+La URL confirmada no garantiza que el core esté levantado. `/health` solo comprueba el ERP y no inicia ni consulta el core. Los puertos distintos también implican orígenes distintos: si las llamadas salen del navegador, el core deberá permitir por CORS el origen del ERP utilizado.
 
 ## Contrato y coordinación
 
@@ -114,7 +118,7 @@ Los scripts cargan `.env` si existe; las variables del proceso tienen prioridad.
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 
-El contrato todavía debe contrastarse con el core. Las tres operaciones HTTP están centralizadas en `lib/api.ts`, sin invocación automática desde Express. La prueba real de emisión se hará en cuanto exista URL confirmada; CORS debe comprobarse desde el navegador si se acuerda ese origen de las llamadas. No se ha configurado un proxy ni modificado el repositorio del core.
+El contrato todavía debe contrastarse con el core. Las tres operaciones HTTP están centralizadas en `lib/api.ts`, sin invocación automática desde Express. La URL local ya está confirmada; la prueba real de emisión requiere el core ejecutándose y una factura de prueba acordada. CORS debe comprobarse desde el navegador si se acuerda ese origen de las llamadas. No se ha configurado un proxy ni modificado el repositorio del core.
 
 ## Dependencias y Git
 

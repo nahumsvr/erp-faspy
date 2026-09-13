@@ -1,6 +1,6 @@
 # Contrato HTTP del ERP — propuesta v0.1.0
 
-Fuente de tipos: [types/schema.ts](../types/schema.ts). Esta propuesta fue solicitada por el usuario y conserva los campos de la planeación original. No es una especificación verificada contra el core: falta su URL y contrato vigente. El cliente provisional está en [lib/api.ts](../lib/api.ts); no está conectado a pantallas ni rutas del servidor. No se implementaron endpoints financieros ni mocks. El endpoint actual del ERP es `GET /health`, descrito en el [README](../README.md).
+Fuente de tipos: [types/schema.ts](../types/schema.ts). Esta propuesta conserva los campos de la planeación original. No está verificada contra el core: falta contrastar su contrato vigente. La URL local confirmada es `http://127.0.0.1:3000`, con ERP y core en la misma computadora. El cliente provisional está en [lib/api.ts](../lib/api.ts); no está conectado a pantallas ni rutas del servidor. No se implementaron endpoints financieros ni mocks. El endpoint actual del ERP es `GET /health`, descrito en el [README](../README.md).
 
 ## Consumo
 
