@@ -33,6 +33,8 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Entrega 6: la acción server-side de pago presenta principal, comisión, remanente y `margen_neto_pct` sin recalcularlos.
 - [x] Entrega 7 (base): foco visible, salto al contenido, asociaciones ARIA, diseño adaptable, alto contraste y movimiento reducido en la pantalla de escritorio.
 - [x] Entrega 8 (escenario acordado): `pnpm probar:ruta-dorada` se repitió con el core disponible y devolvió emisión, aceptación y pago compatibles; documentación y limitaciones quedan registradas.
+- [x] Revisión visual local: `/emision` cargó en navegador, el árbol accesible expuso los cinco campos y el foco recorrió el salto al contenido y el formulario por teclado.
+- [ ] Revisión visual a resolución de escritorio amplia y aceptación de animaciones finales.
 - [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.
 - [x] Decidir navegador o servidor: servidor Express; `/emision` llama al core mediante `lib/api.ts`. CORS de navegador queda fuera de este recorrido.
 - [ ] Acordar errores, rechazos, reenvíos y secuencia para el flujo financiero.
