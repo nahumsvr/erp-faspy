@@ -33,6 +33,7 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Entrega 7 (base): foco visible, salto al contenido, asociaciones ARIA, diseño adaptable, alto contraste, movimiento reducido y bloqueo de doble clic durante cada envío en la pantalla de escritorio. Esto evita reenvíos accidentales de la interfaz; no acredita idempotencia del core.
 - [x] Entrega 8 (escenario acordado): `pnpm probar:ruta-dorada` se repitió con el core disponible y devolvió emisión, aceptación y pago compatibles; documentación y limitaciones quedan registradas.
 - [x] Revisión visual local: `/emision` cargó en navegador, el árbol accesible expuso los cinco campos y el foco recorrió el salto al contenido y el formulario por teclado.
+- [x] Revisión visual a resolución de escritorio amplia: viewport 1440×900, dos columnas visibles (`574.729px` y `517.271px`), documento sin overflow horizontal. La aceptación de animaciones finales queda separada.
 - [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.
 - [x] Decidir navegador o servidor: servidor Express; `/emision` llama al core mediante `lib/api.ts`. CORS de navegador queda fuera de este recorrido.
 - [x] Presentar `margen_neto_pct` como `2 %` cuando el core devuelve `0.02`; el JSON conserva la fracción y la interfaz solo aplica formato visual.
@@ -43,10 +44,10 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [ ] Scoring dinámico, catálogos ampliados y reglas generales del core: requieren contrato, escenarios y reglas aprobadas.
 - [ ] Errores, rechazos, reenvíos, secuencia e idempotencia: requieren política acordada; el ERP no reintenta automáticamente.
 - [ ] Persistencia y recarga del flujo: requieren alcance y almacenamiento aprobados; la entrega actual no persiste datos.
-- [ ] Revisión visual a resolución de escritorio amplia y aceptación de animaciones finales.
+- [ ] Aceptación de animaciones finales; las transiciones actuales respetan `prefers-reduced-motion`, pero falta la decisión visual final.
 - [ ] Ejecutar las comprobaciones de instalación y pruebas en macOS.
 
-La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. Quedan seis pendientes vigentes: cinco áreas de producto y la validación en macOS. CORS de navegador queda fuera de esta arquitectura.
+La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. La resolución amplia ya está comprobada; queda acordar la aceptación final de animaciones. Quedan seis pendientes vigentes: cinco áreas de producto y la validación en macOS. CORS de navegador queda fuera de esta arquitectura.
 
 ## Historial de revisiones — no representa el estado vigente
 
