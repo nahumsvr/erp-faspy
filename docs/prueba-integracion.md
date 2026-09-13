@@ -29,7 +29,7 @@ Para ejecutar la Ruta Dorada completa:
 pnpm probar:ruta-dorada "RUTA_AL_ARCHIVO_JSON_ACORDADO"
 ```
 
-La salida resume emisión, anticipo y pago, sin imprimir la CLABE. La ejecución verificada devolvió `FAC-2026-001`, `FONDEADA`, `120000`, `27000` y `margen_neto_pct: 0.02`. El comando no crea persistencia en el ERP y solo es válido para el escenario que el core tenga habilitado.
+La salida resume emisión, anticipo y pago, sin imprimir la CLABE. La ejecución verificada el 13 de septiembre de 2026 devolvió `FAC-2026-001`, `FONDEADA`, `120000`, `27000` y `margen_neto_pct: 0.02`. El comando no crea persistencia en el ERP y solo es válido para el escenario que el core tenga habilitado.
 
 ## Interpretación del resultado
 

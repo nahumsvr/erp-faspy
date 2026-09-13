@@ -88,7 +88,7 @@ El cliente no interpreta ni devuelve el body de los errores HTTP del core. No re
 
 ### Alcance de las pruebas
 
-Las pruebas del cliente cubren creación sin URL, configuración inválida, cancelación previa y entradas incompatibles; todas se detienen antes de `fetch`. Se añaden pruebas aisladas del validador de decision opcional y de conservación de requisitos obligatorios, sin respuestas financieras ficticias ni modo mock. La validación de respuestas y los caminos HTTP/red/JSON están implementados y revisados, pero aún requieren pruebas de integración reales o escenarios de prueba acordados. No se declara compatibilidad con el core hasta completar ese checkpoint.
+Las pruebas del cliente cubren creación sin URL, configuración inválida, cancelación previa y entradas incompatibles; todas se detienen antes de `fetch`. Se añaden pruebas aisladas del validador de decision opcional y de conservación de requisitos obligatorios, sin respuestas financieras ficticias ni modo mock. La Ruta Dorada del escenario acordado se validó por HTTP real desde Node y desde `/emision`; los errores de negocio generales e idempotencia aún requieren escenarios acordados antes de declararse cubiertos.
 
 No se incluye `GET /api/mercado` ni tipos del dashboard. No se crean valores ficticios de demo. La emisión real y la presentación literal de CLABE ya se comprobaron en la pantalla server-side; CORS de navegador solo aplicará si se autoriza una llamada directa desde una futura pantalla.
 
