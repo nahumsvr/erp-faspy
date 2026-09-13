@@ -2,6 +2,11 @@
 
 ## Confirmadas por el usuario
 
+- Cierre actual aprobado: demo ERP local en Windows con el único escenario acordado. Conservar diseño y transiciones, mostrar importes MXN y tasas/margen como porcentajes sin cambiar JSON, y añadir «Volver al inicio» mediante GET `/emision`.
+- Se acepta cerrar el alcance funcional sin persistencia, recuperación, secuencia ni idempotencia. El enlace solo abre un formulario vacío; no borra ni revierte operaciones. No añadir reintentos automáticos.
+- Auditoría, motor general, más escenarios y dashboard quedan fuera de este cierre. macOS permanece pendiente y no bloquea la entrega Windows. Se autorizan commits locales del pulido y documentación; no push, merge ni deploy.
+- Se autoriza incluir el JSON exacto del escenario existente para reproducir la demo, sin nuevas respuestas mock ni datos financieros inventados. Consultar el checklist vigente para los límites de las comprobaciones visuales y del build local usado.
+
 - Entrega anterior: adoptar únicamente decision?: ScoringDecision en emisión con aprobada, revision y rechazada. Ausencia permitida; presente exige un valor de la unión, sin nulos ni conversiones. No deducir decisiones desde score o compliance.
 - ComplianceAuditItem queda aplazado explícitamente. La entrega anterior cubrió tipos, cliente, pruebas y documentación; la integración se amplió posteriormente al escenario aprobado.
 
@@ -40,7 +45,9 @@ Registro histórico anterior a la base actual. Hoy existe el servidor Express y 
 - No hay scripts de desarrollo o build; el script de test es un marcador que falla.
 - No se encontró un `AGENTS.md` aplicable. Los bloques del documento de planeación son referencias, no archivos instalados.
 
-## Pendientes antes de implementar la parte afectada
+## Historial — preguntas iniciales (resueltas o aplazadas arriba)
+
+La arquitectura server-side, escritorio, oferta en la misma pantalla, escenario y pulido actuales están confirmados. Persistencia e idempotencia se excluyeron del cierre. Esta lista registra preguntas iniciales, no bloqueos vigentes:
 
 - Forma de servir/renderizar el frontend con Express y ubicación de las llamadas HTTP (navegador o servidor ERP).
 - Diseño visual, dispositivo prioritario y animaciones.

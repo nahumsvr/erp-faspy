@@ -5,13 +5,13 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 ## Estado actual
 
 - Entrega 1: base Express completada y validada en Windows. Instrucciones de macOS disponibles; ejecución en una Mac pendiente. La arquitectura server-side quedó confirmada para las pantallas actuales.
-- Entrega 2: cinco tipos alineados con core 4f71ceb, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Ruta Dorada técnica verificada desde Node con el escenario acordado.
+- Entrega 2: cinco tipos alineados con core a754a0d, incluida decision opcional; cliente y guía actualizados. ComplianceAuditItem aplazado. Ruta Dorada técnica verificada desde Node con el escenario acordado.
 - Entrega 3: formulario de emisión de escritorio en `/emision`, con validación básica, errores y llamada server-side a `lib/api.ts`; la pantalla ya mostró una respuesta real del core.
 - Entregas 4 a 6: aceptación, tesorería y pago server-side encadenados desde la pantalla; la Ruta Dorada visual fue verificada con el escenario acordado. No hay persistencia ni reintentos automáticos.
-- Entrega 7: pulido base aplicado a la pantalla de escritorio (foco, salto al contenido, alto contraste, responsive, movimiento reducido y bloqueo de doble clic); revisión visual local y a 1440×900 realizadas sin overflow horizontal. Falta acordar la aceptación de animaciones adicionales. El bloqueo de doble clic solo cubre la interfaz y no reemplaza idempotencia del core.
-- Entrega 8 (escenario acordado): Ruta Dorada repetida por CLI y desde `/emision`, con documentación y limitaciones registradas. Cobertura de escenarios generales y revisión visual final siguen pendientes.
+- Entrega 7: diseño y transiciones actuales aceptados, importes MXN, tasa/margen como porcentaje y enlace de inicio implementados. Formulario y oferta revisados en 1366×768 y 1440×900 sin overflow horizontal. Movimiento reducido revisado en CSS; activación visual y observación dinámica de carga/doble clic pendientes.
+- Entrega 8 (escenario acordado): Ruta Dorada repetida por CLI y navegador; HTTP 400/422 y regreso al inicio verificados. Guía reproducible y JSON acordado disponibles. El core se ejecutó con build local existente por falta de memoria al compilar; ver límites en el checklist.
 
-Pendientes vigentes: seis comprobaciones: cinco áreas de producto (auditoría, reglas generales/scoring dinámico, política de errores y reenvíos, persistencia/idempotencia y revisión visual amplia con animaciones) más la ejecución en macOS. Requieren decisiones, alcance adicional o el entorno correspondiente; no se cuentan como completadas por la prueba del escenario fijo.
+Alcance de cierre: demo Windows, escenario único y pulido actual. Auditoría, reglas generales/scoring, dashboard, persistencia e idempotencia quedan fuera de esta entrega por decisión explícita; macOS sigue sin validar y no bloquea Windows. No se añade CORS de navegador al recorrido server-side. Quedan las comprobaciones visuales dinámicas descritas en el checklist, sin confundirlas con ampliaciones de producto.
 
 ## Entregas
 

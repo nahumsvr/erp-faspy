@@ -1,6 +1,46 @@
 # Checklist MVP: alineación del contrato ERP / core
 
-## Estado vigente — decision opcional, 2026-09-13
+## Estado vigente — cierre acotado de la demo Windows, 2026-09-13
+
+Alcance confirmado: escenario único, diseño y transiciones actuales, Express server-side, sin persistencia ni idempotencia. Auditoría, scoring general, dashboard y macOS no bloquean esta entrega. Las casillas de las secciones históricas no son pendientes actuales.
+
+Fuentes revisadas: ERP `dev@9d824914d868eeb6d728546a9509963f6a5ad1db` antes del pulido; core `feature/contrato-facturacion-compliance-scoring@a754a0dae28a31b72aec3eda5eebe0595cb53e7c`. Ambos árboles limpios al inicio. Los cinco tipos coinciden, con `decision` opcional y CLABE string. No se modificó el contrato ni el core.
+
+### Entregas y evidencia actual
+
+- [x] 1. Base Express en Windows y configuración local.
+- [x] 2. Cinco tipos alineados y tres llamadas centralizadas en `lib/api.ts`; sin fallback.
+- [x] 3. Formulario de emisión, validación y oferta real del escenario acordado.
+- [x] 4. Aceptación real: `FAC-2026-001`, `FONDEADA`.
+- [x] 5. Depósito real de `120000`, fecha `2026-09-13T10:00:00.000Z`.
+- [x] 6. Pago real: principal `120000`, comisión `3000`, remanente `27000`, margen JSON `0.02`.
+- [x] 7. Pulido actual aceptado: importes MXN, tasa y margen en porcentaje, CLABE literal, textos para demo y enlace GET de regreso al inicio.
+- [x] 8. Ruta Dorada CLI y recorrido completo en navegador repetidos; guía y JSON exacto publicados en el repositorio.
+- [x] `pnpm typecheck` y `pnpm test`: 18 pruebas correctas; `git diff --check` sin errores de formato.
+- [x] `pnpm probar:ruta-dorada docs/demo-factura.json`: salida 0 contra el core local.
+- [x] `node scripts/verificar-demo.ts`: salida 0; campos faltantes 400, rechazo del core 400, escenario no soportado 422 y GET con cinco campos vacíos.
+- [x] Error de core inaccesible observado en navegador; configuración ausente cubierta por las pruebas locales.
+- [x] Formulario y oferta revisados en 1366×768 y 1440×900, sin overflow horizontal; depósito y liquidación revisados en navegador. Desplazamiento vertical normal para alcanzar acciones y regreso al inicio.
+- [x] Foco visible, salto al contenido, entrada al formulario y regreso al inicio mediante teclado; enlace también comprobado tras liquidación.
+
+### Límites de la evidencia
+
+- El primer intento de integración falló por core apagado. `pnpm dev` del core agotó la memoria del equipo, incluso con límite de heap. Se detuvieron los procesos de core iniciados para esa prueba y se verificó con `pnpm start` usando el build local existente. No se reconstruyó ese build ni se acredita su correspondencia exacta con HEAD; sí se comprobó su compatibilidad HTTP para el caso acordado.
+- El CSS cargado contiene `prefers-reduced-motion: reduce` que elimina transiciones, transformación y scroll suave. La preferencia del navegador estaba desactivada; la herramienta no expone emulación de movimiento. Esta revisión es estática, no una prueba visual con la preferencia activada.
+- El script deshabilita el botón y cambia su texto a «Procesando…». El intento de doble clic llegó a la oferta, pero el controlador perdió el nodo al navegar; no acredita conteo de peticiones ni observación del estado transitorio. Queda pendiente una comprobación manual de carga y doble clic con navegador visible.
+
+El pulido y el recorrido funcional están entregados. La aceptación visual dinámica completa conserva las dos comprobaciones anteriores pendientes; no se marcan como aprobadas por la revisión estática.
+
+### Ampliaciones y limitaciones aceptadas
+
+- Auditoría `ComplianceAuditItem`, scoring dinámico, catálogos ampliados y dashboard: fuera del cierre.
+- Persistencia, recuperación, secuencia e idempotencia: no implementadas por decisión explícita. Recargar un POST puede reenviar; volver al inicio no borra ni revierte operaciones del core.
+- macOS: instalación y ejecución pendientes; no bloquean la entrega Windows.
+- No se prueban reglas generales de rechazo, servicios financieros reales ni CORS desde navegador; el recorrido es server-side.
+
+## Historial — estado anterior de decision opcional, 2026-09-13
+
+Todo lo que sigue conserva las evidencias y pendientes de revisiones anteriores; no representa el cierre vigente.
 
 Fuentes: ERP en rama dev, commit local deb2f68 (sobre el historial publicado hasta 1223b86); core en feature/contrato-facturacion-compliance-scoring, commit a754a0d (con el escenario determinista de 4f71ceb y el contrato de 921fd4e). Ambos árboles estaban limpios al revisarse.
 

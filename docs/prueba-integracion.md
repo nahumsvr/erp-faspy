@@ -1,5 +1,74 @@
 # Primera prueba real: emisión de factura
 
+## Guía vigente de la demo Windows — 2026-09-13
+
+Usar Node 24.14 o posterior de la rama 24 y la versión de pnpm de cada package.json (ERP 11.19.0, core 11.2.2). Si faltan dependencias, ejecutar `pnpm install --frozen-lockfile` en cada repositorio. No copiar node_modules entre sistemas.
+
+En una terminal PowerShell para el core:
+
+```powershell
+Set-Location C:/Users/hecto/faspy
+pnpm dev
+```
+
+En otra terminal para el ERP:
+
+```powershell
+Set-Location C:/Users/hecto/erp-faspy
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+pnpm typecheck
+pnpm test
+pnpm dev
+```
+
+Configurar `NEXT_PUBLIC_API_URL=http://127.0.0.1:3000` conservando las demás variables. ERP escucha en 3001. No iniciar otra instancia si el puerto está ocupado.
+
+### Caso y recorrido
+
+El archivo [demo-factura.json](demo-factura.json) reproduce exactamente la entrada autorizada:
+
+```json
+{
+  "monto_mxn": 150000,
+  "cliente": "Distribuidora Industrial S.A. de C.V.",
+  "rfc_cliente": "DIN890214ABC",
+  "plazo_dias": 60,
+  "uuid_cfdi": "4a71d8be-b51f-46df-9a84-18ef5560965e"
+}
+```
+
+1. Abrir [la pantalla](http://127.0.0.1:3001/emision), capturar esos valores y pulsar «Validar factura».
+2. Verificar FAC-2026-001, VIGENTE, LIMPIO, ALTO, aprobada, anticipo MXN 120,000.00, tasa 2 %, 45 días y CLABE literal `012180001234567890`.
+3. Pulsar «Aceptar anticipo»: FONDEADA, depósito MXN 120,000.00 y fecha `2026-09-13T10:00:00.000Z`.
+4. Pulsar «Simular pago»: principal MXN 120,000.00, comisión MXN 3,000.00, remanente MXN 27,000.00 y margen 2 %.
+5. Pulsar «Volver al inicio»: abre los cinco campos vacíos, sin borrar ni revertir operaciones del core.
+
+Desde una tercera terminal en el ERP:
+
+```powershell
+pnpm probar:ruta-dorada docs/demo-factura.json
+node scripts/verificar-demo.ts
+```
+
+El primer comando efectúa los tres POST al simulador. El segundo comprueba entradas inválidas, errores 400/422 y el GET inicial. Ambos terminaron con código 0. El JSON conserva importes numéricos y fracciones 0.02; el formato es visual.
+
+### Evidencia y límites
+
+Fuentes: ERP dev@9d82491 antes del pulido y core feature/contrato-facturacion-compliance-scoring@a754a0d. Tipos y escenario contrastados con los archivos actuales. Typecheck correcto y 18 pruebas aprobadas.
+
+La primera ejecución falló por core apagado. El arranque de desarrollo agotó memoria, también al limitar el heap. Se validó con `pnpm start` usando el build local existente: CLI, emisión/aceptación/pago desde navegador y errores 400/422 correctos. No se recompiló el core ni se certifica que ese build reproduzca exactamente HEAD. En una instalación nueva se requiere `pnpm dev` o `pnpm build` correcto antes de `pnpm start`.
+
+Formulario y oferta revisados en 1366×768 y 1440×900 sin overflow horizontal. Foco visible, entrada al formulario y regreso al inicio por teclado comprobados. Depósito y liquidación mostraron los valores anteriores. Core inaccesible observado en navegador; configuración ausente cubierta por pruebas.
+
+Pendiente manual: activar movimiento reducido y confirmar ausencia de transiciones; observar «Procesando…», botón deshabilitado y doble clic durante envío. Las reglas CSS y el script existen, pero la herramienta no expone emulación de movimiento y perdió el nodo al intentar doble clic durante la navegación. No se contabilizaron POST para acreditar un único envío. Estos límites están registrados en el checklist.
+
+Sin persistencia ni recuperación. Recargar un POST puede reenviar la operación; ante fallo de red no asumir que el core no la procesó. Sin garantía de secuencia ni idempotencia. Auditoría, escenarios generales y dashboard quedan fuera; macOS no se ejecutó. CORS del navegador no interviene en este flujo server-side.
+
+## Historial de la primera integración
+
+Lo siguiente conserva la guía anterior; para reproducir el cierre usar la sección vigente de arriba.
+
+
 Estado: primera emisión, Ruta Dorada técnica desde Node y Ruta Dorada visual server-side verificadas contra core `a754a0d` (escenario introducido en `4f71ceb`). La pantalla de escritorio encadena emisión, aceptación, depósito y pago con respuestas reales. No se incluyen respuestas mock ni persistencia del ERP.
 
 ## Requisitos antes de ejecutar
