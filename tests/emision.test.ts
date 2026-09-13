@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { once } from "node:events";
 import test from "node:test";
-import { createApp } from "../server/app.ts";
+import { apiErrorState, createApp } from "../server/app.ts";
+import { ApiError } from "../lib/api.ts";
 import { formatMargin } from "../server/emision-page.ts";
 
 async function withServer(callback: (base: string) => Promise<void>): Promise<void> {
@@ -97,4 +98,16 @@ test("las acciones financieras no inventan respuestas sin URL del core", async (
 
 test("la interfaz presenta el margen recibido como porcentaje", () => {
   assert.match(formatMargin(0.02), /^2(?:\u00a0|\s)?%$/u);
+});
+
+test("la pantalla conserva los estados de error 400 y 422 definidos por el core", () => {
+  assert.deepEqual(apiErrorState(new ApiError("http", "", 400)), {
+    status: 400,
+    message: "El core rechazó la solicitud; revisa los datos de la factura.",
+  });
+  assert.deepEqual(apiErrorState(new ApiError("http", "", 422)), {
+    status: 422,
+    message: "El core no tiene habilitado este escenario.",
+  });
+  assert.equal(apiErrorState(new ApiError("http", "", 500)).status, 502);
 });

@@ -24,11 +24,17 @@ function parseEmissionForm(body: unknown): { input?: EmitirFacturaRequest; value
   return { values, input: { ...values, monto_mxn, plazo_dias } };
 }
 
-function apiErrorState(error: unknown): NonNullable<EmisionPageState["error"]> {
+export function apiErrorState(error: unknown): NonNullable<EmisionPageState["error"]> {
   if (error instanceof ApiError) {
     if (error.kind === "configuration") return { status: 503, message: "El core no está configurado en el ERP." };
     if (error.kind === "request") return { status: 400, message: "Revisa los datos de la factura." };
     if (error.kind === "contract") return { status: 502, message: "El core devolvió una respuesta incompatible." };
+    if (error.kind === "http" && error.status === 400) {
+      return { status: 400, message: "El core rechazó la solicitud; revisa los datos de la factura." };
+    }
+    if (error.kind === "http" && error.status === 422) {
+      return { status: 422, message: "El core no tiene habilitado este escenario." };
+    }
     if (error.kind === "http") return { status: 502, message: `El core respondió con HTTP ${error.status ?? "desconocido"}.` };
     return { status: 502, message: "No se pudo completar la conexión con el core." };
   }

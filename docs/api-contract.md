@@ -40,7 +40,7 @@ La URL debe ser la base anterior a `/api`: cada método añade su ruta completa.
 
 Enviar el objeto de entrada directamente con `Content-Type: application/json`. No envolverlo en `data` ni `factura`. En emisión se envían `monto_mxn`, `cliente`, `rfc_cliente`, `plazo_dias` y `uuid_cfdi`. Para aceptar o simular, pasar el `factura_id` recibido como el campo `facturaId` del body; ambos nombres son intencionalmente distintos en la planeación.
 
-Todos los campos declarados son obligatorios salvo `decision?: ScoringDecision` en emisión. Ninguno admite `null` en JSON. Límites de monto/plazo, validaciones de RFC, códigos HTTP concretos, cuerpo de error, reglas de rechazo e idempotencia quedan pendientes. No deducirlos de estos tipos.
+Todos los campos declarados son obligatorios salvo `decision?: ScoringDecision` en emisión. Ninguno admite `null` en JSON. El core define `400` para JSON o solicitudes inválidas y `422 SCENARIO_NOT_SUPPORTED` para entradas fuera del escenario habilitado; los límites de monto/plazo, validaciones de RFC, reglas generales de rechazo e idempotencia siguen pendientes.
 
 ## Los cinco tipos solicitados
 
@@ -84,7 +84,7 @@ Un estado `RECHAZADO` o `SANCIONADO` permitido por el contrato se devuelve como 
 | `json` | Respuesta HTTP exitosa cuyo contenido no es JSON válido |
 | `contract` | JSON exitoso incompatible con el esquema provisional |
 
-El cliente no interpreta ni devuelve el body de los errores HTTP del core. No reintenta, no sigue redirecciones ni usa mocks de respaldo. No fija un timeout: el invocador puede pasar `{ signal }`. Cancelar o perder la conexión no demuestra que el core no haya procesado la operación; la política de repetición e idempotencia sigue pendiente.
+El cliente no interpreta ni devuelve el body de los errores HTTP del core. La pantalla conserva `400` como error de datos y `422` como escenario no habilitado; otros códigos HTTP se presentan como fallo de integración. No reintenta, no sigue redirecciones ni usa mocks de respaldo. No fija un timeout: el invocador puede pasar `{ signal }`. Cancelar o perder la conexión no demuestra que el core no haya procesado la operación; la política de repetición e idempotencia sigue pendiente.
 
 ### Alcance de las pruebas
 

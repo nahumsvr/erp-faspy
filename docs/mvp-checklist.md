@@ -42,7 +42,7 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 
 - [ ] Auditoría `ComplianceAuditItem` y su endpoint: aplazada explícitamente.
 - [ ] Scoring dinámico, catálogos ampliados y reglas generales del core: requieren contrato, escenarios y reglas aprobadas.
-- [ ] Errores, rechazos, reenvíos, secuencia e idempotencia: requieren política acordada; el ERP no reintenta automáticamente.
+- [ ] Errores, rechazos, reenvíos, secuencia e idempotencia: el core ya define `400` y `422 SCENARIO_NOT_SUPPORTED`, y el ERP conserva esos estados en la pantalla; siguen requiriendo política acordada los rechazos generales, reenvíos, secuencia e idempotencia.
 - [ ] Persistencia y recarga del flujo: requieren alcance y almacenamiento aprobados; la entrega actual no persiste datos.
 - [ ] Aceptación de animaciones finales; las transiciones actuales respetan `prefers-reduced-motion`, pero falta la decisión visual final.
 - [ ] Ejecutar las comprobaciones de instalación y pruebas en macOS.
