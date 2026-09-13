@@ -41,6 +41,10 @@ Registro histórico anterior a la base actual. Hoy existe el servidor Express y 
 
 ## Conflictos resueltos y por resolver
 
+- El usuario autorizó avanzar sin URL ni pantallas con un cliente HTTP provisional, validaciones estructurales y errores locales. Implementado en `lib/api.ts` con `createApiClient(baseUrl)` y las tres operaciones acordadas; la URL se pasa desde `NEXT_PUBLIC_API_URL` cuando esté disponible.
+- La clasificación `ApiError.kind` es interna del cliente, no modifica el contrato HTTP del core. No hay reintentos, redirecciones automáticas ni fallback mock. El invocador puede cancelar mediante `AbortSignal`; no se impone un timeout.
+- La prueba del cliente se limita por ahora a fallos previos al envío. No se han creado respuestas mock, datos financieros ficticios ni supuestos sobre errores del core. La prueba de integración permanece pendiente.
+
 - El usuario autorizó avanzar con la base sin pantallas: dependencias Windows, servidor Express, configuración de entorno, documentación y consistencia interna de tipos.
 - La base usa Node 24 (mínimo 24.14) para ejecutar TypeScript directamente y pnpm 11.19.0. `typecheck` comprueba tipos por separado; no hay artefactos de build.
 - El servidor local escucha en `127.0.0.1:3001` por defecto. `/health` identifica el proceso como simulación y no comprueba conectividad con el core.

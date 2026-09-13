@@ -2,7 +2,7 @@
 
 Base Express del Frente 3 para una PyME mexicana. La Ruta Dorada prevista es emitir factura → oferta → depósito → simulación del cobro y split settlement.
 
-Actualmente incluye servidor local, configuración, contrato TypeScript propuesto y comprobaciones de la base. Las pantallas y el cliente del core están pendientes. No contiene motor financiero, autenticación, base de datos ni conexiones a SAT/SPEI.
+Actualmente incluye servidor local, configuración, contrato TypeScript propuesto, cliente HTTP provisional y comprobaciones locales. Las pantallas y la conexión real con el core están pendientes. No contiene motor financiero, autenticación, base de datos ni conexiones a SAT/SPEI.
 
 ## Requisitos
 
@@ -71,11 +71,11 @@ Copiar `.env.example` solo si todavía no existe `.env`, para conservar tu confi
 | `pnpm dev` | Arrancar y reiniciar al cambiar archivos |
 | `pnpm start` | Arrancar sin vigilancia de archivos |
 | `pnpm typecheck` | Comprobar tipos sin generar archivos |
-| `pnpm test` | Probar configuración, HTTP local y serialización de CLABE |
+| `pnpm test` | Probar la base y los casos del cliente que no requieren core ni mocks |
 
 Detener con Ctrl+C. Si el puerto está ocupado, detener el proceso correspondiente o cambiar `PORT` en `.env`.
 
-La base y las cuatro pruebas se han validado en Windows. Los scripts y dependencias permiten instalación en macOS, pero falta ejecutar las comprobaciones en una Mac. Cada equipo debe instalar sus dependencias localmente.
+La base se ha validado en Windows. Los scripts y dependencias permiten instalación en macOS, pero falta ejecutar las comprobaciones en una Mac. Cada equipo debe instalar sus dependencias localmente.
 
 ## Qué puede probar el equipo hoy
 
@@ -84,7 +84,7 @@ La base y las cuatro pruebas se han validado en Windows. Los scripts y dependenc
 - Tipos del contrato propuesto, incluida CLABE como `string` y los valores de `ScoringDecision`.
 - Serialización de una cadena con ceros iniciales; no es validación bancaria ni una prueba del core.
 
-Las cuatro pantallas, `lib/api.ts` y el recorrido financiero completo están pendientes. La guía del contrato es una propuesta, no una garantía de compatibilidad con el backend del otro repositorio.
+El cliente provisional está en `lib/api.ts` y se describe en la guía de consumo. Puede crearse sin URL; las operaciones fallan explícitamente hasta configurarla. Las cuatro pantallas y el recorrido financiero completo están pendientes. La guía del contrato es una propuesta, no una garantía de compatibilidad con el backend del otro repositorio.
 
 ## Problemas frecuentes
 
@@ -114,7 +114,7 @@ Los scripts cargan `.env` si existe; las variables del proceso tienen prioridad.
 - [Decisiones](docs/decisiones.md)
 - [Backlog](docs/backlog.md)
 
-El contrato todavía debe contrastarse con el core. Las futuras llamadas se centralizarán en `lib/api.ts`. La prueba real de emisión se hará en cuanto exista URL confirmada; CORS debe comprobarse desde el navegador si se acuerda ese origen de las llamadas. No se ha configurado un proxy ni modificado el repositorio del core.
+El contrato todavía debe contrastarse con el core. Las tres operaciones HTTP están centralizadas en `lib/api.ts`, sin invocación automática desde Express. La prueba real de emisión se hará en cuanto exista URL confirmada; CORS debe comprobarse desde el navegador si se acuerda ese origen de las llamadas. No se ha configurado un proxy ni modificado el repositorio del core.
 
 ## Dependencias y Git
 

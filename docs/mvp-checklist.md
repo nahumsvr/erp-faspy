@@ -38,7 +38,7 @@ Propuesta del lado ERP: conservar esos valores exactamente si corresponden al co
 - [ ] Verificar tipo string en ambos contratos e intercambio JSON como cadena.
 - [ ] Comprobar que captura, transporte, almacenamiento si se acuerda y presentación preserven el valor literal, sin conversiones numéricas.
 
-La validación en ejecución está pendiente porque aún no existen cliente ni pantallas. TypeScript no valida JSON recibido. No se han creado datos mock ni reglas adicionales sobre longitud o validación bancaria.
+El cliente provisional valida en ejecución los tipos requeridos, incluida CLABE como string, sin conversiones. Falta probar respuestas reales y presentación en pantallas. No se han creado datos mock ni reglas adicionales sobre longitud o validación bancaria.
 
 ## Cierre de integración
 
@@ -54,10 +54,12 @@ La validación en ejecución está pendiente porque aún no existen cliente ni p
 
 ## Validación local de la propuesta
 
+- Cliente provisional añadido en `lib/api.ts`. Pruebas de configuración, cancelación y entradas inválidas sin ejecutar `fetch`. Respuestas HTTP y compatibilidad real aún pendientes de prueba con core o escenarios acordados.
+
 - `node --check types/schema.ts`: sintaxis válida; no sustituye comprobación de tipos.
 - `git diff --check`: sin errores de formato.
 - Bloqueo inicial de dependencias macOS resuelto al reinstalar para Windows con `pnpm install --frozen-lockfile`, sin cambiar versiones del lockfile.
 - `pnpm typecheck`: correcto; incluye el contrato, servidor y pruebas estáticas de CLABE y unión de decisiones.
-- `pnpm test`: cuatro pruebas correctas de configuración, HTTP local y serialización de CLABE. Esta última comprueba una cadena sintética, no una respuesta del core.
+- `pnpm test`: ocho pruebas correctas de configuración, HTTP local, serialización de CLABE y fallos del cliente previos al envío. La prueba de CLABE utiliza una cadena sintética, no una respuesta del core.
 - `pnpm start`: comprobado en puerto 3001 sin `.env`; `/health` respondió correctamente y el proceso se detuvo al finalizar la verificación.
 - No se realizó prueba HTTP contra el core ni validación de CLABE en una respuesta suya: el core no está disponible en esta sesión.

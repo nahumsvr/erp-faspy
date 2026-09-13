@@ -5,7 +5,7 @@ Se conserva el orden de las ocho entregas de la solicitud original. Cada entrega
 ## Estado actual
 
 - Entrega 1: base sin pantallas completada y validada en Windows. Instrucciones de macOS disponibles; ejecución en una Mac pendiente. Arquitectura de frontend aún pendiente.
-- Entrega 2: propuesta de tipos y guía disponibles; falta contrastar el core e implementar el cliente HTTP. No hay mocks.
+- Entrega 2: propuesta de tipos, guía y cliente HTTP provisional disponibles. Falta contrastar el core y probar respuestas reales o escenarios acordados. No hay mocks ni integración desde pantallas o rutas del servidor.
 - Entregas 3 a 8: pendientes. No existe todavía la Ruta Dorada ejecutable.
 
 ## Entregas
