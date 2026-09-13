@@ -85,3 +85,7 @@ Las referencias a ScoringDecision pendiente se resuelven con la decisión actual
 - Express reemplaza la suposición de Next.js de la planeación. No se crearán rutas `app/*/page.tsx` por inercia.
 - El uso automático de mocks sugerido por la planeación queda subordinado a la confirmación explícita exigida por el usuario.
 - La referencia propone HTTP desde el navegador con CORS; confirmar la arquitectura de frontend antes de introducir un proxy o cambiar ese punto de integración.
+
+## Integración autorizada de ramas de demo
+
+Se conserva `/emision` y se incorpora la demo de tres escenarios en `/`. Las llamadas de la nueva pantalla pasan por `/demo/evaluar` y `lib/api.ts`, sin exponer la URL del core al navegador. Las comprobaciones anteriores de CORS describen la versión previa al merge. El usuario autorizó publicar la rama demo, integrarla a `dev` y después a `main`. Aceptación y pago existentes dependen de la versión del core; no se añaden endpoints financieros en este merge.
