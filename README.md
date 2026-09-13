@@ -2,7 +2,7 @@
 
 Base Express del Frente 3 para una PyME mexicana. La Ruta Dorada prevista es emitir factura → oferta → depósito → simulación del cobro y split settlement.
 
-Actualmente incluye servidor local, configuración, contrato TypeScript, cliente HTTP y una experiencia de escritorio que encadena emisión, aceptación, depósito y pago server-side en `/emision`. La Ruta Dorada visual del escenario acordado está verificada y la pantalla tiene pulido base de accesibilidad; quedan cinco áreas pendientes: auditoría, reglas generales/scoring dinámico, errores y reenvíos, persistencia/idempotencia y revisión visual amplia con animaciones. No contiene motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
+Actualmente incluye servidor local, configuración, contrato TypeScript, cliente HTTP y una experiencia de escritorio que encadena emisión, aceptación, depósito y pago server-side en `/emision`. La Ruta Dorada visual del escenario acordado está verificada y la pantalla tiene pulido base de accesibilidad; quedan seis pendientes vigentes: cinco áreas de producto y la validación en macOS. No contiene motor financiero propio, autenticación, base de datos ni conexiones a SAT/SPEI.
 
 ## Requisitos
 

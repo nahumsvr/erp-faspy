@@ -46,8 +46,9 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [ ] Errores, rechazos, reenvíos, secuencia e idempotencia: requieren política acordada; el ERP no reintenta automáticamente.
 - [ ] Persistencia y recarga del flujo: requieren alcance y almacenamiento aprobados; la entrega actual no persiste datos.
 - [ ] Revisión visual a resolución de escritorio amplia y aceptación de animaciones finales.
+- [ ] Ejecutar las comprobaciones de instalación y pruebas en macOS.
 
-La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. Quedan cinco áreas pendientes en la sección anterior. CORS de navegador queda fuera de esta arquitectura.
+La alineación estática está cerrada para los cinco tipos y la Ruta Dorada técnica y visual server-side se verificaron contra el core. La pantalla de escritorio cubre emisión, aceptación, tesorería y pago, incluida la CLABE literal. Quedan seis pendientes vigentes: cinco áreas de producto y la validación en macOS. CORS de navegador queda fuera de esta arquitectura.
 
 ## Historial de revisiones — no representa el estado vigente
 
