@@ -31,6 +31,12 @@
 - Validaciones de entrada, rechazo, reintentos y prevención de acciones duplicadas.
 - Persistencia, recarga, acceso directo a pasos posteriores y reinicio del demo.
 
+## Limpieza solicitada
+
+- Se retira `node_modules` del seguimiento de Git y se conserva instalado localmente; `.gitignore` excluye dependencias, salidas de compilación, cobertura, logs y archivos de entorno locales.
+- Se elimina el ejemplo `index.js` y su referencia `main`, junto con el script de prueba de marcador. La base queda sin servidor ejecutable hasta la entrega de configuración de Express.
+- Se conservan las dependencias de Express y TypeScript, el lockfile, `tsconfig.json` y la documentación del proyecto.
+
 ## Conflictos resueltos y por resolver
 
 - Express reemplaza la suposición de Next.js de la planeación. No se crearán rutas `app/*/page.tsx` por inercia.
