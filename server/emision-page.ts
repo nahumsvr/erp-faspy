@@ -31,12 +31,18 @@ export function formatMargin(value: number): string {
   }).format(value);
 }
 
+function formatMoney(value: number): string {
+  return new Intl.NumberFormat("es-MX", {
+    style: "currency", currency: "MXN", currencyDisplay: "code",
+  }).format(value);
+}
+
 function resultPanel(result: EmitirFacturaResponse): string {
   const decision = result.decision
     ? `<div><dt>Decisión</dt><dd>${escapeHtml(result.decision)}</dd></div>`
     : "";
   return `<section class="result" aria-labelledby="result-title" aria-live="polite">
-    <p class="eyebrow">Respuesta del core</p>
+    <p class="eyebrow">Validación de factura</p>
     <h2 id="result-title">Oferta disponible</h2>
     <dl class="metrics">
       <div><dt>Factura</dt><dd>${escapeHtml(result.factura_id)}</dd></div>
@@ -44,8 +50,8 @@ function resultPanel(result: EmitirFacturaResponse): string {
       <div><dt>EFOS</dt><dd>${escapeHtml(result.efos_status)}</dd></div>
       <div><dt>Score</dt><dd>${escapeHtml(result.score)}</dd></div>
       ${decision}
-      <div><dt>Monto de anticipo</dt><dd>${escapeHtml(result.monto_anticipo)}</dd></div>
-      <div><dt>Tasa aplicada</dt><dd>${escapeHtml(result.tasa_aplicada)}</dd></div>
+      <div><dt>Monto de anticipo</dt><dd>${escapeHtml(formatMoney(result.monto_anticipo))}</dd></div>
+      <div><dt>Tasa aplicada</dt><dd>${escapeHtml(formatMargin(result.tasa_aplicada))}</dd></div>
       <div><dt>Días promedio de pago</dt><dd>${escapeHtml(result.dias_promedio_pago)}</dd></div>
       <div><dt>CLABE virtual</dt><dd><code>${escapeHtml(result.clabe_virtual)}</code></dd></div>
     </dl>
@@ -63,7 +69,7 @@ function advancePanel(advance: AnticipoConfirmado): string {
     <dl class="metrics">
       <div><dt>Factura</dt><dd>${escapeHtml(advance.factura_id)}</dd></div>
       <div><dt>Estado</dt><dd>${escapeHtml(advance.estado)}</dd></div>
-      <div><dt>Monto depositado</dt><dd>${escapeHtml(advance.monto_depositado)}</dd></div>
+      <div><dt>Monto depositado</dt><dd>${escapeHtml(formatMoney(advance.monto_depositado))}</dd></div>
       <div><dt>Fecha de depósito</dt><dd>${escapeHtml(advance.fecha_deposito)}</dd></div>
     </dl>
     <form class="action" method="post" action="/emision/pago">
@@ -79,12 +85,12 @@ function paymentPanel(payment: ResultadoPago): string {
     <h2 id="payment-title">Pago simulado</h2>
     <dl class="metrics">
       <div><dt>Factura</dt><dd>${escapeHtml(payment.factura_id)}</dd></div>
-      <div><dt>Principal retenido</dt><dd>${escapeHtml(payment.principal_retenido)}</dd></div>
-      <div><dt>Comisión cobrada</dt><dd>${escapeHtml(payment.comision_cobrada)}</dd></div>
-      <div><dt>Remanente dispersado</dt><dd>${escapeHtml(payment.remanente_dispersado)}</dd></div>
+      <div><dt>Principal retenido</dt><dd>${escapeHtml(formatMoney(payment.principal_retenido))}</dd></div>
+      <div><dt>Comisión cobrada</dt><dd>${escapeHtml(formatMoney(payment.comision_cobrada))}</dd></div>
+      <div><dt>Remanente dispersado</dt><dd>${escapeHtml(formatMoney(payment.remanente_dispersado))}</dd></div>
       <div><dt>Margen neto</dt><dd>${escapeHtml(formatMargin(payment.margen_neto_pct))}</dd></div>
     </dl>
-    <p class="hint">El core devuelve el margen como fracción decimal; aquí se presenta como porcentaje.</p>
+    <p class="hint">Recorrido completado. Revisa la distribución del pago simulado.</p>
   </section>`;
 }
 
@@ -98,7 +104,7 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
       ? advancePanel(state.advance)
       : state.result
         ? resultPanel(state.result)
-        : `<section class="panel" aria-live="polite"><p class="eyebrow">Resultado</p><h2>La respuesta aparecerá aquí</h2><p class="lede">Completa el formulario para iniciar la validación del escenario acordado.</p></section>`;
+        : `<section class="panel" aria-live="polite"><p class="eyebrow">Resultado</p><h2>La respuesta aparecerá aquí</h2><p class="lede">Captura la factura del escenario de demostración para consultar su oferta.</p></section>`;
   return `<!doctype html>
 <html lang="es">
   <head>
@@ -123,6 +129,7 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
       button { background: #006d77; border: 0; border-radius: 10px; color: #fff; cursor: pointer; font: inherit; font-weight: 800; min-height: 48px; padding: 12px 18px; transition: background-color .18s ease, transform .18s ease; } button:hover { background: #00515a; transform: translateY(-1px); } button:focus-visible { outline: 3px solid #f4b942; outline-offset: 3px; } button:disabled { background: #6b858a; cursor: wait; transform: none; }
       .result { background: #f2fbf8; border: 1px solid #b8e2d4; border-radius: 16px; padding: 24px; } .metrics { display: grid; gap: 13px; margin: 0; } .metrics div { border-bottom: 1px solid #d6eee7; display: flex; gap: 18px; justify-content: space-between; padding-bottom: 10px; } dt { color: #52706f; font-size: .9rem; } dd { font-weight: 800; margin: 0; text-align: right; } code { font-size: .92rem; letter-spacing: .06em; }
       .alert { background: #fff4e8; border: 1px solid #edc693; border-radius: 10px; color: #744d1d; margin-bottom: 20px; padding: 12px 14px; }
+      .restart { margin-top: 24px; } .restart a { color: #00515a; display: inline-block; padding: 12px 0; font-weight: 700; } a:focus-visible { outline: 3px solid #006d77; outline-offset: 3px; } .metrics dd { min-width: 0; overflow-wrap: anywhere; }
       @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } input, button { transition: none; } button:hover { transform: none; } }
       @media (forced-colors: active) { .panel, .result, .alert { border: 1px solid CanvasText; } button { border: 1px solid ButtonText; } }
       @media (max-width: 780px) { main { width: min(100% - 28px, 620px); padding-top: 28px; } .shell { grid-template-columns: 1fr; } .panel { padding: 24px; } }
@@ -132,9 +139,9 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
   <body>
     <a class="skip-link" href="#main-content">Saltar al contenido</a>
     <main id="main-content">
-      <p class="eyebrow">EcoStream · Centro de operaciones</p>
+      <p class="eyebrow">EcoStream · Demo simulada</p>
       <h1>Emite una factura y revisa su oferta.</h1>
-      <p class="lede">El ERP envía la información al core simulado y presenta la respuesta sin calcular scoring ni importes financieros localmente.</p>
+      <p class="lede">Valida la factura de demostración, acepta el anticipo y consulta el depósito y la distribución del pago.</p>
       <div class="shell">
         <section class="panel" aria-labelledby="form-title">
           <h2 id="form-title">Datos de la factura</h2>
@@ -147,12 +154,13 @@ export function renderEmissionPage(state: EmisionPageState = {}): string {
               <div class="field"><label for="plazo_dias">Plazo (días)</label><input id="plazo_dias" name="plazo_dias" type="number" min="0" step="1" inputmode="numeric" required value="${fieldValue(state, "plazo_dias")}"></div>
               <div class="field"><label for="uuid_cfdi">UUID del CFDI</label><input id="uuid_cfdi" name="uuid_cfdi" type="text" autocomplete="off" required value="${fieldValue(state, "uuid_cfdi")}"></div>
             </div>
-            <p id="form-hint" class="hint">La validación de elegibilidad y la oferta provienen del core.</p>
+            <p id="form-hint" class="hint">Usa los datos exactos del escenario acordado. Esta demo no realiza operaciones financieras reales.</p>
             <button type="submit">Validar factura</button>
           </form>
         </section>
         ${result}
       </div>
+      ${state.result || state.advance || state.payment || state.error ? `<nav class="restart" aria-label="Reiniciar recorrido"><a href="/emision">Volver al inicio</a><p class="hint">Abre el formulario vacío; no borra ni revierte operaciones. Evita recargar después de enviar: podrías repetir la solicitud.</p></nav>` : ""}
     </main>
   <script>
     // Evita dobles clics durante una petición; no reemplaza idempotencia del core.
