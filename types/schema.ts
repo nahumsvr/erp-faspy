@@ -32,6 +32,7 @@ export type ScoringDecision = "aprobada" | "revision" | "rechazada";
 
 /** POST /api/emitir-factura: respuesta plana de la planeación original. */
 export interface EmitirFacturaResponse extends ComplianceReport {
+  decision?: ScoringDecision;
   factura_id: string;
   score: "ALTO" | "MEDIO" | "BAJO";
   monto_anticipo: number;

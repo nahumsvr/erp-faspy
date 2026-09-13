@@ -1,3 +1,14 @@
+## Actualización: recorrido de demo conectado
+
+- [x] Pantalla de factura en `/`, con tres escenarios y campos editables.
+- [x] Cliente HTTP de navegador al endpoint `/api/emitir-factura` de Faspy.
+- [x] Mostrar decisión recibida, cumplimiento, score, anticipo, tasa y CLABE textual.
+- [x] Estados de carga y error; limpiar oferta anterior al editar o reenviar.
+- [x] Campo opcional `decision` alineado con el contrato del core revisado.
+- [ ] Aceptación, depósito, liquidación y persistencia (fuera de esta demo).
+
+Las secciones siguientes registran la revisión previa a esta integración.
+
 # Checklist MVP: alineación del contrato ERP / core
 
 Estado: propuesta ERP v0.1.0 creada por solicitud posterior del usuario en `types/schema.ts`, con guía en `docs/api-contract.md`. Pendiente recibir el contrato vigente del core y confirmar la unión de estados. No se confirma compatibilidad entre contratos todavía.
@@ -61,3 +72,9 @@ La validación en ejecución está pendiente porque aún no existen cliente ni p
 - `pnpm test`: cuatro pruebas correctas de configuración, HTTP local y serialización de CLABE. Esta última comprueba una cadena sintética, no una respuesta del core.
 - `pnpm start`: comprobado en puerto 3001 sin `.env`; `/health` respondió correctamente y el proceso se detuvo al finalizar la verificación.
 - No se realizó prueba HTTP contra el core ni validación de CLABE en una respuesta suya: el core no está disponible en esta sesión.
+
+### Verificación de la demo
+
+- Typecheck y cuatro pruebas existentes: correctos.
+- Navegador en localhost:3001 contra core en localhost:3000: aprobación ($132,300), rechazo fiscal ($0), revisión ($0), CLABE con cero inicial conservada.
+- Sintaxis de demo.js y git diff --check: correctos.

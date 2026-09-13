@@ -1,6 +1,7 @@
 import express from "express";
+import { fileURLToPath } from "node:url";
 
-export function createApp() {
+export function createApp(apiUrl?: string) {
   const app = express();
   app.disable("x-powered-by");
 
@@ -9,5 +10,9 @@ export function createApp() {
     res.json({ status: "ok", service: "erp-faspy", simulation: true });
   });
 
+  app.get("/demo-config", (_req, res) => {
+    res.json({ apiUrl: apiUrl ?? null });
+  });
+  app.use(express.static(fileURLToPath(new URL("../public/", import.meta.url))));
   return app;
 }
