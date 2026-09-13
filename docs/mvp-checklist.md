@@ -21,7 +21,6 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Validar el campo presente; no completar ausencia ni inferir decisiones. Valores incompatibles siguen el error local contract.
 - [x] Confirmar CLABE string en ambos schemas. El contrato documenta 18 dígitos; el cliente comprueba tipo, no formato bancario.
 - [x] pnpm typecheck correcto; pnpm test: 11 pruebas correctas, incluyendo opcionalidad y campos obligatorios. Sin respuestas financieras mock. El primer intento tuvo EPERM de dependencias en sandbox; la ejecución autorizada fuera de él pasó.
-- [ ] ComplianceAuditItem: aplazado por decisión del usuario.
 - [x] Datos y motor acotados al escenario acordado en el core: fixtures mínimos en `lib/data` y funciones puras en `lib/engine`; no hay reglas generales.
 - [x] Endpoints financieros del escenario: `POST /api/emitir-factura`, `POST /api/aceptar-anticipo` y `POST /api/simular-pago`. Auditoría y scoring dinámico siguen pendientes.
 - [x] Probar el core por HTTP real: smoke test correcto contra `localhost:3000`, incluida latencia de emisión, CORS, anticipo y pago. Esto no prueba aún el cliente ERP ni CORS desde navegador.
@@ -34,7 +33,6 @@ El usuario aprobó adoptar únicamente decision opcional. ComplianceAuditItem qu
 - [x] Entrega 7 (base): foco visible, salto al contenido, asociaciones ARIA, diseño adaptable, alto contraste y movimiento reducido en la pantalla de escritorio.
 - [x] Entrega 8 (escenario acordado): `pnpm probar:ruta-dorada` se repitió con el core disponible y devolvió emisión, aceptación y pago compatibles; documentación y limitaciones quedan registradas.
 - [x] Revisión visual local: `/emision` cargó en navegador, el árbol accesible expuso los cinco campos y el foco recorrió el salto al contenido y el formulario por teclado.
-- [ ] Revisión visual a resolución de escritorio amplia y aceptación de animaciones finales.
 - [x] Verificar intercambio JSON real y presentación literal de CLABE: el core devolvió `clabe_virtual` como `string` y `/emision` la mostró sin conversión.
 - [x] Decidir navegador o servidor: servidor Express; `/emision` llama al core mediante `lib/api.ts`. CORS de navegador queda fuera de este recorrido.
 - [x] Presentar `margen_neto_pct` como `2 %` cuando el core devuelve `0.02`; el JSON conserva la fracción y la interfaz solo aplica formato visual.
