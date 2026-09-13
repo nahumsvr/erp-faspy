@@ -1,0 +1,38 @@
+# Decisiones del ERP EcoStream
+
+## Confirmadas por el usuario
+
+- El repositorio de trabajo es `erp-faspy`, aunque la planeación lo denomina `ecostream-erp`.
+- Se utilizará Express. La propuesta de migrar a Next.js fue rechazada.
+- Se aprueba el backlog de ocho entregas de la solicitud original; no se sustituye por el desglose propuesto posteriormente por el asistente.
+- La imagen proporcionada sirve como referencia de arquitectura: ERP y core independientes, unidos por contrato HTTP y CORS. No especifica el diseño de las pantallas.
+- Solo se construye el ERP: emisión de factura, oferta de anticipo, depósito en tesorería y simulación del cobro con split settlement.
+- El ERP muestra los resultados del core; no implementa el motor financiero ni integraciones financieras reales.
+- Las llamadas al core se centralizan en `lib/api.ts`; los componentes no hacen llamadas directas. Los tipos acordados viven en `types/schema.ts`.
+- Se solicita configurar la URL con `NEXT_PUBLIC_API_URL`. Express no publica esa variable al navegador automáticamente; su exposición depende de la arquitectura de frontend pendiente.
+- Los mocks requieren confirmar previamente valores y escenarios. Nunca se usarán como fallback automático ante fallos de la API.
+- Se autorizan commits locales de entregas validadas. No se autoriza push, merge, deploy ni reescritura del historial.
+
+## Estado observado al iniciar
+
+- Rama `dev`, árbol limpio, commit inicial `f626781`.
+- Base mínima Express con TypeScript, `pnpm-lock.yaml` y sin pantallas.
+- `index.js` contiene sintaxis TypeScript; aún no se corrigió el arranque.
+- No hay scripts de desarrollo o build; el script de test es un marcador que falla.
+- No se encontró un `AGENTS.md` aplicable. Los bloques del documento de planeación son referencias, no archivos instalados.
+
+## Pendientes antes de implementar la parte afectada
+
+- Forma de servir/renderizar el frontend con Express y ubicación de las llamadas HTTP (navegador o servidor ERP).
+- Diseño visual, dispositivo prioritario y animaciones.
+- Oferta como página, modal o ambos.
+- Disponibilidad y URL del core, versión vigente del contrato y contrato de errores.
+- Datos ficticios y autorización de mocks, con valores y escenarios.
+- Validaciones de entrada, rechazo, reintentos y prevención de acciones duplicadas.
+- Persistencia, recarga, acceso directo a pasos posteriores y reinicio del demo.
+
+## Conflictos resueltos y por resolver
+
+- Express reemplaza la suposición de Next.js de la planeación. No se crearán rutas `app/*/page.tsx` por inercia.
+- El uso automático de mocks sugerido por la planeación queda subordinado a la confirmación explícita exigida por el usuario.
+- La referencia propone HTTP desde el navegador con CORS; confirmar la arquitectura de frontend antes de introducir un proxy o cambiar ese punto de integración.
